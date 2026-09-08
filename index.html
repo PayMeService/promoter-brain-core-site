@@ -56,13 +56,12 @@
   header.top details summary { list-style: none; cursor: pointer; font-size: .9rem; padding: .25rem .6rem; border: 1px solid var(--line); border-radius: 999px; background: var(--box); }
   header.top details[open] summary { background: var(--paper-2); }
   header.top details nav { position: absolute; left: 1rem; right: 1rem; top: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: .2rem; padding: .6rem; background: var(--box); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
-  header.top nav.wide { display: flex; gap: .1rem .2rem; flex: 1 1 auto; min-width: 0; overflow-x: auto; white-space: nowrap; font-size: .86rem; scrollbar-width: none; }
-  header.top nav.wide::-webkit-scrollbar { display: none; }
+  header.top nav.wide { display: flex; gap: .1rem .15rem; flex: 1 1 auto; min-width: 0; white-space: nowrap; font-size: .84rem; justify-content: center; }
   header.top nav a { text-decoration: none; color: var(--ink-2); padding: .22rem .5rem; border-radius: 6px; position: relative; }
   header.top nav a[aria-current="true"] { color: var(--ink); background: var(--paper-2); box-shadow: inset 0 -2px 0 var(--accent); }
   header.top nav a:hover { color: var(--ink); background: var(--paper-2); }
   header.top .tools { margin-left: auto; display: flex; gap: .35rem; flex: none; }
-  button.tool { font: inherit; font-size: .8rem; background: var(--box); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: .2rem .6rem; cursor: pointer; white-space: nowrap; }
+  button.tool { font: inherit; font-size: .78rem; background: var(--box); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: .18rem .55rem; cursor: pointer; white-space: nowrap; }
   button.tool[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
 
   .hero { max-width: 1240px; margin: 0 auto; padding: 2.6rem 1rem 1.2rem; }
@@ -79,18 +78,20 @@
   .hero .cta a.primary { background: var(--accent); color: #fff; }
 
   .stagewrap { position: sticky; top: var(--header-h, 3rem); z-index: 5; width: 100%; }
-  .stage { position: relative; height: 32vh; min-height: 230px; max-height: 340px; border-top: 1px solid #2a3140; border-bottom: 1px solid #2a3140; color: #e7e3d9; overflow: hidden;
+  .stage { position: relative; display: flex; flex-direction: column; height: 32vh; min-height: 240px; max-height: 340px; border-top: 1px solid #2a3140; border-bottom: 1px solid #2a3140; color: #e7e3d9; overflow: hidden;
     background: radial-gradient(120% 90% at 50% 110%, #16213a 0%, #0d1117 55%, #0a0d12 100%); box-shadow: 0 10px 40px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.04); }
   .stage::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(70% 70% at 50% 50%, #000 40%, transparent 100%); pointer-events: none; }
   .stage .labels { position: absolute; inset: 0; pointer-events: none; }
+  .stage .strip { flex: none; display: flex; align-items: center; gap: 1rem; height: 2.4rem; padding: 0 max(1rem, calc(50% - 620px + 1rem)); border-top: 1px solid rgba(255,255,255,.08); background: rgba(13,17,23,.6); font-size: .92rem; }
+  .stage .strip .kick { color: #e59a5a; font-family: "Sora", system-ui, sans-serif; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; flex: none; }
+  .stage .strip .caption { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #e7e3d9; }
+  .stage .strip .mode { flex: none; color: #8fa3b8; font-size: .78rem; }
   .stage .label { position: absolute; transform: translate(-50%, -50%); font-family: "Sora", system-ui, sans-serif; font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: #dfe4ec; background: rgba(13,17,23,.78); border: 1px solid rgba(255,255,255,.14); padding: .22rem .6rem; border-radius: 999px; opacity: 0; transition: opacity .5s; white-space: nowrap; backdrop-filter: blur(4px); }
   .stage .label.on { opacity: 1; }
   .stage .label.hot { color: #ffd9a8; border-color: rgba(229,154,90,.5); }
-  .stage .kick { position: absolute; left: max(1rem, calc(50% - 620px + 1rem)); top: .9rem; font-family: "Sora", system-ui, sans-serif; font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: #8fa3b8; }
+  .stage .draw { position: relative; flex: 1 1 auto; min-height: 0; }
   .stage canvas { display: block; width: 100%; height: 100%; }
-  .stage .caption { position: absolute; left: max(1rem, calc(50% - 620px + 1rem)); right: max(1rem, calc(50% - 620px + 1rem)); bottom: .8rem; font-size: .95rem; color: #e7e3d9; display: flex; justify-content: space-between; gap: 1rem; text-shadow: 0 1px 3px #0d1117; }
-  .stage .caption span:last-child { color: #8fa3b8; font-size: .8rem; }
-  .stage .fallback { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; padding: 1rem; color: #e7e3d9; }
+  .stage .fallback { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; padding: .5rem 1rem; color: #e7e3d9; }
   .stage.plain .fallback { display: flex; }
   .stage.plain canvas { display: none; }
   .fallback svg { width: min(100%, 720px); max-height: 100%; height: auto; }
@@ -133,12 +134,14 @@
   footer { border-top: 1px solid var(--line); color: var(--ink-2); font-size: .92rem; padding: 1.6rem 1rem 3rem; max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
   footer p { margin: .2rem 0; }
   .reveal { opacity: 1; }
+  @media (max-width: 1180px) {
+    header.top nav.wide { display: none; }
+    header.top details { display: block; }
+  }
   @media (max-width: 960px) {
     .stagewrap { position: static; }
     .stage { height: 34vh; }
     .stage .label { font-size: .7rem; }
-    header.top nav.wide { display: none; }
-    header.top details { display: block; }
     footer { grid-template-columns: 1fr; }
   }
   @media (prefers-reduced-motion: reduce) { .reveal { transition: none !important; } }
@@ -150,10 +153,10 @@
   <div class="bar">
     <a class="brand" href="#top"><span class="mark" aria-hidden="true"></span>Promoter Brain Core</a>
     <nav class="wide" aria-label="Chapters" id="nav">
-      <a href="#system">The system</a><a href="#ownership">Who owns what</a><a href="#phases">Phases</a><a href="#ladder">The data ladder</a><a href="#profiling">Profiling</a><a href="#serving">Serving</a><a href="#handoff">Hand-off</a><a href="#infra">Local infrastructure</a><a href="#install">Install &amp; run</a><a href="#glossary">Glossary</a>
+      <a href="#system">System</a><a href="#ownership">Ownership</a><a href="#phases">Phases</a><a href="#ladder">Data ladder</a><a href="#profiling">Profiling</a><a href="#serving">Serving</a><a href="#handoff">Hand-off</a><a href="#infra">Infrastructure</a><a href="#install">Install</a><a href="#glossary">Glossary</a>
     </nav>
     <details><summary>Chapters</summary><nav aria-label="Chapters (small screens)">
-      <a href="#system">The system</a><a href="#ownership">Who owns what</a><a href="#phases">Phases</a><a href="#ladder">The data ladder</a><a href="#profiling">Profiling</a><a href="#serving">Serving</a><a href="#handoff">Hand-off</a><a href="#infra">Local infrastructure</a><a href="#install">Install &amp; run</a><a href="#glossary">Glossary</a>
+      <a href="#system">System</a><a href="#ownership">Ownership</a><a href="#phases">Phases</a><a href="#ladder">Data ladder</a><a href="#profiling">Profiling</a><a href="#serving">Serving</a><a href="#handoff">Hand-off</a><a href="#infra">Infrastructure</a><a href="#install">Install</a><a href="#glossary">Glossary</a>
     </nav></details>
     <div class="tools">
       <button class="tool" id="motion" aria-pressed="false" title="Turn the moving parts off or on">Motion: on</button>
@@ -178,10 +181,10 @@
 </section>
 <div class="stagewrap">
   <div class="stage" id="stage" aria-label="A moving picture of the system: thousands of points form the packages, the stores, the phases and the hand-off as you read">
-    <canvas id="canvas"></canvas>
-    <div class="kick" id="kick">Chapter 1</div>
-    <div class="labels" id="labels"></div>
-    <div class="fallback" id="fallback">
+    <div class="draw">
+      <canvas id="canvas"></canvas>
+      <div class="labels" id="labels"></div>
+      <div class="fallback" id="fallback">
       <svg viewBox="0 0 560 240" role="img" aria-label="contracts, then data-transfer, then the profiling and serving engines; the company database read-only; audience lists out">
         <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
         <g fill="none" stroke="currentColor" stroke-width="2" font-family="system-ui" font-size="14">
@@ -194,7 +197,8 @@
         </g>
       </svg>
     </div>
-    <div class="caption"><span id="caption">Four packages, one direction of dependence.</span><span id="mode"></span></div>
+    </div>
+    <div class="strip"><span class="kick" id="kick">Chapter 1</span><span class="caption" id="caption">Four packages, one direction of dependence.</span><span class="mode" id="mode"></span></div>
   </div>
 </div>
 
@@ -307,7 +311,7 @@
   </table></div>
 </section>
 
-<section class="chapter reveal" id="install" data-scene="screen">
+<section class="chapter reveal" id="install" data-scene="screen" data-caption="One line, then a guided screen on your own branch.">
   <div class="num">CHAPTER 9</div>
   <h2>Install and run</h2>
   <p>The repository is private; a team member gives your GitHub account read access. On Ubuntu 22.04 or newer (or WSL), once: <code>sudo apt install gh</code>, then <code>gh auth login</code>. Then one line:</p>
@@ -322,7 +326,7 @@
   <p>When something goes wrong, every message ends with what to do next; the README's "Common failures" table lists them with the exact text.</p>
 </section>
 
-<section class="chapter reveal" id="glossary" data-scene="flow">
+<section class="chapter reveal" id="glossary" data-scene="flow" data-caption="Every term of art, in plain words.">
   <div class="num">CHAPTER 10</div>
   <h2>Glossary</h2>
   <dl class="glossary">
@@ -427,7 +431,7 @@
     var id = chapter.id;
     links.forEach(function (a) { a.setAttribute("aria-current", a.getAttribute("href") === "#" + id ? "true" : "false"); });
     var scene = chapter.getAttribute("data-scene") || "flow";
-    doc.getElementById("caption").textContent = captions[scene] || captions.flow;
+    doc.getElementById("caption").textContent = chapter.getAttribute("data-caption") || captions[scene] || captions.flow;
     doc.getElementById("kick").textContent = (chapter.querySelector(".num") || {}).textContent || "";
   }
 
@@ -528,14 +532,14 @@
     var shapes = { cloud: shape("cloud"), brain: shape("brain"), pipeline: shape("pipeline"), stack: shape("stack"), beam: shape("beam"), lists: shape("lists"), grid: shape("grid"), screen: shape("screen") };
     // overlay labels per shape: text, x%, y% of the stage
     var labelSets = {
-      grid: [["contracts", 32, 40], ["data-transfer", 44, 40], ["profiling", 58, 20, "hot"], ["serving", 58, 92]],
-      stack: [["staging · incoming, checked", 50, 12], ["active · the live vintage", 50, 50, "hot"], ["previous · one rollback slot", 50, 88]],
-      pipeline: [["1 · setup", 34, 84], ["2 · data", 50, 84, "hot"], ["3 · operate", 66, 84]],
-      brain: [["labelled answers, one row per website, three lenses", 50, 90, "hot"]],
-      lists: [["a repeatable audience list, best fit first", 50, 90]],
-      beam: [["your run's tables", 34, 86, "hot"], ["one write-scoped login", 50, 38], ["company database · schema profiling", 67, 86]],
-      screen: [["the guided screen", 50, 90]],
-      cloud: [["websites", 50, 90]]
+      grid: [["contracts", 32, 38], ["data-transfer", 44, 38], ["profiling", 58, 16, "hot"], ["serving", 58, 90]],
+      stack: [["staging · incoming, checked", 50, 10], ["active · the live vintage", 50, 50, "hot"], ["previous · one rollback slot", 50, 90]],
+      pipeline: [["1 · setup", 34, 88], ["2 · data", 50, 88, "hot"], ["3 · operate", 66, 88]],
+      brain: [["labelled answers, one row per website, three lenses", 50, 92, "hot"]],
+      lists: [["a repeatable audience list, best fit first", 50, 92]],
+      beam: [["your run's tables", 34, 90, "hot"], ["one write-scoped login", 50, 36], ["company database · schema profiling", 67, 90]],
+      screen: [["the guided screen", 50, 92]],
+      cloud: [["websites", 50, 92]]
     };
     var labelsBox = doc.getElementById("labels");
     function showLabels(name) {
@@ -609,7 +613,7 @@
         showLabels(name);
       }
       function resize() {
-        var w = canvas.clientWidth || canvas.parentNode.clientWidth, h = canvas.clientHeight || canvas.parentNode.clientHeight;
+        var w = canvas.parentNode.clientWidth, h = canvas.parentNode.clientHeight;
         if (!w || !h) { return; }
         renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
       }
@@ -654,7 +658,7 @@
         showLabels(name);
       }
       function resize() {
-        var w = canvas.clientWidth || canvas.parentNode.clientWidth, h = canvas.clientHeight || canvas.parentNode.clientHeight;
+        var w = canvas.parentNode.clientWidth, h = canvas.parentNode.clientHeight;
         if (!w || !h) { return; }
         canvas.width = Math.round(w * pixel); canvas.height = Math.round(h * pixel);
       }
