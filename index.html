@@ -434,13 +434,15 @@
     pipeline: "One database container, two roles, portable defaults.",
     screen: "One line, then a guided screen on your own branch."
   };
-  function announce(chapter) {  // the chapter in view: its link, the band's caption and label
-    var id = chapter.id;
-    links.forEach(function (a) { a.setAttribute("aria-current", a.getAttribute("href") === "#" + id ? "true" : "false"); });
+  function announce(chapter) {  // the chapter in view (or null for the opening): its link, the band's caption and label
+    var id = chapter ? chapter.id : "";
+    links.forEach(function (a) { a.setAttribute("aria-current", chapter && a.getAttribute("href") === "#" + id ? "true" : "false"); });
+    if (!chapter) { doc.getElementById("caption").textContent = captions.curious; doc.getElementById("kick").textContent = "The guided tour"; return; }
     var scene = chapter.getAttribute("data-scene") || "flow";
     doc.getElementById("caption").textContent = chapter.getAttribute("data-caption") || captions[scene] || captions.flow;
     doc.getElementById("kick").textContent = (chapter.querySelector(".num") || {}).textContent || "";
   }
+  announce(null);
 
   // ── renderers: WebGL with three.js when both are there, else the 2D canvas; the SVG only without JavaScript ──
   function webgl() {
@@ -450,7 +452,7 @@
     Array.prototype.forEach.call(doc.querySelectorAll(".stage"), function (s) { s.classList.add("plain"); });
     doc.getElementById("mode").textContent = reason;
     if ("IntersectionObserver" in window) {
-      chapters.forEach(function (c) { new IntersectionObserver(function (entries) { if (entries[0].isIntersecting) { announce(c); } }, { rootMargin: "-40% 0px -40% 0px" }).observe(c); });
+      chapters.forEach(function (c, i) { new IntersectionObserver(function (entries) { var e = entries[0]; if (e.isIntersecting) { announce(c); } else if (e.boundingClientRect.top > 0) { announce(i === 0 ? null : chapters[i - 1]); } }, { rootMargin: "-40% 0px -40% 0px" }).observe(c); });
     }
   }
   function start() {
@@ -707,11 +709,15 @@
     }
     var stage = hasGL ? world(doc.getElementById("canvas"), "stage") : world2d(doc.getElementById("canvas"));
     if (g && window.ScrollTrigger) { g.registerPlugin(window.ScrollTrigger); }
-    chapters.forEach(function (chapter) {
+    function opening() { announce(null); stage.morphTo("grid"); }  // above chapter 1: the hero's own state
+    chapters.forEach(function (chapter, index) {
       var name = sceneShape[chapter.getAttribute("data-scene") || "flow"] || "brain";
       function go() { announce(chapter); stage.morphTo(name); }
-      if (g && window.ScrollTrigger) { window.ScrollTrigger.create({ trigger: chapter, start: "top 60%", end: "bottom 40%", onEnter: go, onEnterBack: go }); }
-      else if ("IntersectionObserver" in window) { new IntersectionObserver(function (entries) { if (entries[0].isIntersecting) { go(); } }, { rootMargin: "-40% 0px -40% 0px" }).observe(chapter); }
+      function back() { if (index === 0) { opening(); } else { var prev = chapters[index - 1]; announce(prev); stage.morphTo(sceneShape[prev.getAttribute("data-scene") || "flow"] || "brain"); } }
+      if (g && window.ScrollTrigger) { window.ScrollTrigger.create({ trigger: chapter, start: "top 60%", end: "bottom 40%", onEnter: go, onEnterBack: go, onLeaveBack: back }); }
+      else if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entries) { var e = entries[0]; if (e.isIntersecting) { go(); } else if (e.boundingClientRect.top > 0) { back(); } }, { rootMargin: "-40% 0px -40% 0px" }).observe(chapter);
+      }
     });
     // opens on scattered websites and gathers them into the four packages
     stage.morphTo("cloud");
