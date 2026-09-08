@@ -3,23 +3,562 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The guided tour of Promoter Brain Core: what the two engines do, how the phases stay apart, how to install, and a plain-language glossary.">
 <title>Promoter Brain Core</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f6e8c'/%3E%3Crect x='6' y='11' width='8' height='8' rx='2' fill='%23fffdf8'/%3E%3Crect x='18' y='11' width='8' height='8' rx='2' fill='%23e59a5a'/%3E%3C/svg%3E">
 <style>
-  :root { color-scheme: light dark; --ink: #1d2430; --paper: #f7f5ef; --accent: #1f6f8b; }
-  @media (prefers-color-scheme: dark) { :root { --ink: #e8e4da; --paper: #14181f; --accent: #7cc4dc; } }
-  body { margin: 0; min-height: 100vh; display: grid; place-items: center; font: 18px/1.5 system-ui, sans-serif; color: var(--ink); background: var(--paper); }
-  main { max-width: 34rem; padding: 2rem; text-align: center; }
-  h1 { font-size: 2rem; letter-spacing: 0.02em; margin: 0 0 0.5rem; }
-  p { margin: 0.5rem 0; }
+  :root {
+    --ink: #1c2128; --ink-2: #4b5563; --paper: #f6f4ee; --paper-2: #ece9e0; --line: #d8d3c6;
+    --accent: #0f6e8c; --accent-2: #b25a1c; --good: #2f7a3d; --warn: #9a6b00; --bad: #a8323a;
+    --box: #fffdf8; --code: #eef2f5; --shadow: 0 1px 2px rgba(20,25,30,.08), 0 8px 24px rgba(20,25,30,.06);
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #e7e3d9; --ink-2: #a8a49a; --paper: #14171c; --paper-2: #1b1f26; --line: #2b313b;
+      --accent: #6cc3de; --accent-2: #e59a5a; --good: #7fc98c; --warn: #e0b64a; --bad: #ef8a90;
+      --box: #1a1e25; --code: #0f1217; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35); }
+  }
+  html[data-theme="light"] { --ink: #1c2128; --ink-2: #4b5563; --paper: #f6f4ee; --paper-2: #ece9e0; --line: #d8d3c6; --accent: #0f6e8c; --accent-2: #b25a1c; --good: #2f7a3d; --warn: #9a6b00; --bad: #a8323a; --box: #fffdf8; --code: #eef2f5; }
+  html[data-theme="dark"] { --ink: #e7e3d9; --ink-2: #a8a49a; --paper: #14171c; --paper-2: #1b1f26; --line: #2b313b; --accent: #6cc3de; --accent-2: #e59a5a; --good: #7fc98c; --warn: #e0b64a; --bad: #ef8a90; --box: #1a1e25; --code: #0f1217; }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
   a { color: var(--accent); }
+  code, pre, kbd { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace; font-size: .92em; }
+  code { background: var(--code); padding: .1em .35em; border-radius: 4px; }
+  pre { background: var(--code); border: 1px solid var(--line); border-radius: 8px; padding: .8rem 1rem; overflow-x: auto; margin: .6rem 0; }
+  pre code { background: none; padding: 0; }
+  h1, h2, h3 { line-height: 1.2; text-wrap: balance; margin: 0 0 .5rem; }
+  h1 { font-size: clamp(2rem, 5vw, 3.4rem); letter-spacing: -.01em; }
+  h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); }
+  h3 { font-size: 1.15rem; }
+  p { margin: .5rem 0 .9rem; max-width: 68ch; }
+  ul, ol { max-width: 70ch; padding-left: 1.3rem; }
+  li { margin: .25rem 0; }
+  .skip { position: absolute; left: -999px; top: 0; background: var(--accent); color: #fff; padding: .5rem 1rem; z-index: 50; }
+  .skip:focus { left: 1rem; top: 1rem; }
+  :focus-visible { outline: 3px solid var(--accent-2); outline-offset: 2px; }
+
+  header.top { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  header.top .bar { max-width: 1240px; margin: 0 auto; padding: .55rem 1rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  header.top .brand { font-weight: 700; letter-spacing: .02em; text-decoration: none; color: var(--ink); }
+  header.top nav { display: flex; gap: .2rem .6rem; flex-wrap: wrap; font-size: .9rem; }
+  header.top nav a { text-decoration: none; color: var(--ink-2); padding: .2rem .4rem; border-radius: 6px; }
+  header.top nav a[aria-current="true"], header.top nav a:hover { color: var(--ink); background: var(--paper-2); }
+  header.top .tools { margin-left: auto; display: flex; gap: .4rem; }
+  button.tool { font: inherit; font-size: .85rem; background: var(--box); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: .25rem .7rem; cursor: pointer; }
+  button.tool[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .hero { max-width: 1240px; margin: 0 auto; padding: 2.5rem 1rem 1.5rem; display: grid; grid-template-columns: 1.1fr 1fr; gap: 2rem; align-items: center; }
+  .hero .kicker { color: var(--accent-2); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: .8rem; }
+  .hero .lede { font-size: 1.15rem; color: var(--ink-2); }
+  .hero .cta { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1rem; }
+  .hero .cta a { text-decoration: none; padding: .55rem 1rem; border-radius: 8px; border: 1px solid var(--accent); }
+  .hero .cta a.primary { background: var(--accent); color: #fff; }
+
+  .stage { position: relative; min-height: 340px; border: 1px solid var(--line); border-radius: 14px; background: #0d1117; color: #e7e3d9; box-shadow: var(--shadow); overflow: hidden; }
+  .stage canvas { display: block; width: 100%; height: 100%; }
+  .stage .caption { position: absolute; left: .8rem; bottom: .6rem; right: .8rem; font-size: .85rem; color: #b8bcc6; display: flex; justify-content: space-between; gap: 1rem; text-shadow: 0 1px 2px #0d1117; }
+  .stage .fallback { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; padding: 1rem; color: #e7e3d9; }
+  .stage.plain .fallback { display: flex; }
+  .stage.plain canvas { display: none; }
+  .fallback svg { max-width: 100%; height: auto; }
+
+  main { max-width: 1240px; margin: 0 auto; padding: 0 1rem 4rem; }
+  .story { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 2rem; align-items: start; }
+  .rail { position: sticky; top: 4.2rem; }
+  .rail .stage { min-height: 300px; height: 62vh; max-height: 560px; }
+  section.chapter { padding: 2.2rem 0 1.4rem; border-top: 1px solid var(--line); scroll-margin-top: 4.5rem; }
+  section.chapter .num { color: var(--accent-2); font-weight: 700; font-size: .85rem; letter-spacing: .08em; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: .9rem; margin: .8rem 0; }
+  .card { background: var(--box); border: 1px solid var(--line); border-radius: 10px; padding: .9rem 1rem; }
+  .card h3 { margin-bottom: .3rem; }
+  .card p { font-size: .95rem; margin: .3rem 0; }
+  .card .tag { display: inline-block; font-size: .75rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; padding: .1rem .5rem; border-radius: 999px; background: var(--paper-2); color: var(--ink-2); margin-bottom: .3rem; }
+  .card.good { border-left: 4px solid var(--good); } .card.never { border-left: 4px solid var(--bad); } .card.warn { border-left: 4px solid var(--warn); }
+  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; margin: .6rem 0; }
+  th, td { text-align: left; padding: .5rem .7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--paper-2); }
+  tr:last-child td { border-bottom: none; }
+  .cmd { display: flex; gap: .5rem; align-items: flex-start; margin: .35rem 0; }
+  .cmd pre { flex: 1; margin: 0; }
+  .cmd button { font: inherit; font-size: .8rem; background: var(--box); border: 1px solid var(--line); border-radius: 6px; padding: .3rem .6rem; cursor: pointer; color: var(--ink); white-space: nowrap; }
+  .cmd .why { flex-basis: 100%; font-size: .9rem; color: var(--ink-2); margin: 0 0 .4rem; }
+  .cmd { flex-wrap: wrap; }
+  .toast { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: .5rem 1rem; border-radius: 8px; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 30; }
+  .toast.show { opacity: 1; }
+  abbr.term { text-decoration: underline dotted var(--accent-2); text-underline-offset: 3px; cursor: help; }
+  dl.glossary { display: grid; grid-template-columns: max-content 1fr; gap: .5rem 1.2rem; max-width: 80ch; }
+  dl.glossary dt { font-weight: 700; color: var(--accent); scroll-margin-top: 5rem; }
+  dl.glossary dd { margin: 0; }
+  .callout { border-left: 4px solid var(--accent); background: var(--box); padding: .7rem 1rem; border-radius: 0 8px 8px 0; margin: .8rem 0; max-width: 72ch; }
+  .steps { counter-reset: step; list-style: none; padding: 0; max-width: 72ch; }
+  .steps li { counter-increment: step; position: relative; padding-left: 2.4rem; margin: .6rem 0; }
+  .steps li::before { content: counter(step); position: absolute; left: 0; top: .05rem; width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: .85rem; }
+  .qa { border: 1px solid var(--line); border-radius: 10px; padding: .8rem 1rem; background: var(--box); max-width: 72ch; }
+  .qa summary { cursor: pointer; font-weight: 600; }
+  footer { border-top: 1px solid var(--line); color: var(--ink-2); font-size: .9rem; padding: 1.5rem 1rem 3rem; max-width: 1240px; margin: 0 auto; }
+  .reveal { opacity: 1; }
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; }
+    .story { grid-template-columns: 1fr; }
+    .rail { position: static; }
+    .rail .stage { height: 46vh; }
+  }
+  @media (prefers-reduced-motion: reduce) { .reveal { transition: none !important; } }
 </style>
 </head>
 <body>
-<main>
-  <h1>Promoter Brain Core</h1>
-  <p>The guided tour of the website-profiling and audience-serving engines is being written.</p>
-  <p>Websites go in, an AI asks what each one is about, the answers become labelled boxes, and audience lists come out.</p>
-  <p><a href="https://github.com/PayMeService/promoter-brain-core">The project repository</a> (private, team access).</p>
+<a class="skip" href="#story">Skip to the tour</a>
+<header class="top">
+  <div class="bar">
+    <a class="brand" href="#top">Promoter Brain Core</a>
+    <nav aria-label="Chapters" id="nav">
+      <a href="#system">The system</a><a href="#ownership">Who owns what</a><a href="#phases">Phases</a><a href="#ladder">The data ladder</a><a href="#profiling">Profiling</a><a href="#serving">Serving</a><a href="#handoff">Hand-off</a><a href="#infra">Local infrastructure</a><a href="#install">Install &amp; run</a><a href="#glossary">Glossary</a>
+    </nav>
+    <div class="tools">
+      <button class="tool" id="motion" aria-pressed="false" title="Turn the moving parts off or on">Motion: on</button>
+      <button class="tool" id="theme" aria-pressed="false" title="Switch between light and dark">Theme: auto</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div>
+    <div class="kicker">The guided tour</div>
+    <h1>Two engines, one boundary, no surprises.</h1>
+    <p class="lede">Promoter Brain Core is a small system: a profiling engine that asks an AI what websites are about, a serving engine that turns those answers and the company's buyer data into audience lists, and one shared way of moving data that keeps the company database read-only. This page explains how it is put together and why it behaves the way it does.</p>
+    <div class="cta">
+      <a class="primary" href="#system">Start with the picture</a>
+      <a href="#install">Install and run</a>
+      <a href="#glossary">Plain-language glossary</a>
+    </div>
+  </div>
+  <div class="stage" id="hero-stage" aria-label="A moving picture of the pipeline: websites flow into the profiling machine, come out labelled, and drop into the serving machine as audience lists">
+    <canvas id="hero-canvas"></canvas>
+    <div class="fallback" id="hero-fallback">
+      <svg viewBox="0 0 560 300" role="img" aria-label="Websites flow into profiling, come out as labelled boxes, then into serving, and leave as audience lists">
+        <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+        <g fill="none" stroke="currentColor" stroke-width="2" font-family="system-ui" font-size="14">
+          <rect x="20" y="120" width="110" height="60" rx="10"/><text x="75" y="155" text-anchor="middle" fill="currentColor" stroke="none">websites</text>
+          <line x1="130" y1="150" x2="190" y2="150" marker-end="url(#arr)"/>
+          <rect x="195" y="105" width="130" height="90" rx="10"/><text x="260" y="140" text-anchor="middle" fill="currentColor" stroke="none">profiling</text><text x="260" y="165" text-anchor="middle" fill="currentColor" stroke="none" font-size="12">asks an AI</text>
+          <line x1="325" y1="150" x2="385" y2="150" marker-end="url(#arr)"/>
+          <rect x="390" y="105" width="130" height="90" rx="10"/><text x="455" y="140" text-anchor="middle" fill="currentColor" stroke="none">serving</text><text x="455" y="165" text-anchor="middle" fill="currentColor" stroke="none" font-size="12">builds lists</text>
+          <line x1="455" y1="195" x2="455" y2="245" marker-end="url(#arr)"/>
+          <rect x="380" y="250" width="150" height="40" rx="8"/><text x="455" y="276" text-anchor="middle" fill="currentColor" stroke="none">audience lists</text>
+          <text x="260" y="70" text-anchor="middle" fill="currentColor" stroke="none" font-size="12">labelled boxes in between</text>
+        </g>
+      </svg>
+    </div>
+    <div class="caption"><span id="hero-caption">Four packages, one direction of dependence.</span><span id="hero-mode"></span></div>
+  </div>
+</section>
+
+<main id="story">
+<div class="story">
+<div class="text">
+
+<section class="chapter reveal" id="system" data-scene="curious">
+  <div class="num">CHAPTER 1</div>
+  <h2>The system in one picture</h2>
+  <p>Four packages in one workspace, one Python environment, one lock file. Two of them are engines a person uses; two are the ground they stand on.</p>
+  <div class="cards">
+    <div class="card"><span class="tag">ground</span><h3>contracts</h3><p>Pure shared definitions: names, shapes, compatibility rules. No database, no network, no secrets. Everything imports it; it imports nothing of ours.</p></div>
+    <div class="card"><span class="tag">ground</span><h3>data-transfer</h3><p>The one place that opens a session to the company database, read-only, and knows how to copy, check, seal and swap a snapshot. It also holds the one write-scoped publish session (chapter 7).</p></div>
+    <div class="card"><span class="tag">engine</span><h3>profiling</h3><p>Reads websites, asks an AI a fixed set of questions per lens, stores the answers in tables named after the person and their selection.</p></div>
+    <div class="card"><span class="tag">engine</span><h3>serving</h3><p>Builds audience lists for a seller from the buyer data and the profiling answers, with a browser studio to run and inspect them.</p></div>
+  </div>
+  <pre><code>contracts  ←  data-transfer  ←  { profiling, serving }</code></pre>
+  <p>The arrow is the whole architecture: dependencies point one way. The engines share contracts and transfer mechanics, never runtime modules and never a writable table. They never import each other. A check runs on every change to keep the arrow pointing that way.</p>
+  <p>Each engine is a website on your own machine: the profiling app on port 8010, the serving studio on 8020. Everything they read and write lives in one local PostgreSQL container; serving adds a small Neo4j graph for the evidence behind a list.</p>
+</section>
+
+<section class="chapter reveal" id="ownership" data-scene="stores">
+  <div class="num">CHAPTER 2</div>
+  <h2>Who owns what</h2>
+  <p>Every store has exactly one writer. That single rule is what makes rollback, promotion and the hand-off safe: nobody ever writes into a table somebody else is swapping.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Store</th><th>Sole writer</th><th>Readers</th><th>Holds</th></tr>
+    <tr><td><code>profiling_staging</code> → <code>profiling_source</code> → <code>profiling_previous</code></td><td>the profiling data ladder</td><td>the profiling worker</td><td>the website list copied from the company database: incoming, live, and the one rollback slot</td></tr>
+    <tr><td><code>profiling</code>, <code>profiling_registry</code></td><td>the profiling app's storage module</td><td>the profiling app</td><td>a run's result tables per workspace and lens; the growing registry of answer labels</td></tr>
+    <tr><td><code>serving_staging</code> → <code>serving_active</code> → <code>serving_previous</code></td><td>the serving writer plus the shared promotion primitives</td><td>the serving runtime</td><td>one coherent, gate-checked vintage of the buyer data, and the one rollback slot</td></tr>
+    <tr><td><code>serving_evidence</code>; local Neo4j</td><td>the serving evidence module; the graph module</td><td>the studio</td><td>the receipts behind each run; the published evidence graph</td></tr>
+    <tr><td><code>*_state</code></td><td>data-transfer, on behalf of each engine</td><td>the engine</td><td>transfer progress, the sealed manifest, the authoritative stamp</td></tr>
+    <tr><td>company database, schema <code>profiling</code></td><td>the hand-off's publish session only</td><td>the serving data commands, read-only</td><td>the published copy of a person's result tables</td></tr>
+  </table></div>
+  <p>Contracts own no store at all. Data-transfer writes local data only through three named modules and only over loopback. Setup writes settings files and starts containers, nothing in a database.</p>
+</section>
+
+<section class="chapter reveal" id="phases" data-scene="phases">
+  <div class="num">CHAPTER 3</div>
+  <h2>Three phases and what never happens</h2>
+  <p>Setting up, moving data, and operating are separate phases. Nothing slides from one into the next on its own; each is started by a person, on purpose.</p>
+  <div class="cards">
+    <div class="card good"><span class="tag">1 · setup</span><h3>Provisions, only</h3><p>The uv preflight, host checks, the shared environment, the two settings files, the resource profile, the containers with health checks, and a record of what is installed.</p><p><strong>Never:</strong> a copy from the company database, a job, an outside call, a refresh or rollback, an engine process, or a deletion of settings, volumes or data.</p></div>
+    <div class="card warn"><span class="tag">2 · data</span><h3>Explicit, read-only at the source</h3><p>A person types <code>data bootstrap</code>, <code>refresh</code> or <code>rollback</code>. Only these commands open a session to the company database, and that session can only read.</p><p><strong>Never:</strong> a user workload, scoring, export or evidence publication.</p></div>
+    <div class="card good"><span class="tag">3 · operate</span><h3>Local only</h3><p>The apps, the profiling jobs and the serving runs work against local stores. The studio's refresh and rollback buttons start a phase-2 operation, on purpose, with the same read-only session the command line uses.</p><p><strong>Never:</strong> company-database access outside a started data operation or the person's hand-off answer.</p></div>
+    <div class="card warn"><span class="tag">4 · hand-off</span><h3>The one write</h3><p>After a run, on the person's click, the result tables are published into one schema of the company database through a separate, write-scoped session. Chapter 7.</p></div>
+  </div>
+</section>
+
+<section class="chapter reveal" id="ladder" data-scene="stores">
+  <div class="num">CHAPTER 4</div>
+  <h2>The data ladder: how a copy becomes the live copy</h2>
+  <p>Both engines move data the same way, rung by rung. A failure on any rung leaves the live copy exactly as it was; staging is disposable.</p>
+  <ol class="steps">
+    <li><strong>Preflight.</strong> Read the company database's catalog only: are the expected tables and columns there, with the expected types; is there room on the local volume (2.2 times the source estimate). Copies nothing; every issue is one line naming the table or column.</li>
+    <li><strong>Snapshot.</strong> Open one consistent view of the source so a long copy never sees half an update. While tables stream, the session that holds the snapshot is kept alive every 30 seconds.</li>
+    <li><strong>Stage.</strong> Copy the tables into the staging schema, in chunks, with progress rows in the engine's state schema so an interrupted copy is visible.</li>
+    <li><strong>Verify.</strong> Row tallies and shape checks on the staged copy.</li>
+    <li><strong>Prepare or derive.</strong> Profiling builds its indexes and statistics. Serving runs its <em>gates</em> (tallies, a census, the profiles source) and derives the label surfaces from the person's profiling answers.</li>
+    <li><strong>Manifest.</strong> A sealed, digested receipt of what was copied and how it was derived. Nothing becomes visible before the manifest exists.</li>
+    <li><strong>Promote.</strong> One atomic swap: staging becomes active, the old active becomes previous, the old previous is dropped. A reader holding the tables makes the swap wait, then refuse, never corrupt.</li>
+    <li><strong>Stamp.</strong> The database stamp is the authority; filesystem pointers heal from it.</li>
+  </ol>
+  <div class="callout"><strong>Rollback</strong> swaps active and previous: local, atomic, no remote access. Doing it twice rolls forward again. Each engine keeps exactly one previous vintage. Two advisory locks guard all of this: an engine mutex, so two data operations cannot overlap, and a swap key held shared by readers and exclusive by promote and rollback.</div>
+</section>
+
+<section class="chapter reveal" id="profiling" data-scene="flow">
+  <div class="num">CHAPTER 5</div>
+  <h2>Inside the profiling engine</h2>
+  <p>Its source is the website list copied by the ladder. A <em>job</em> takes a selection of websites and a <em>lens</em> (purchase drivers, political, or psychological: the set of questions the AI is asked), streams the pages, asks, and writes one row per website.</p>
+  <p>Answers land in a <em>workspace</em>: the person's name plus an optional selection tag. Each workspace has its own result table per lens, <code>profiling.&lt;person&gt;_&lt;tag&gt;_&lt;lens&gt;_websites</code>, and its own registry of labels. Two jobs with the same workspace and lens append to the same table; a new tag re-profiles addresses another tag already covered. The name bound (12 characters) and the tag bound (22) are chosen so every allowed table name fits PostgreSQL's identifier limit exactly.</p>
+  <p>The worker reads the live source while holding the swap key shared, so a refresh can never swap the schema out from under a running job. The app's storage module is the only writer of the result and registry schemas.</p>
+</section>
+
+<section class="chapter reveal" id="serving" data-scene="lists">
+  <div class="num">CHAPTER 6</div>
+  <h2>Inside the serving engine</h2>
+  <p>Its vintage is the buyer data plus one <em>profiles table</em>: the person's published purchase-drivers answers. The data commands resolve which table that is, in a fixed order: an explicit pin in the settings, else the person's own published table, else a documented fallback. The choice is printed as a report-only gate and recorded in the manifest, so every vintage says where its labels came from.</p>
+  <p>From that table the engine derives two surfaces during the ladder's derive rung: a label cell per website (the analyst's flattening of the answer JSON at a fixed score and confidence bar) and a seller write-up. A run then builds an audience list for a seller against the active vintage, breaking ties with the person's tie salt so the same input always gives the same list, and can keep the evidence behind it and publish that evidence to the local graph on request.</p>
+  <p>Runs hold the runtime reader lock; a refresh or rollback that needs the exclusive swap key waits for them, then refuses rather than swapping under a run.</p>
+</section>
+
+<section class="chapter reveal" id="handoff" data-scene="handoff">
+  <div class="num">CHAPTER 7</div>
+  <h2>The hand-off loop</h2>
+  <p>The only write this system ever makes to the company database. When a profiling job finishes, its page asks: <strong>copy these result tables now, or later?</strong></p>
+  <ul>
+    <li><strong>Copy now</strong> first checks reachability within five seconds, then, in one transaction: create <code>profiling.&lt;table&gt;</code> if absent with the local table's exact columns, copy the rows into a temporary table, insert the new ones (<code>ON CONFLICT DO NOTHING</code>). A second copy inserts zero rows.</li>
+    <li><strong>Later</strong> runs the same check and records a milestone; the banner and the Hand-offs panel show it until the person acts. Nothing is scheduled, nothing retries on a timer, nothing runs at start-up or from setup.</li>
+  </ul>
+  <p>The session is a separate login that holds only <code>USAGE, CREATE</code> on that one schema. Its statement allowlist is pinned by value: it can issue nothing else, no drop, delete, update, alter or grant. The loop closes when the serving data commands resolve that published table as their profiles source (chapter 6): websites in, answers published, audience lists built from the person's own answers.</p>
+  <div class="callout">Milestones outlive the process: a copy that was mid-flight when the app stopped comes back as failed and retryable; a postponed one stays listed even after the job's page is gone, because the tables are still local.</div>
+</section>
+
+<section class="chapter reveal" id="infra" data-scene="pipeline">
+  <div class="num">CHAPTER 8</div>
+  <h2>Local infrastructure and settings</h2>
+  <p>One PostgreSQL container serves both engines with two least-privilege roles and engine-prefixed schemas, bound to the machine itself only. Serving adds Neo4j. Committed Compose files carry portable defaults; setup measures the machine (CPU, memory, disk, free ports), picks a resource profile, computes one host-wide budget for the installed scopes, and writes it to an ignored <code>infra/resources.env</code>. A busy default port gets an override there, never an edit to the committed defaults.</p>
+  <p>Each engine keeps its settings in one file only the person can read. The keys, never the values:</p>
+  <div class="table-wrap"><table>
+    <tr><th>Key</th><th>Role in the logic</th></tr>
+    <tr><td><code>PROMOTER_BRAIN_USER_NAME</code></td><td>the person: names every result table, the workspace, the branch, and the profiles table serving looks for; the same value in both files</td></tr>
+    <tr><td><code>GEMINI_API_KEY</code></td><td>the AI the profiling worker asks</td></tr>
+    <tr><td><code>*_SOURCE_PG_*</code></td><td>the read-only session the data ladder opens; optional until the first copy</td></tr>
+    <tr><td><code>PROFILING_PUBLISH_PG_*</code></td><td>the write-scoped hand-off session; optional, most people leave it for later</td></tr>
+    <tr><td><code>SERVING_PROFILING_TABLE</code>, <code>SERVING_PROFILING_SELECTION</code></td><td>the explicit pin and the selection tag in the profiles-source order</td></tr>
+    <tr><td><code>SERVING_TIE_SALT</code></td><td>the tie-breaker that makes lists repeatable</td></tr>
+    <tr><td><code>PROFILING_API_PORT</code>, <code>SERVING_STUDIO_PORT</code></td><td>where the two apps listen</td></tr>
+  </table></div>
+</section>
+
+<section class="chapter reveal" id="install" data-scene="screen">
+  <div class="num">CHAPTER 9</div>
+  <h2>Install and run</h2>
+  <p>The repository is private; a team member gives your GitHub account read access. On Ubuntu 22.04 or newer (or WSL), once: <code>sudo apt install gh</code>, then <code>gh auth login</code>. Then one line:</p>
+  <div class="cmd"><pre><code>gh repo clone PayMeService/promoter-brain-core ~/promoter-brain-core &amp;&amp; ~/promoter-brain-core/install.sh</code></pre><button data-copy>Copy</button></div>
+  <p>A guided screen asks which engine (or "not sure"), your settings in plain language, reads your GitHub account, makes a branch named after you, runs setup with a progress bar, writes your notes into the README and the rules, and offers, never forces, the data copy. Re-running it is safe.</p>
+  <h3>The commands you will use</h3>
+  <div class="cmd"><pre><code>uv run promoter-brain-profiling api serve</code></pre><button data-copy>Copy</button><p class="why">The profiling app at http://127.0.0.1:8010/ (from <code>~/promoter-brain-core</code>).</p></div>
+  <div class="cmd"><pre><code>uv run promoter-brain-serving studio serve</code></pre><button data-copy>Copy</button><p class="why">The serving studio at http://127.0.0.1:8020/.</p></div>
+  <div class="cmd"><pre><code>uv run promoter-brain-&lt;engine&gt; data preflight</code></pre><button data-copy>Copy</button><p class="why">Rung one of the ladder, alone: look, copy nothing.</p></div>
+  <div class="cmd"><pre><code>uv run promoter-brain-&lt;engine&gt; data bootstrap</code></pre><button data-copy>Copy</button><p class="why">The first copy, the whole ladder. <code>refresh</code> later, <code>rollback</code> to go back one vintage, <code>status</code> to see where you stand.</p></div>
+  <div class="cmd"><pre><code>~/promoter-brain-core/install.sh --check</code></pre><button data-copy>Copy</button><p class="why">What is installed here, and is it healthy.</p></div>
+  <p>When something goes wrong, every message ends with what to do next; the README's "Common failures" table lists them with the exact text.</p>
+</section>
+
+<section class="chapter reveal" id="glossary" data-scene="flow">
+  <div class="num">CHAPTER 10</div>
+  <h2>Glossary</h2>
+  <dl class="glossary">
+    <dt id="g-engine">engine</dt><dd>One of the two machines, profiling or serving, each with its own browser page.</dd>
+    <dt id="g-contracts">contracts</dt><dd>The shared definitions everything agrees on. Pure: no database, no network.</dd>
+    <dt id="g-transfer">data-transfer</dt><dd>The shared way of copying data: the only opener of the read-only source session, and of the write-scoped publish session.</dd>
+    <dt id="g-schema">schema</dt><dd>A named drawer inside a database. Each engine owns its own; every drawer has one writer.</dd>
+    <dt id="g-rds">the company database (RDS)</dt><dd>Where the real data lives. Read-only for this system, except the hand-off's one login.</dd>
+    <dt id="g-snapshot">snapshot</dt><dd>A frozen, consistent view of the source for the length of a copy.</dd>
+    <dt id="g-staging">staging</dt><dd>The waiting drawer where a fresh copy is checked before it goes live.</dd>
+    <dt id="g-vintage">vintage / active / previous</dt><dd>A finished, checked copy; the live one; the one before it, kept for rollback.</dd>
+    <dt id="g-manifest">manifest</dt><dd>The sealed receipt of a copy. Nothing goes live without one.</dd>
+    <dt id="g-promotion">promotion</dt><dd>The atomic swap that makes a checked copy the live one.</dd>
+    <dt id="g-gate">gate</dt><dd>A check a refresh must pass before promotion. A failed gate leaves the live copy untouched.</dd>
+    <dt id="g-lock">advisory lock</dt><dd>A "do not disturb" sign inside the database: no swap under a reader, no two data operations at once.</dd>
+    <dt id="g-lens">lens</dt><dd>The set of questions the AI is asked about a website.</dd>
+    <dt id="g-workspace">workspace</dt><dd>The person's name plus a selection tag: the label under which a run's answers are stored.</dd>
+    <dt id="g-salt">tie salt</dt><dd>A number that breaks ties so the same input gives the same list.</dd>
+    <dt id="g-handoff">hand-off</dt><dd>Publishing a run's answers back to the company database, on the person's click.</dd>
+    <dt id="g-gh">gh</dt><dd>GitHub's command-line tool: signs you in once, clones the private repository, and tells the installer which account you are.</dd>
+    <dt id="g-uv">uv</dt><dd>Installs the project's own Python and libraries into a private folder.</dd>
+  </dl>
+</section>
+
+</div>
+<aside class="rail" aria-hidden="true">
+  <div class="stage" id="rail-stage">
+    <canvas id="rail-canvas"></canvas>
+    <div class="fallback" id="rail-fallback"><svg viewBox="0 0 320 260" role="presentation"><g fill="none" stroke="currentColor" stroke-width="2" font-family="system-ui" font-size="13"><rect x="20" y="30" width="120" height="50" rx="8"/><text x="80" y="60" text-anchor="middle" fill="currentColor" stroke="none">websites</text><rect x="180" y="30" width="120" height="50" rx="8"/><text x="240" y="60" text-anchor="middle" fill="currentColor" stroke="none">profiling</text><rect x="180" y="120" width="120" height="50" rx="8"/><text x="240" y="150" text-anchor="middle" fill="currentColor" stroke="none">serving</text><rect x="20" y="120" width="120" height="50" rx="8"/><text x="80" y="150" text-anchor="middle" fill="currentColor" stroke="none">company DB</text><rect x="100" y="200" width="120" height="40" rx="8"/><text x="160" y="225" text-anchor="middle" fill="currentColor" stroke="none">audience lists</text></g></svg></div>
+    <div class="caption"><span id="rail-caption">Four packages, one direction of dependence.</span></div>
+  </div>
+</aside>
+</div>
 </main>
+
+<footer>
+  <p>Promoter Brain Core is a private project of its team; this tour names no secret, no server and no credential. The project repository is <a href="https://github.com/PayMeService/promoter-brain-core">github.com/PayMeService/promoter-brain-core</a> (team access). This page is one self-contained file, <code>index.html</code>, at the root of that repository and on <a href="https://paymeservice.github.io/promoter-brain-core-site/">its public tour site</a>.</p>
+  <p>Built with HTML, vanilla JavaScript, <a href="https://threejs.org/">three.js</a> and <a href="https://gsap.com/">GSAP</a>. If the moving picture does not show, your browser has no WebGL or the libraries could not load; every word of the tour is still here.</p>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.149.0/three.min.js" integrity="sha384-RRHfJ6w1mTlKUBMYT/hvnRiOzEB/vyRV3DrQOseb6oYfvaZSfdd0byS4bHps0k2R" crossorigin="anonymous" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous" defer></script>
+<script>
+(function () {
+  "use strict";
+  var doc = document, root = doc.documentElement;
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var motionOn = !reduced;
+
+  // ── theme and motion toggles (per-viewer conveniences; storage is optional) ──
+  function store(key, value) { try { localStorage.setItem(key, value); } catch (e) { /* private window */ } }
+  function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+  var themeBtn = doc.getElementById("theme"), motionBtn = doc.getElementById("motion");
+  function applyTheme(t) {
+    if (t === "light" || t === "dark") { root.setAttribute("data-theme", t); } else { root.removeAttribute("data-theme"); t = "auto"; }
+    themeBtn.textContent = "Theme: " + t; themeBtn.setAttribute("aria-pressed", t !== "auto");
+  }
+  applyTheme(load("pb-theme"));
+  themeBtn.addEventListener("click", function () {
+    var order = ["auto", "light", "dark"], now = root.getAttribute("data-theme") || "auto";
+    var next = order[(order.indexOf(now) + 1) % order.length]; applyTheme(next); store("pb-theme", next);
+  });
+  var savedMotion = load("pb-motion"); if (savedMotion === "off") { motionOn = false; }
+  function applyMotion() { motionBtn.textContent = "Motion: " + (motionOn ? "on" : "off"); motionBtn.setAttribute("aria-pressed", !motionOn); }
+  applyMotion();
+  motionBtn.addEventListener("click", function () { motionOn = !motionOn; applyMotion(); store("pb-motion", motionOn ? "on" : "off"); });
+
+  // ── copy buttons ──
+  var toast = doc.getElementById("toast"), toastTimer = 0;
+  function say(text) { toast.textContent = text; toast.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 1600); }
+  Array.prototype.forEach.call(doc.querySelectorAll("[data-copy]"), function (btn) {
+    btn.addEventListener("click", function () {
+      var code = btn.parentNode.querySelector("code");
+      var text = code ? code.textContent : "";
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { say("Copied"); }, function () { say("Select the text and copy it yourself"); });
+      } else { say("Select the text and copy it yourself"); }
+    });
+  });
+
+  // ── the chapter in view lights its link ──
+  var links = Array.prototype.slice.call(doc.querySelectorAll("#nav a"));
+  var chapters = Array.prototype.slice.call(doc.querySelectorAll("section.chapter"));
+  var captions = {
+    curious: "Four packages, one direction of dependence.",
+    stores: "Staging, active, previous: one writer each, the swap all or nothing.",
+    phases: "Setup, then data, then operate. Nothing slides on its own.",
+    flow: "Websites become labelled rows in a workspace.",
+    lists: "A vintage, a seller, a repeatable audience list.",
+    handoff: "One drawer, one dedicated login, one click.",
+    pipeline: "One database container, two roles, portable defaults.",
+    screen: "One line, then a guided screen on your own branch."
+  };
+  var currentScene = "curious";
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) { return; }
+        var id = entry.target.id;
+        links.forEach(function (a) { a.setAttribute("aria-current", a.getAttribute("href") === "#" + id ? "true" : "false"); });
+        currentScene = entry.target.getAttribute("data-scene") || "flow";
+        var text = captions[currentScene] || captions.flow;
+        doc.getElementById("rail-caption").textContent = text;
+        doc.getElementById("hero-caption").textContent = text;
+      });
+    }, { rootMargin: "-40% 0px -50% 0px" });
+    chapters.forEach(function (c) { io.observe(c); });
+  }
+
+  // ── libraries: ready when both loaded; otherwise the SVG stays ──
+  function webgl() {
+    try { var c = doc.createElement("canvas"); return !!(window.WebGLRenderingContext && (c.getContext("webgl") || c.getContext("experimental-webgl"))); } catch (e) { return false; }
+  }
+  function plain(reason) {
+    Array.prototype.forEach.call(doc.querySelectorAll(".stage"), function (s) { s.classList.add("plain"); });
+    doc.getElementById("hero-mode").textContent = reason;
+  }
+  function start() {
+    if (!window.THREE || !window.gsap) { plain("static picture (libraries did not load)"); return; }
+    if (!webgl()) { plain("static picture (no WebGL here)"); return; }
+    try { scenes(); } catch (e) { plain("static picture"); }
+  }
+
+  // ── the scenes: one particle world, drawn in the hero and in the rail ──
+  // Six thousand points morph between shapes as the chapters scroll by. Each shape is a
+  // set of positions and colours; GSAP tweens the mix between the current pair.
+  function scenes() {
+    var T = window.THREE, g = window.gsap;
+    var N = 4200;
+    var COLD = [0.36, 0.72, 0.86], WARM = [0.93, 0.60, 0.33], LIST = [0.52, 0.80, 0.55], RED = [0.94, 0.45, 0.48], DIM = [0.45, 0.50, 0.58];
+    function rnd(seed) { var x = Math.sin(seed * 9301 + 49297) * 233280; return x - Math.floor(x); }
+    function shape(name) {
+      var pos = new Float32Array(N * 3), col = new Float32Array(N * 3), size = new Float32Array(N);
+      for (var i = 0; i < N; i++) {
+        var u = rnd(i + 1), v = rnd(i + 7919), w = rnd(i + 104729), q = i / N;
+        var x = 0, y = 0, z = 0, c = COLD, sz = 1;
+        if (name === "cloud") {            // websites, scattered wide, unlabelled
+          x = (u - 0.5) * 14; y = (v - 0.5) * 7; z = (w - 0.5) * 6; c = COLD; sz = 0.8 + w;
+        } else if (name === "brain") {     // labelled knowledge: a sphere with a ridge, warm by lens
+          var th = u * Math.PI * 2, ph = Math.acos(2 * v - 1), r = 2.6 + Math.sin(th * 6) * Math.sin(ph * 4) * 0.25;
+          x = r * Math.sin(ph) * Math.cos(th); y = r * Math.cos(ph) * 0.85; z = r * Math.sin(ph) * Math.sin(th);
+          c = q < 0.34 ? WARM : q < 0.67 ? [0.80, 0.55, 0.85] : [0.95, 0.80, 0.40]; sz = 0.9 + w * 0.8;
+        } else if (name === "pipeline") {  // three phases, three plates, left to right
+          var k = Math.floor(u * 3); x = -4.5 + k * 4.5 + (v - 0.5) * 2.6; y = (w - 0.5) * 2.6; z = (rnd(i + 31) - 0.5) * 0.6;
+          c = k === 0 ? LIST : k === 1 ? WARM : COLD; sz = 1;
+        } else if (name === "stack") {     // staging above, active in the middle, previous below
+          var d = Math.floor(u * 3), a = v * Math.PI * 2, rr = Math.sqrt(w) * 2.4;
+          x = rr * Math.cos(a); y = 1.8 - d * 1.8; z = rr * Math.sin(a) * 0.6; c = d === 1 ? WARM : d === 0 ? COLD : DIM; sz = d === 1 ? 1.2 : 0.8;
+        } else if (name === "beam") {      // the hand-off: a local cluster, a beam, the remote database
+          if (u < 0.55) { var t2 = v * Math.PI * 2, r2 = Math.sqrt(w) * 1.8; x = -3.5 + r2 * Math.cos(t2); y = r2 * Math.sin(t2) * 0.7; z = (rnd(i + 3) - 0.5); c = WARM; sz = 0.9; }
+          else if (u < 0.8) { x = -1.8 + v * 5.4; y = Math.sin(v * 9 + i) * 0.12; z = (w - 0.5) * 0.3; c = [1, 0.85, 0.6]; sz = 0.7 + v; }
+          else { var t3 = v * Math.PI * 2; x = 4.2 + Math.cos(t3) * 1.1; y = (w - 0.5) * 2.2; z = Math.sin(t3) * 1.1; c = RED; sz = 1; }
+        } else if (name === "lists") {     // audience lists: rows of a sheet, brightest at the top
+          var row = Math.floor(u * 14), colm = v; x = -4 + colm * 8; y = 2.6 - row * 0.4; z = (w - 0.5) * 0.4;
+          c = row < 3 ? LIST : DIM; sz = row < 3 ? 1.3 : 0.7;
+        } else if (name === "grid") {      // four packages, one direction: four tiles
+          var tile = Math.floor(u * 4); x = -4.5 + tile * 3 + (v - 0.5) * 2.2; y = (w - 0.5) * 2.2 + (tile < 2 ? 0.8 : -0.8); z = 0;
+          c = tile === 0 ? DIM : tile === 1 ? COLD : tile === 2 ? WARM : LIST; sz = 0.9;
+        } else if (name === "screen") {    // a guided screen: lines of a terminal
+          var ln = Math.floor(u * 12); x = -4 + v * 8 * (0.4 + rnd(ln + 5) * 0.6); y = 2.4 - ln * 0.44; z = 0; c = ln === 3 ? WARM : COLD; sz = 0.9;
+        }
+        pos[i * 3] = x; pos[i * 3 + 1] = y; pos[i * 3 + 2] = z; col[i * 3] = c[0]; col[i * 3 + 1] = c[1]; col[i * 3 + 2] = c[2]; size[i] = sz;
+      }
+      return { pos: pos, col: col, size: size };
+    }
+    var shapes = { cloud: shape("cloud"), brain: shape("brain"), pipeline: shape("pipeline"), stack: shape("stack"), beam: shape("beam"), lists: shape("lists"), grid: shape("grid"), screen: shape("screen") };
+    var sceneShape = { curious: "grid", stores: "stack", phases: "pipeline", flow: "brain", lists: "lists", handoff: "beam", pipeline: "pipeline", screen: "screen" };
+    var vert = [
+      "attribute vec3 posB; attribute vec3 colA; attribute vec3 colB; attribute float sizeA; attribute float sizeB;",
+      "uniform float uMix; uniform float uTime; uniform float uPixel; varying vec3 vColor; varying float vFade;",
+      "void main() {",
+      "  float m = smoothstep(0.0, 1.0, uMix);",
+      "  vec3 p = mix(position, posB, m);",
+      "  float lift = sin(uTime * 0.6 + p.x * 1.3 + p.z) * 0.06;",
+      "  p.y += lift; p += normalize(p + 0.001) * sin(m * 3.14159) * 0.9;",
+      "  vColor = mix(colA, colB, m); vFade = 1.0;",
+      "  vec4 mv = modelViewMatrix * vec4(p, 1.0);",
+      "  float s = mix(sizeA, sizeB, m);",
+      "  gl_PointSize = s * uPixel * 30.0 / -mv.z;",
+      "  gl_Position = projectionMatrix * mv;",
+      "}"].join("\n");
+    var frag = [
+      "varying vec3 vColor; varying float vFade;",
+      "void main() {",
+      "  vec2 d = gl_PointCoord - 0.5; float r = dot(d, d);",
+      "  if (r > 0.25) discard;",
+      "  float a = smoothstep(0.25, 0.0, r);",
+      "  gl_FragColor = vec4(vColor * (0.45 + a * 0.9), a * 0.75);",
+      "}"].join("\n");
+    function world(canvas, mode) {
+      var renderer = new T.WebGLRenderer({ canvas: canvas, antialias: false, alpha: false, powerPreference: "low-power" });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setClearColor(0x0d1117, 1);
+      var scene = new T.Scene();
+      scene.fog = new T.Fog(0x0d1117, 12, 24);
+      var camera = new T.PerspectiveCamera(mode === "rail" ? 40 : 36, 1, 0.1, 60);
+      var dist = mode === "rail" ? 12.5 : 11;
+      var geo = new T.BufferGeometry();
+      var current = shapes.brain, next = shapes.brain;
+      geo.setAttribute("position", new T.BufferAttribute(current.pos.slice(), 3));
+      geo.setAttribute("posB", new T.BufferAttribute(next.pos.slice(), 3));
+      geo.setAttribute("colA", new T.BufferAttribute(current.col.slice(), 3));
+      geo.setAttribute("colB", new T.BufferAttribute(next.col.slice(), 3));
+      geo.setAttribute("sizeA", new T.BufferAttribute(current.size.slice(), 1));
+      geo.setAttribute("sizeB", new T.BufferAttribute(next.size.slice(), 1));
+      var material = new T.ShaderMaterial({ vertexShader: vert, fragmentShader: frag, transparent: true, depthWrite: false, blending: T.AdditiveBlending,
+        uniforms: { uMix: { value: 0 }, uTime: { value: 0 }, uPixel: { value: renderer.getPixelRatio() } } });
+      var points = new T.Points(geo, material); scene.add(points);
+      var state = { mix: 0, spin: 0, tilt: 0.25, targetSpin: 0, mouseX: 0, mouseY: 0 };
+      function setShapes(fromName, toName) {
+        var a = shapes[fromName], b = shapes[toName];
+        geo.attributes.position.array.set(a.pos); geo.attributes.position.needsUpdate = true;
+        geo.attributes.posB.array.set(b.pos); geo.attributes.posB.needsUpdate = true;
+        geo.attributes.colA.array.set(a.col); geo.attributes.colA.needsUpdate = true;
+        geo.attributes.colB.array.set(b.col); geo.attributes.colB.needsUpdate = true;
+        geo.attributes.sizeA.array.set(a.size); geo.attributes.sizeA.needsUpdate = true;
+        geo.attributes.sizeB.array.set(b.size); geo.attributes.sizeB.needsUpdate = true;
+      }
+      var shown = "brain";
+      function morphTo(name) {
+        if (name === shown) { return; }
+        var from = shown; shown = name;
+        g.killTweensOf(state);
+        setShapes(from, name); state.mix = 0;
+        g.to(state, { mix: 1, duration: reduced || !motionOn ? 0 : 1.6, ease: "power2.inOut" });
+      }
+      function resize() {
+        var w = canvas.clientWidth || canvas.parentNode.clientWidth, h = canvas.clientHeight || canvas.parentNode.clientHeight;
+        if (!w || !h) { return; }
+        renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+      }
+      resize();
+      var visible = true, last = 0;
+      function frame(now) {
+        if (!visible) { return; }
+        var dt = Math.min((now - last) / 1000, 0.05); last = now;
+        if (motionOn) { state.spin += dt * 0.12; material.uniforms.uTime.value += dt; }
+        material.uniforms.uMix.value = state.mix;
+        var spin = state.spin + state.mouseX * 0.5, tilt = state.tilt + state.mouseY * 0.25;
+        camera.position.set(Math.sin(spin) * dist * Math.cos(tilt), Math.sin(tilt) * dist, Math.cos(spin) * dist * Math.cos(tilt));
+        camera.lookAt(0, 0, 0);
+        renderer.render(scene, camera);
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(function (now) { last = now; frame(now); });
+      window.addEventListener("resize", resize);
+      canvas.parentNode.addEventListener("pointermove", function (e) {
+        if (!motionOn) { return; }
+        var r = canvas.getBoundingClientRect(); state.mouseX = ((e.clientX - r.left) / r.width - 0.5); state.mouseY = ((e.clientY - r.top) / r.height - 0.5);
+      });
+      canvas.parentNode.addEventListener("pointerleave", function () { g.to(state, { mouseX: 0, mouseY: 0, duration: 0.8 }); });
+      doc.addEventListener("visibilitychange", function () { visible = !doc.hidden; if (visible) { requestAnimationFrame(function (now) { last = now; frame(now); }); } });
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entries) { var on = entries[0].isIntersecting; if (on && !visible) { visible = true; requestAnimationFrame(function (now) { last = now; frame(now); }); } else if (!on) { visible = false; } }).observe(canvas);
+      }
+      window.addEventListener("pagehide", function () { geo.dispose(); material.dispose(); renderer.dispose(); });
+      return { morphTo: morphTo };
+    }
+    var hero = world(doc.getElementById("hero-canvas"), "hero");
+    var rail = world(doc.getElementById("rail-canvas"), "rail");
+    if (window.ScrollTrigger) { g.registerPlugin(window.ScrollTrigger); }
+    chapters.forEach(function (chapter) {
+      var name = sceneShape[chapter.getAttribute("data-scene") || "flow"] || "brain";
+      function go() { rail.morphTo(name); hero.morphTo(name); }
+      if (window.ScrollTrigger) { window.ScrollTrigger.create({ trigger: chapter, start: "top 55%", end: "bottom 45%", onEnter: go, onEnterBack: go }); }
+    });
+    // the hero opens on the scattered websites and gathers them into the brain
+    hero.morphTo("cloud"); rail.morphTo("cloud");
+    setTimeout(function () { hero.morphTo("brain"); rail.morphTo("brain"); }, reduced || !motionOn ? 0 : 900);
+    // gentle text reveal from a visible resting state
+    if (!reduced) { chapters.forEach(function (c) { g.from(c, { opacity: 0.35, y: 12, duration: 0.6, ease: "power1.out", scrollTrigger: { trigger: c, start: "top 85%", once: true } }); }); }
+  }
+  if (doc.readyState === "complete") { start(); } else { window.addEventListener("load", start); }
+})();
+</script>
 </body>
 </html>
