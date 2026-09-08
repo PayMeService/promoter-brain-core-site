@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="The guided tour of Promoter Brain Core: what the two engines do, how the phases stay apart, how to install, and a plain-language glossary.">
 <title>Promoter Brain Core</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f6e8c'/%3E%3Crect x='6' y='11' width='8' height='8' rx='2' fill='%23fffdf8'/%3E%3Crect x='18' y='11' width='8' height='8' rx='2' fill='%23e59a5a'/%3E%3C/svg%3E">
 <style>
   :root {
@@ -24,16 +27,17 @@
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-  body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 18px/1.62 "Source Sans 3", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
   a { color: var(--accent); }
-  code, pre, kbd { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace; font-size: .92em; }
+  code, pre, kbd { font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: .88em; }
   code { background: var(--code); padding: .1em .35em; border-radius: 4px; }
   pre { background: var(--code); border: 1px solid var(--line); border-radius: 8px; padding: .8rem 1rem; overflow-x: auto; margin: .6rem 0; }
   pre code { background: none; padding: 0; }
-  h1, h2, h3 { line-height: 1.2; text-wrap: balance; margin: 0 0 .5rem; }
-  h1 { font-size: clamp(2rem, 5vw, 3.4rem); letter-spacing: -.01em; }
-  h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); }
-  h3 { font-size: 1.15rem; }
+  h1, h2, h3 { font-family: "Sora", "Source Sans 3", system-ui, sans-serif; line-height: 1.15; text-wrap: balance; margin: 0 0 .5rem; letter-spacing: -.012em; }
+  h1 { font-size: clamp(2.1rem, 4.6vw, 3.5rem); font-weight: 700; }
+  h2 { font-size: clamp(1.45rem, 2.6vw, 2rem); font-weight: 600; }
+  h3 { font-size: 1.08rem; font-weight: 600; }
+  .eyebrow { font-family: "Sora", system-ui, sans-serif; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: .74rem; }
   p { margin: .5rem 0 .9rem; max-width: 68ch; }
   ul, ol { max-width: 70ch; padding-left: 1.3rem; }
   li { margin: .25rem 0; }
@@ -43,37 +47,62 @@
 
   header.top { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
   header.top .bar { max-width: 1240px; margin: 0 auto; padding: .55rem 1rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-  header.top .brand { font-weight: 700; letter-spacing: .02em; text-decoration: none; color: var(--ink); }
-  header.top nav { display: flex; gap: .2rem .6rem; flex-wrap: wrap; font-size: .9rem; }
-  header.top nav a { text-decoration: none; color: var(--ink-2); padding: .2rem .4rem; border-radius: 6px; }
-  header.top nav a[aria-current="true"], header.top nav a:hover { color: var(--ink); background: var(--paper-2); }
+  header.top .brand { display: inline-flex; align-items: center; gap: .55rem; font-family: "Sora", system-ui, sans-serif; font-weight: 700; letter-spacing: .01em; text-decoration: none; color: var(--ink); }
+  header.top .brand .mark { width: 22px; height: 22px; border-radius: 6px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); position: relative; flex: none; }
+  header.top .brand .mark::before, header.top .brand .mark::after { content: ""; position: absolute; top: 7px; width: 6px; height: 8px; border-radius: 2px; background: #fffdf8; }
+  header.top .brand .mark::before { left: 4px; } header.top .brand .mark::after { left: 12px; opacity: .75; }
+  .progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .15s linear; }
+  header.top details { display: none; }
+  header.top details summary { list-style: none; cursor: pointer; font-size: .9rem; padding: .25rem .6rem; border: 1px solid var(--line); border-radius: 999px; background: var(--box); }
+  header.top details[open] summary { background: var(--paper-2); }
+  header.top details nav { position: absolute; left: 1rem; right: 1rem; top: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: .2rem; padding: .6rem; background: var(--box); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
+  header.top nav.wide { display: flex; gap: .1rem .4rem; flex-wrap: wrap; font-size: .9rem; }
+  header.top nav a { text-decoration: none; color: var(--ink-2); padding: .22rem .5rem; border-radius: 6px; position: relative; }
+  header.top nav a[aria-current="true"] { color: var(--ink); background: var(--paper-2); box-shadow: inset 0 -2px 0 var(--accent); }
+  header.top nav a:hover { color: var(--ink); background: var(--paper-2); }
   header.top .tools { margin-left: auto; display: flex; gap: .4rem; }
   button.tool { font: inherit; font-size: .85rem; background: var(--box); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: .25rem .7rem; cursor: pointer; }
   button.tool[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-  .hero { max-width: 1240px; margin: 0 auto; padding: 2.5rem 1rem 1.5rem; display: grid; grid-template-columns: 1.1fr 1fr; gap: 2rem; align-items: center; }
+  .hero { max-width: 1240px; margin: 0 auto; padding: 2.6rem 1rem 1.2rem; }
+  .hero h1 { max-width: 22ch; }
+  .hero .lede { max-width: 66ch; }
+  .stats { display: flex; gap: .6rem; flex-wrap: wrap; margin: 1.1rem 0 .2rem; }
+  .stats span { font-family: "Sora", system-ui, sans-serif; font-size: .82rem; font-weight: 600; letter-spacing: .02em; padding: .35rem .7rem; border-radius: 999px; border: 1px solid var(--line); background: var(--box); color: var(--ink-2); }
+  .stats span b { color: var(--accent); font-weight: 700; margin-right: .25rem; }
   .hero .kicker { color: var(--accent-2); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: .8rem; }
   .hero .lede { font-size: 1.15rem; color: var(--ink-2); }
   .hero .cta { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1rem; }
-  .hero .cta a { text-decoration: none; padding: .55rem 1rem; border-radius: 8px; border: 1px solid var(--accent); }
+  .hero .cta a { text-decoration: none; padding: .6rem 1.05rem; border-radius: 9px; border: 1px solid var(--accent); font-weight: 600; transition: transform .12s ease, box-shadow .12s ease; }
+  .hero .cta a:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
   .hero .cta a.primary { background: var(--accent); color: #fff; }
 
-  .stage { position: relative; min-height: 340px; border: 1px solid var(--line); border-radius: 14px; background: #0d1117; color: #e7e3d9; box-shadow: var(--shadow); overflow: hidden; }
+  .stagewrap { position: sticky; top: 3.9rem; z-index: 5; width: 100%; }
+  .stage { position: relative; height: 46vh; min-height: 300px; max-height: 520px; border-top: 1px solid #2a3140; border-bottom: 1px solid #2a3140; color: #e7e3d9; overflow: hidden;
+    background: radial-gradient(120% 90% at 50% 110%, #16213a 0%, #0d1117 55%, #0a0d12 100%); box-shadow: 0 10px 40px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.04); }
+  .stage::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(70% 70% at 50% 50%, #000 40%, transparent 100%); pointer-events: none; }
+  .stage .labels { position: absolute; inset: 0; pointer-events: none; }
+  .stage .label { position: absolute; transform: translate(-50%, -50%); font-family: "Sora", system-ui, sans-serif; font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: #dfe4ec; background: rgba(13,17,23,.78); border: 1px solid rgba(255,255,255,.14); padding: .22rem .6rem; border-radius: 999px; opacity: 0; transition: opacity .5s; white-space: nowrap; backdrop-filter: blur(4px); }
+  .stage .label.on { opacity: 1; }
+  .stage .label.hot { color: #ffd9a8; border-color: rgba(229,154,90,.5); }
+  .stage .kick { position: absolute; left: max(1rem, calc(50% - 620px + 1rem)); top: .9rem; font-family: "Sora", system-ui, sans-serif; font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: #8fa3b8; }
   .stage canvas { display: block; width: 100%; height: 100%; }
-  .stage .caption { position: absolute; left: .8rem; bottom: .6rem; right: .8rem; font-size: .85rem; color: #b8bcc6; display: flex; justify-content: space-between; gap: 1rem; text-shadow: 0 1px 2px #0d1117; }
+  .stage .caption { position: absolute; left: max(1rem, calc(50% - 620px + 1rem)); right: max(1rem, calc(50% - 620px + 1rem)); bottom: .8rem; font-size: .95rem; color: #e7e3d9; display: flex; justify-content: space-between; gap: 1rem; text-shadow: 0 1px 3px #0d1117; }
+  .stage .caption span:last-child { color: #8fa3b8; font-size: .8rem; }
   .stage .fallback { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; padding: 1rem; color: #e7e3d9; }
   .stage.plain .fallback { display: flex; }
   .stage.plain canvas { display: none; }
   .fallback svg { max-width: 100%; height: auto; }
 
-  main { max-width: 1240px; margin: 0 auto; padding: 0 1rem 4rem; }
-  .story { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 2rem; align-items: start; }
-  .rail { position: sticky; top: 4.2rem; }
-  .rail .stage { min-height: 300px; height: 62vh; max-height: 560px; }
-  section.chapter { padding: 2.2rem 0 1.4rem; border-top: 1px solid var(--line); scroll-margin-top: 4.5rem; }
-  section.chapter .num { color: var(--accent-2); font-weight: 700; font-size: .85rem; letter-spacing: .08em; }
+  main { max-width: 1240px; margin: 0 auto; padding: 1rem 1rem 4rem; }
+  .story { display: block; }
+  section.chapter { padding: 2.6rem 0 1.6rem; border-top: 1px solid var(--line); scroll-margin-top: 4.5rem; }
+  section.chapter .num { color: var(--accent-2); font-family: "Sora", system-ui, sans-serif; font-weight: 600; font-size: .74rem; letter-spacing: .12em; }
+  .totop { position: fixed; right: 1.1rem; bottom: 1.1rem; width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--box); color: var(--ink); font-size: 1.1rem; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .2s; box-shadow: var(--shadow); z-index: 25; }
+  .totop.show { opacity: 1; pointer-events: auto; }
   .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: .9rem; margin: .8rem 0; }
-  .card { background: var(--box); border: 1px solid var(--line); border-radius: 10px; padding: .9rem 1rem; }
+  .card { background: var(--box); border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+  .card:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
   .card h3 { margin-bottom: .3rem; }
   .card p { font-size: .95rem; margin: .3rem 0; }
   .card .tag { display: inline-block; font-size: .75rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; padding: .1rem .5rem; border-radius: 999px; background: var(--paper-2); color: var(--ink-2); margin-bottom: .3rem; }
@@ -100,13 +129,16 @@
   .steps li::before { content: counter(step); position: absolute; left: 0; top: .05rem; width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: .85rem; }
   .qa { border: 1px solid var(--line); border-radius: 10px; padding: .8rem 1rem; background: var(--box); max-width: 72ch; }
   .qa summary { cursor: pointer; font-weight: 600; }
-  footer { border-top: 1px solid var(--line); color: var(--ink-2); font-size: .9rem; padding: 1.5rem 1rem 3rem; max-width: 1240px; margin: 0 auto; }
+  footer { border-top: 1px solid var(--line); color: var(--ink-2); font-size: .92rem; padding: 1.6rem 1rem 3rem; max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  footer p { margin: .2rem 0; }
   .reveal { opacity: 1; }
   @media (max-width: 960px) {
-    .hero { grid-template-columns: 1fr; }
-    .story { grid-template-columns: 1fr; }
-    .rail { position: static; }
-    .rail .stage { height: 46vh; }
+    .stagewrap { position: static; }
+    .stage { height: 42vh; }
+    .stage .label { font-size: .7rem; }
+    header.top nav.wide { display: none; }
+    header.top details { display: block; }
+    footer { grid-template-columns: 1fr; }
   }
   @media (prefers-reduced-motion: reduce) { .reveal { transition: none !important; } }
 </style>
@@ -115,48 +147,55 @@
 <a class="skip" href="#story">Skip to the tour</a>
 <header class="top">
   <div class="bar">
-    <a class="brand" href="#top">Promoter Brain Core</a>
-    <nav aria-label="Chapters" id="nav">
+    <a class="brand" href="#top"><span class="mark" aria-hidden="true"></span>Promoter Brain Core</a>
+    <nav class="wide" aria-label="Chapters" id="nav">
       <a href="#system">The system</a><a href="#ownership">Who owns what</a><a href="#phases">Phases</a><a href="#ladder">The data ladder</a><a href="#profiling">Profiling</a><a href="#serving">Serving</a><a href="#handoff">Hand-off</a><a href="#infra">Local infrastructure</a><a href="#install">Install &amp; run</a><a href="#glossary">Glossary</a>
     </nav>
+    <details><summary>Chapters</summary><nav aria-label="Chapters (small screens)">
+      <a href="#system">The system</a><a href="#ownership">Who owns what</a><a href="#phases">Phases</a><a href="#ladder">The data ladder</a><a href="#profiling">Profiling</a><a href="#serving">Serving</a><a href="#handoff">Hand-off</a><a href="#infra">Local infrastructure</a><a href="#install">Install &amp; run</a><a href="#glossary">Glossary</a>
+    </nav></details>
     <div class="tools">
       <button class="tool" id="motion" aria-pressed="false" title="Turn the moving parts off or on">Motion: on</button>
       <button class="tool" id="theme" aria-pressed="false" title="Switch between light and dark">Theme: auto</button>
     </div>
+    <div class="progress" id="progress"></div>
   </div>
 </header>
 
 <section class="hero" id="top">
   <div>
-    <div class="kicker">The guided tour</div>
+    <div class="kicker eyebrow">The guided tour</div>
     <h1>Two engines, one boundary, no surprises.</h1>
     <p class="lede">Promoter Brain Core is a small system: a profiling engine that asks an AI what websites are about, a serving engine that turns those answers and the company's buyer data into audience lists, and one shared way of moving data that keeps the company database read-only. This page explains how it is put together and why it behaves the way it does.</p>
+    <div class="stats" aria-label="At a glance"><span><b>2</b> engines</span><span><b>4</b> packages</span><span><b>1</b> read-only source session</span><span><b>1</b> write path, on a click</span><span><b>0</b> shared writable tables</span></div>
     <div class="cta">
       <a class="primary" href="#system">Start with the picture</a>
       <a href="#install">Install and run</a>
       <a href="#glossary">Plain-language glossary</a>
     </div>
   </div>
-  <div class="stage" id="hero-stage" aria-label="A moving picture of the pipeline: websites flow into the profiling machine, come out labelled, and drop into the serving machine as audience lists">
-    <canvas id="hero-canvas"></canvas>
-    <div class="fallback" id="hero-fallback">
-      <svg viewBox="0 0 560 300" role="img" aria-label="Websites flow into profiling, come out as labelled boxes, then into serving, and leave as audience lists">
+</section>
+<div class="stagewrap">
+  <div class="stage" id="stage" aria-label="A moving picture of the system: thousands of points form the packages, the stores, the phases and the hand-off as you read">
+    <canvas id="canvas"></canvas>
+    <div class="kick" id="kick">Chapter 1</div>
+    <div class="labels" id="labels"></div>
+    <div class="fallback" id="fallback">
+      <svg viewBox="0 0 560 240" role="img" aria-label="contracts, then data-transfer, then the profiling and serving engines; the company database read-only; audience lists out">
         <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
         <g fill="none" stroke="currentColor" stroke-width="2" font-family="system-ui" font-size="14">
-          <rect x="20" y="120" width="110" height="60" rx="10"/><text x="75" y="155" text-anchor="middle" fill="currentColor" stroke="none">websites</text>
-          <line x1="130" y1="150" x2="190" y2="150" marker-end="url(#arr)"/>
-          <rect x="195" y="105" width="130" height="90" rx="10"/><text x="260" y="140" text-anchor="middle" fill="currentColor" stroke="none">profiling</text><text x="260" y="165" text-anchor="middle" fill="currentColor" stroke="none" font-size="12">asks an AI</text>
-          <line x1="325" y1="150" x2="385" y2="150" marker-end="url(#arr)"/>
-          <rect x="390" y="105" width="130" height="90" rx="10"/><text x="455" y="140" text-anchor="middle" fill="currentColor" stroke="none">serving</text><text x="455" y="165" text-anchor="middle" fill="currentColor" stroke="none" font-size="12">builds lists</text>
-          <line x1="455" y1="195" x2="455" y2="245" marker-end="url(#arr)"/>
-          <rect x="380" y="250" width="150" height="40" rx="8"/><text x="455" y="276" text-anchor="middle" fill="currentColor" stroke="none">audience lists</text>
-          <text x="260" y="70" text-anchor="middle" fill="currentColor" stroke="none" font-size="12">labelled boxes in between</text>
+          <rect x="20" y="95" width="110" height="50" rx="10"/><text x="75" y="125" text-anchor="middle" fill="currentColor" stroke="none">contracts</text>
+          <line x1="130" y1="120" x2="180" y2="120" marker-end="url(#arr)"/>
+          <rect x="185" y="95" width="130" height="50" rx="10"/><text x="250" y="125" text-anchor="middle" fill="currentColor" stroke="none">data-transfer</text>
+          <line x1="315" y1="120" x2="365" y2="70" marker-end="url(#arr)"/><line x1="315" y1="120" x2="365" y2="170" marker-end="url(#arr)"/>
+          <rect x="370" y="45" width="120" height="50" rx="10"/><text x="430" y="75" text-anchor="middle" fill="currentColor" stroke="none">profiling</text>
+          <rect x="370" y="145" width="120" height="50" rx="10"/><text x="430" y="175" text-anchor="middle" fill="currentColor" stroke="none">serving</text>
         </g>
       </svg>
     </div>
-    <div class="caption"><span id="hero-caption">Four packages, one direction of dependence.</span><span id="hero-mode"></span></div>
+    <div class="caption"><span id="caption">Four packages, one direction of dependence.</span><span id="mode"></span></div>
   </div>
-</section>
+</div>
 
 <main id="story">
 <div class="story">
@@ -308,20 +347,14 @@
 </section>
 
 </div>
-<aside class="rail" aria-hidden="true">
-  <div class="stage" id="rail-stage">
-    <canvas id="rail-canvas"></canvas>
-    <div class="fallback" id="rail-fallback"><svg viewBox="0 0 320 260" role="presentation"><g fill="none" stroke="currentColor" stroke-width="2" font-family="system-ui" font-size="13"><rect x="20" y="30" width="120" height="50" rx="8"/><text x="80" y="60" text-anchor="middle" fill="currentColor" stroke="none">websites</text><rect x="180" y="30" width="120" height="50" rx="8"/><text x="240" y="60" text-anchor="middle" fill="currentColor" stroke="none">profiling</text><rect x="180" y="120" width="120" height="50" rx="8"/><text x="240" y="150" text-anchor="middle" fill="currentColor" stroke="none">serving</text><rect x="20" y="120" width="120" height="50" rx="8"/><text x="80" y="150" text-anchor="middle" fill="currentColor" stroke="none">company DB</text><rect x="100" y="200" width="120" height="40" rx="8"/><text x="160" y="225" text-anchor="middle" fill="currentColor" stroke="none">audience lists</text></g></svg></div>
-    <div class="caption"><span id="rail-caption">Four packages, one direction of dependence.</span></div>
-  </div>
-</aside>
 </div>
 </main>
 
 <footer>
-  <p>Promoter Brain Core is a private project of its team; this tour names no secret, no server and no credential. The project repository is <a href="https://github.com/PayMeService/promoter-brain-core">github.com/PayMeService/promoter-brain-core</a> (team access). This page is one self-contained file, <code>index.html</code>, at the root of that repository and on <a href="https://paymeservice.github.io/promoter-brain-core-site/">its public tour site</a>.</p>
-  <p>Built with HTML, vanilla JavaScript, <a href="https://threejs.org/">three.js</a> and <a href="https://gsap.com/">GSAP</a>. If the moving picture does not show, your browser has no WebGL or the libraries could not load; every word of the tour is still here.</p>
+  <div><p><strong>Promoter Brain Core</strong> is a private project of its team; this tour names no secret, no server and no credential. The repository is <a href="https://github.com/PayMeService/promoter-brain-core">github.com/PayMeService/promoter-brain-core</a> (team access).</p></div>
+  <div><p>One self-contained file, <code>index.html</code>, at the root of that repository and on <a href="https://paymeservice.github.io/promoter-brain-core-site/">its public tour site</a>. Built with HTML, vanilla JavaScript, <a href="https://threejs.org/">three.js</a> and <a href="https://gsap.com/">GSAP</a>. If the moving picture does not show, every word of the tour is still here.</p></div>
 </footer>
+<button class="totop" id="totop" aria-label="Back to the top">↑</button>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.149.0/three.min.js" integrity="sha384-RRHfJ6w1mTlKUBMYT/hvnRiOzEB/vyRV3DrQOseb6oYfvaZSfdd0byS4bHps0k2R" crossorigin="anonymous" defer></script>
@@ -366,7 +399,16 @@
   });
 
   // ── the chapter in view lights its link ──
-  var links = Array.prototype.slice.call(doc.querySelectorAll("#nav a"));
+  var links = Array.prototype.slice.call(doc.querySelectorAll("header.top nav a"));
+  var progress = doc.getElementById("progress"), totop = doc.getElementById("totop"), menu = doc.querySelector("header.top details");
+  function onScroll() {
+    var h = doc.documentElement, max = h.scrollHeight - h.clientHeight, y = h.scrollTop || doc.body.scrollTop;
+    progress.style.width = (max > 0 ? (y / max) * 100 : 0) + "%";
+    totop.classList.toggle("show", y > 600);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  totop.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" }); });
+  if (menu) { menu.addEventListener("click", function (e) { if (e.target.tagName === "A") { menu.removeAttribute("open"); } }); }
   var chapters = Array.prototype.slice.call(doc.querySelectorAll("section.chapter"));
   var captions = {
     curious: "Four packages, one direction of dependence.",
@@ -387,8 +429,8 @@
         links.forEach(function (a) { a.setAttribute("aria-current", a.getAttribute("href") === "#" + id ? "true" : "false"); });
         currentScene = entry.target.getAttribute("data-scene") || "flow";
         var text = captions[currentScene] || captions.flow;
-        doc.getElementById("rail-caption").textContent = text;
-        doc.getElementById("hero-caption").textContent = text;
+        doc.getElementById("caption").textContent = text;
+        doc.getElementById("kick").textContent = (entry.target.querySelector(".num") || {}).textContent || "";
       });
     }, { rootMargin: "-40% 0px -50% 0px" });
     chapters.forEach(function (c) { io.observe(c); });
@@ -400,7 +442,7 @@
   }
   function plain(reason) {
     Array.prototype.forEach.call(doc.querySelectorAll(".stage"), function (s) { s.classList.add("plain"); });
-    doc.getElementById("hero-mode").textContent = reason;
+    doc.getElementById("mode").textContent = reason;
   }
   function start() {
     if (!window.THREE || !window.gsap) { plain("static picture (libraries did not load)"); return; }
@@ -413,44 +455,85 @@
   // set of positions and colours; GSAP tweens the mix between the current pair.
   function scenes() {
     var T = window.THREE, g = window.gsap;
-    var N = 4200;
+    var N = 9000;
     var COLD = [0.36, 0.72, 0.86], WARM = [0.93, 0.60, 0.33], LIST = [0.52, 0.80, 0.55], RED = [0.94, 0.45, 0.48], DIM = [0.45, 0.50, 0.58];
     function rnd(seed) { var x = Math.sin(seed * 9301 + 49297) * 233280; return x - Math.floor(x); }
+    var PHI = Math.PI * (3 - Math.sqrt(5));
+    function tile(i, count, cx, cy, w, h, jitter) {   // an even lattice inside a rectangle
+      var cols = Math.max(2, Math.round(Math.sqrt(count * w / h))), rows = Math.max(2, Math.ceil(count / cols));
+      var c = i % cols, r = Math.floor(i / cols) % rows;
+      return [cx - w / 2 + (c + 0.5) * w / cols + (rnd(i + 17) - 0.5) * jitter, cy - h / 2 + (r + 0.5) * h / rows + (rnd(i + 29) - 0.5) * jitter];
+    }
+    function disc(i, count, cx, cy, rx, ry) {          // a sunflower spiral: even density on a disc
+      var r = Math.sqrt((i + 0.5) / count), a = i * PHI;
+      return [cx + Math.cos(a) * r * rx, cy + Math.sin(a) * r * ry];
+    }
+    function ring(i, count, cx, cy, rx, ry, thick) {
+      var r = 1 - (i % 7) * thick / 7, a = i * PHI;
+      return [cx + Math.cos(a) * r * rx, cy + Math.sin(a) * r * ry];
+    }
     function shape(name) {
       var pos = new Float32Array(N * 3), col = new Float32Array(N * 3), size = new Float32Array(N);
       for (var i = 0; i < N; i++) {
-        var u = rnd(i + 1), v = rnd(i + 7919), w = rnd(i + 104729), q = i / N;
-        var x = 0, y = 0, z = 0, c = COLD, sz = 1;
-        if (name === "cloud") {            // websites, scattered wide, unlabelled
-          x = (u - 0.5) * 14; y = (v - 0.5) * 7; z = (w - 0.5) * 6; c = COLD; sz = 0.8 + w;
-        } else if (name === "brain") {     // labelled knowledge: a sphere with a ridge, warm by lens
-          var th = u * Math.PI * 2, ph = Math.acos(2 * v - 1), r = 2.6 + Math.sin(th * 6) * Math.sin(ph * 4) * 0.25;
-          x = r * Math.sin(ph) * Math.cos(th); y = r * Math.cos(ph) * 0.85; z = r * Math.sin(ph) * Math.sin(th);
-          c = q < 0.34 ? WARM : q < 0.67 ? [0.80, 0.55, 0.85] : [0.95, 0.80, 0.40]; sz = 0.9 + w * 0.8;
-        } else if (name === "pipeline") {  // three phases, three plates, left to right
-          var k = Math.floor(u * 3); x = -4.5 + k * 4.5 + (v - 0.5) * 2.6; y = (w - 0.5) * 2.6; z = (rnd(i + 31) - 0.5) * 0.6;
-          c = k === 0 ? LIST : k === 1 ? WARM : COLD; sz = 1;
+        var u = rnd(i + 1), w = rnd(i + 104729), q = i / N;
+        var x = 0, y = 0, z = 0, c = COLD, sz = 1, pt;
+        if (name === "cloud") {            // scattered websites, deliberately loose
+          x = (u - 0.5) * 17; y = (rnd(i + 7919) - 0.5) * 5.2; z = (w - 0.5) * 6; c = COLD; sz = 0.7 + w * 0.8;
+        } else if (name === "brain") {     // a Fibonacci sphere: labelled knowledge, three lenses
+          var yy = 1 - (i / (N - 1)) * 2, rr = Math.sqrt(1 - yy * yy), th = PHI * i;
+          x = Math.cos(th) * rr * 2.9; y = yy * 2.3; z = Math.sin(th) * rr * 2.6;
+          c = q < 0.34 ? WARM : q < 0.67 ? [0.80, 0.55, 0.85] : [0.95, 0.80, 0.40]; sz = 0.85;
+        } else if (name === "grid") {      // four package tiles and the dependency trail between them
+          var k4 = i % 5, j4 = Math.floor(i / 5), per = Math.floor(N / 5);
+          if (k4 === 4) {                  // the trail: contracts → data-transfer → the two engines
+            var t = j4 / per; if (t < 0.4) { x = -4.0 + t / 0.4 * 1.9; y = 0; } else if (t < 0.7) { var t2 = (t - 0.4) / 0.3; x = -0.4 + t2 * 1.8; y = t2 * 1.3; } else { var t3 = (t - 0.7) / 0.3; x = -0.4 + t3 * 1.8; y = -t3 * 1.3; }
+            y += Math.sin(t * 40) * 0.02; z = 0; c = [1, 0.92, 0.75]; sz = 0.55;
+          } else { var TX = [-5.2, -1.7, 2.7, 2.7][k4], TY = [0, 0, 1.4, -1.4][k4]; pt = tile(j4, per, TX, TY, 2.3, 1.5, 0.05); x = pt[0]; y = pt[1]; z = (rnd(i + 11) - 0.5) * 0.25; c = k4 === 0 ? DIM : k4 === 1 ? COLD : k4 === 2 ? WARM : LIST; sz = 0.9; }
         } else if (name === "stack") {     // staging above, active in the middle, previous below
-          var d = Math.floor(u * 3), a = v * Math.PI * 2, rr = Math.sqrt(w) * 2.4;
-          x = rr * Math.cos(a); y = 1.8 - d * 1.8; z = rr * Math.sin(a) * 0.6; c = d === 1 ? WARM : d === 0 ? COLD : DIM; sz = d === 1 ? 1.2 : 0.8;
-        } else if (name === "beam") {      // the hand-off: a local cluster, a beam, the remote database
-          if (u < 0.55) { var t2 = v * Math.PI * 2, r2 = Math.sqrt(w) * 1.8; x = -3.5 + r2 * Math.cos(t2); y = r2 * Math.sin(t2) * 0.7; z = (rnd(i + 3) - 0.5); c = WARM; sz = 0.9; }
-          else if (u < 0.8) { x = -1.8 + v * 5.4; y = Math.sin(v * 9 + i) * 0.12; z = (w - 0.5) * 0.3; c = [1, 0.85, 0.6]; sz = 0.7 + v; }
-          else { var t3 = v * Math.PI * 2; x = 4.2 + Math.cos(t3) * 1.1; y = (w - 0.5) * 2.2; z = Math.sin(t3) * 1.1; c = RED; sz = 1; }
-        } else if (name === "lists") {     // audience lists: rows of a sheet, brightest at the top
-          var row = Math.floor(u * 14), colm = v; x = -4 + colm * 8; y = 2.6 - row * 0.4; z = (w - 0.5) * 0.4;
-          c = row < 3 ? LIST : DIM; sz = row < 3 ? 1.3 : 0.7;
-        } else if (name === "grid") {      // four packages, one direction: four tiles
-          var tile = Math.floor(u * 4); x = -4.5 + tile * 3 + (v - 0.5) * 2.2; y = (w - 0.5) * 2.2 + (tile < 2 ? 0.8 : -0.8); z = 0;
-          c = tile === 0 ? DIM : tile === 1 ? COLD : tile === 2 ? WARM : LIST; sz = 0.9;
-        } else if (name === "screen") {    // a guided screen: lines of a terminal
-          var ln = Math.floor(u * 12); x = -4 + v * 8 * (0.4 + rnd(ln + 5) * 0.6); y = 2.4 - ln * 0.44; z = 0; c = ln === 3 ? WARM : COLD; sz = 0.9;
+          var d = i % 3, j3 = Math.floor(i / 3), per3 = Math.floor(N / 3);
+          pt = disc(j3, per3, 0, 0, 3.4, 1.15); x = pt[0]; y = 1.75 - d * 1.75 + pt[1] * 0.3; z = pt[1] * 1.6;
+          c = d === 1 ? WARM : d === 0 ? COLD : DIM; sz = d === 1 ? 1.15 : 0.8;
+        } else if (name === "pipeline") {  // three phase tiles with two arrows
+          var k3 = i % 4, j5 = Math.floor(i / 4), per4 = Math.floor(N / 4);
+          if (k3 === 3) { var tt = j5 / per4, seg = tt < 0.5 ? 0 : 1, tl = (tt - seg * 0.5) / 0.5; x = -3.05 + seg * 4.4 + tl * 1.7; y = Math.abs(tl - 0.85) < 0.15 ? (rnd(i + 3) - 0.5) * 0.5 * (1 - (tl - 0.85) / 0.15) : 0; z = 0; c = [1, 0.92, 0.75]; sz = 0.55; }
+          else { pt = tile(j5, per4, -4.4 + k3 * 4.4, 0, 2.6, 2.2, 0.05); x = pt[0]; y = pt[1]; z = (rnd(i + 31) - 0.5) * 0.25; c = k3 === 0 ? LIST : k3 === 1 ? WARM : COLD; sz = 0.95; }
+        } else if (name === "beam") {      // the hand-off: the run's tables, one beam, the company database's one schema
+          var k2 = i % 4, j2 = Math.floor(i / 4), per2 = Math.floor(N / 4);
+          if (k2 < 2) { pt = disc(j2 * 2 + k2, per2 * 2, -4.3, 0, 1.9, 1.5); x = pt[0]; y = pt[1]; z = (rnd(i + 3) - 0.5) * 0.4; c = WARM; sz = 0.85; }
+          else if (k2 === 2) { var tb = j2 / per2; x = -2.3 + tb * 6.4; y = (rnd(i + 5) - 0.5) * 0.12; z = (rnd(i + 9) - 0.5) * 0.12; c = [1, 0.9, 0.7]; sz = 0.5 + tb * 0.5; }
+          else { pt = ring(j2, per2, 4.7, 0, 1.25, 1.25, 0.5); x = pt[0]; y = pt[1]; z = (rnd(i + 13) - 0.5) * 0.3; c = RED; sz = 0.9; }
+        } else if (name === "lists") {     // an audience list: dense rows, the top three lit, a rank column
+          var rows = 11, colsL = 70, r = Math.floor(i / colsL) % rows, cc = i % colsL;
+          if (cc < 3) { x = -5.6 + cc * 0.22; y = 2.2 - r * 0.44; z = 0; c = r < 3 ? WARM : DIM; sz = 1.2; }
+          else { x = -4.6 + (cc - 3) / (colsL - 4) * 10.2; y = 2.2 - r * 0.44 + (rnd(i + 21) - 0.5) * 0.03; z = 0; c = r < 3 ? LIST : DIM; sz = r < 3 ? 1.1 : 0.7; }
+        } else if (name === "screen") {    // the guided screen: lines of a terminal, one highlighted
+          var ln = i % 11, jl = Math.floor(i / 11), perl = Math.floor(N / 11), len = 0.35 + rnd(ln + 5) * 0.65;
+          x = -5.5 + (jl / perl) * 11 * len; y = 2.2 - ln * 0.44; z = 0; c = ln === 3 ? WARM : COLD; sz = 0.85;
         }
         pos[i * 3] = x; pos[i * 3 + 1] = y; pos[i * 3 + 2] = z; col[i * 3] = c[0]; col[i * 3 + 1] = c[1]; col[i * 3 + 2] = c[2]; size[i] = sz;
       }
       return { pos: pos, col: col, size: size };
     }
     var shapes = { cloud: shape("cloud"), brain: shape("brain"), pipeline: shape("pipeline"), stack: shape("stack"), beam: shape("beam"), lists: shape("lists"), grid: shape("grid"), screen: shape("screen") };
+    // overlay labels per shape: text, x%, y% of the stage
+    var labelSets = {
+      grid: [["contracts", 33, 24], ["data-transfer", 45, 24], ["profiling", 60, 12, "hot"], ["serving", 60, 90]],
+      stack: [["staging · incoming, checked", 50, 12], ["active · the live vintage", 50, 50, "hot"], ["previous · one rollback slot", 50, 88]],
+      pipeline: [["1 · setup", 34, 84], ["2 · data", 50, 84, "hot"], ["3 · operate", 66, 84]],
+      brain: [["labelled answers, one row per website, three lenses", 50, 90, "hot"]],
+      lists: [["a repeatable audience list, best fit first", 50, 90]],
+      beam: [["your run's tables", 34, 86, "hot"], ["one write-scoped login", 50, 38], ["company database · schema profiling", 67, 86]],
+      screen: [["the guided screen", 50, 90]],
+      cloud: [["websites", 50, 90]]
+    };
+    var labelsBox = doc.getElementById("labels");
+    function showLabels(name) {
+      labelsBox.innerHTML = "";
+      (labelSets[name] || []).forEach(function (l) {
+        var el = doc.createElement("span"); el.className = "label" + (l[3] ? " " + l[3] : ""); el.textContent = l[0]; el.style.left = l[1] + "%"; el.style.top = l[2] + "%"; labelsBox.appendChild(el);
+        setTimeout(function () { el.classList.add("on"); }, reduced || !motionOn ? 0 : 700);
+      });
+    }
     var sceneShape = { curious: "grid", stores: "stack", phases: "pipeline", flow: "brain", lists: "lists", handoff: "beam", pipeline: "pipeline", screen: "screen" };
     var vert = [
       "attribute vec3 posB; attribute vec3 colA; attribute vec3 colB; attribute float sizeA; attribute float sizeB;",
@@ -458,12 +541,12 @@
       "void main() {",
       "  float m = smoothstep(0.0, 1.0, uMix);",
       "  vec3 p = mix(position, posB, m);",
-      "  float lift = sin(uTime * 0.6 + p.x * 1.3 + p.z) * 0.06;",
+      "  float lift = sin(uTime * 0.6 + p.x * 1.3 + p.z) * 0.025;",
       "  p.y += lift; p += normalize(p + 0.001) * sin(m * 3.14159) * 0.9;",
       "  vColor = mix(colA, colB, m); vFade = 1.0;",
       "  vec4 mv = modelViewMatrix * vec4(p, 1.0);",
       "  float s = mix(sizeA, sizeB, m);",
-      "  gl_PointSize = s * uPixel * 30.0 / -mv.z;",
+      "  gl_PointSize = s * uPixel * 18.0 / -mv.z;",
       "  gl_Position = projectionMatrix * mv;",
       "}"].join("\n");
     var frag = [
@@ -472,16 +555,15 @@
       "  vec2 d = gl_PointCoord - 0.5; float r = dot(d, d);",
       "  if (r > 0.25) discard;",
       "  float a = smoothstep(0.25, 0.0, r);",
-      "  gl_FragColor = vec4(vColor * (0.45 + a * 0.9), a * 0.75);",
+      "  gl_FragColor = vec4(vColor * (0.55 + a * 0.9), a * 0.9);",
       "}"].join("\n");
     function world(canvas, mode) {
-      var renderer = new T.WebGLRenderer({ canvas: canvas, antialias: false, alpha: false, powerPreference: "low-power" });
+      var renderer = new T.WebGLRenderer({ canvas: canvas, antialias: false, alpha: true, powerPreference: "low-power" });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      renderer.setClearColor(0x0d1117, 1);
+      renderer.setClearColor(0x000000, 0);
       var scene = new T.Scene();
-      scene.fog = new T.Fog(0x0d1117, 12, 24);
-      var camera = new T.PerspectiveCamera(mode === "rail" ? 40 : 36, 1, 0.1, 60);
-      var dist = mode === "rail" ? 12.5 : 11;
+      var camera = new T.PerspectiveCamera(30, 1, 0.1, 60);
+      var dist = 13.2;
       var geo = new T.BufferGeometry();
       var current = shapes.brain, next = shapes.brain;
       geo.setAttribute("position", new T.BufferAttribute(current.pos.slice(), 3));
@@ -493,7 +575,10 @@
       var material = new T.ShaderMaterial({ vertexShader: vert, fragmentShader: frag, transparent: true, depthWrite: false, blending: T.AdditiveBlending,
         uniforms: { uMix: { value: 0 }, uTime: { value: 0 }, uPixel: { value: renderer.getPixelRatio() } } });
       var points = new T.Points(geo, material); scene.add(points);
-      var state = { mix: 0, spin: 0, tilt: 0.25, targetSpin: 0, mouseX: 0, mouseY: 0 };
+      var glowMat = material.clone(); glowMat.uniforms = { uMix: material.uniforms.uMix, uTime: material.uniforms.uTime, uPixel: { value: material.uniforms.uPixel.value * 3.4 } };
+      glowMat.fragmentShader = frag.replace("a * 0.9)", "a * 0.07)");
+      var glow = new T.Points(geo, glowMat); scene.add(glow);
+      var state = { mix: 0, spin: 0, tilt: 0.16, mouseX: 0, mouseY: 0 };
       function setShapes(fromName, toName) {
         var a = shapes[fromName], b = shapes[toName];
         geo.attributes.position.array.set(a.pos); geo.attributes.position.needsUpdate = true;
@@ -503,13 +588,14 @@
         geo.attributes.sizeA.array.set(a.size); geo.attributes.sizeA.needsUpdate = true;
         geo.attributes.sizeB.array.set(b.size); geo.attributes.sizeB.needsUpdate = true;
       }
-      var shown = "brain";
+      var shown = "";
       function morphTo(name) {
         if (name === shown) { return; }
-        var from = shown; shown = name;
+        var from = shown || name; shown = name;
         g.killTweensOf(state);
         setShapes(from, name); state.mix = 0;
         g.to(state, { mix: 1, duration: reduced || !motionOn ? 0 : 1.6, ease: "power2.inOut" });
+        showLabels(name);
       }
       function resize() {
         var w = canvas.clientWidth || canvas.parentNode.clientWidth, h = canvas.clientHeight || canvas.parentNode.clientHeight;
@@ -521,9 +607,10 @@
       function frame(now) {
         if (!visible) { return; }
         var dt = Math.min((now - last) / 1000, 0.05); last = now;
-        if (motionOn) { state.spin += dt * 0.12; material.uniforms.uTime.value += dt; }
+        if (motionOn) { state.spin += dt; material.uniforms.uTime.value += dt; }
         material.uniforms.uMix.value = state.mix;
-        var spin = state.spin + state.mouseX * 0.5, tilt = state.tilt + state.mouseY * 0.25;
+        // a gentle sway, never a full turn: the layouts stay readable
+        var spin = Math.sin(state.spin * 0.22) * 0.16 + state.mouseX * 0.25, tilt = state.tilt + state.mouseY * 0.15;
         camera.position.set(Math.sin(spin) * dist * Math.cos(tilt), Math.sin(tilt) * dist, Math.cos(spin) * dist * Math.cos(tilt));
         camera.lookAt(0, 0, 0);
         renderer.render(scene, camera);
@@ -540,20 +627,19 @@
       if ("IntersectionObserver" in window) {
         new IntersectionObserver(function (entries) { var on = entries[0].isIntersecting; if (on && !visible) { visible = true; requestAnimationFrame(function (now) { last = now; frame(now); }); } else if (!on) { visible = false; } }).observe(canvas);
       }
-      window.addEventListener("pagehide", function () { geo.dispose(); material.dispose(); renderer.dispose(); });
+      window.addEventListener("pagehide", function () { geo.dispose(); material.dispose(); glowMat.dispose(); renderer.dispose(); });
       return { morphTo: morphTo };
     }
-    var hero = world(doc.getElementById("hero-canvas"), "hero");
-    var rail = world(doc.getElementById("rail-canvas"), "rail");
+    var stage = world(doc.getElementById("canvas"), "stage");
     if (window.ScrollTrigger) { g.registerPlugin(window.ScrollTrigger); }
     chapters.forEach(function (chapter) {
       var name = sceneShape[chapter.getAttribute("data-scene") || "flow"] || "brain";
-      function go() { rail.morphTo(name); hero.morphTo(name); }
-      if (window.ScrollTrigger) { window.ScrollTrigger.create({ trigger: chapter, start: "top 55%", end: "bottom 45%", onEnter: go, onEnterBack: go }); }
+      function go() { stage.morphTo(name); }
+      if (window.ScrollTrigger) { window.ScrollTrigger.create({ trigger: chapter, start: "top 60%", end: "bottom 40%", onEnter: go, onEnterBack: go }); }
     });
-    // the hero opens on the scattered websites and gathers them into the brain
-    hero.morphTo("cloud"); rail.morphTo("cloud");
-    setTimeout(function () { hero.morphTo("brain"); rail.morphTo("brain"); }, reduced || !motionOn ? 0 : 900);
+    // opens on scattered websites and gathers them into the four packages
+    stage.morphTo("cloud");
+    setTimeout(function () { stage.morphTo("grid"); }, reduced || !motionOn ? 0 : 900);
     // gentle text reveal from a visible resting state
     if (!reduced) { chapters.forEach(function (c) { g.from(c, { opacity: 0.35, y: 12, duration: 0.6, ease: "power1.out", scrollTrigger: { trigger: c, start: "top 85%", once: true } }); }); }
   }
