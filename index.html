@@ -92,7 +92,7 @@
   .stage .fallback { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; padding: 1rem; color: #e7e3d9; }
   .stage.plain .fallback { display: flex; }
   .stage.plain canvas { display: none; }
-  .fallback svg { max-width: 100%; height: auto; }
+  .fallback svg { width: min(100%, 720px); max-height: 100%; height: auto; }
 
   main { max-width: 1240px; margin: 0 auto; padding: 1rem 1rem 4rem; }
   .story { display: block; }
@@ -445,8 +445,6 @@
     doc.getElementById("mode").textContent = reason;
   }
   function start() {
-    if (!window.THREE || !window.gsap) { plain("static picture (libraries did not load)"); return; }
-    if (!webgl()) { plain("static picture (no WebGL here)"); return; }
     try { scenes(); } catch (e) { plain("static picture"); }
   }
 
@@ -455,6 +453,21 @@
   // set of positions and colours; GSAP tweens the mix between the current pair.
   function scenes() {
     var T = window.THREE, g = window.gsap;
+    var hasGL = !!T && webgl() && !/[?&]render=2d/.test(location.search);  // ?render=2d shows the canvas-2D path on purpose
+    doc.getElementById("mode").textContent = hasGL ? "" : "drawn without WebGL";
+    // a small tween of one number, used when GSAP is not there
+    var tweens = [];
+    function tween(obj, key, to, seconds) {
+      tweens = tweens.filter(function (t) { return t.obj !== obj || t.key !== key; });
+      if (seconds <= 0) { obj[key] = to; return; }
+      tweens.push({ obj: obj, key: key, from: obj[key], to: to, t0: performance.now(), d: seconds * 1000 });
+    }
+    function stepTweens(now) {
+      tweens = tweens.filter(function (t) {
+        var k = Math.min(1, (now - t.t0) / t.d), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+        t.obj[t.key] = t.from + (t.to - t.from) * e; return k < 1;
+      });
+    }
     var N = 9000;
     var COLD = [0.36, 0.72, 0.86], WARM = [0.93, 0.60, 0.33], LIST = [0.52, 0.80, 0.55], RED = [0.94, 0.45, 0.48], DIM = [0.45, 0.50, 0.58];
     function rnd(seed) { var x = Math.sin(seed * 9301 + 49297) * 233280; return x - Math.floor(x); }
@@ -517,7 +530,7 @@
     var shapes = { cloud: shape("cloud"), brain: shape("brain"), pipeline: shape("pipeline"), stack: shape("stack"), beam: shape("beam"), lists: shape("lists"), grid: shape("grid"), screen: shape("screen") };
     // overlay labels per shape: text, x%, y% of the stage
     var labelSets = {
-      grid: [["contracts", 33, 24], ["data-transfer", 45, 24], ["profiling", 60, 12, "hot"], ["serving", 60, 90]],
+      grid: [["contracts", 32, 40], ["data-transfer", 44, 40], ["profiling", 58, 20, "hot"], ["serving", 58, 92]],
       stack: [["staging · incoming, checked", 50, 12], ["active · the live vintage", 50, 50, "hot"], ["previous · one rollback slot", 50, 88]],
       pipeline: [["1 · setup", 34, 84], ["2 · data", 50, 84, "hot"], ["3 · operate", 66, 84]],
       brain: [["labelled answers, one row per website, three lenses", 50, 90, "hot"]],
@@ -592,9 +605,9 @@
       function morphTo(name) {
         if (name === shown) { return; }
         var from = shown || name; shown = name;
-        g.killTweensOf(state);
+        if (g) { g.killTweensOf(state); }
         setShapes(from, name); state.mix = 0;
-        g.to(state, { mix: 1, duration: reduced || !motionOn ? 0 : 1.6, ease: "power2.inOut" });
+        if (g) { g.to(state, { mix: 1, duration: reduced || !motionOn ? 0 : 1.6, ease: "power2.inOut" }); } else { tween(state, "mix", 1, reduced || !motionOn ? 0 : 1.6); }
         showLabels(name);
       }
       function resize() {
@@ -606,7 +619,7 @@
       var visible = true, last = 0;
       function frame(now) {
         if (!visible) { return; }
-        var dt = Math.min((now - last) / 1000, 0.05); last = now;
+        var dt = Math.min((now - last) / 1000, 0.05); last = now; stepTweens(now);
         if (motionOn) { state.spin += dt; material.uniforms.uTime.value += dt; }
         material.uniforms.uMix.value = state.mix;
         // a gentle sway, never a full turn: the layouts stay readable
@@ -622,7 +635,7 @@
         if (!motionOn) { return; }
         var r = canvas.getBoundingClientRect(); state.mouseX = ((e.clientX - r.left) / r.width - 0.5); state.mouseY = ((e.clientY - r.top) / r.height - 0.5);
       });
-      canvas.parentNode.addEventListener("pointerleave", function () { g.to(state, { mouseX: 0, mouseY: 0, duration: 0.8 }); });
+      canvas.parentNode.addEventListener("pointerleave", function () { tween(state, "mouseX", 0, 0.8); tween(state, "mouseY", 0, 0.8); });
       doc.addEventListener("visibilitychange", function () { visible = !doc.hidden; if (visible) { requestAnimationFrame(function (now) { last = now; frame(now); }); } });
       if ("IntersectionObserver" in window) {
         new IntersectionObserver(function (entries) { var on = entries[0].isIntersecting; if (on && !visible) { visible = true; requestAnimationFrame(function (now) { last = now; frame(now); }); } else if (!on) { visible = false; } }).observe(canvas);
@@ -630,18 +643,72 @@
       window.addEventListener("pagehide", function () { geo.dispose(); material.dispose(); glowMat.dispose(); renderer.dispose(); });
       return { morphTo: morphTo };
     }
-    var stage = world(doc.getElementById("canvas"), "stage");
-    if (window.ScrollTrigger) { g.registerPlugin(window.ScrollTrigger); }
+    function world2d(canvas) {
+      var ctx = canvas.getContext("2d");
+      var cur = shapes.grid, nxt = shapes.grid, shown = "";
+      var state = { mix: 0, spin: 0, tilt: 0.16, mouseX: 0, mouseY: 0, time: 0 };
+      var dist = 13.2, fov = 30 * Math.PI / 180, pixel = Math.min(window.devicePixelRatio || 1, 2);
+      var buf = new Float32Array(N * 3);
+      function morphTo(name) {
+        if (name === shown) { return; }
+        cur = shapes[shown || name]; nxt = shapes[name]; shown = name; state.mix = 0;
+        tween(state, "mix", 1, reduced || !motionOn ? 0 : 1.6);
+        showLabels(name);
+      }
+      function resize() {
+        var w = canvas.clientWidth || canvas.parentNode.clientWidth, h = canvas.clientHeight || canvas.parentNode.clientHeight;
+        if (!w || !h) { return; }
+        canvas.width = Math.round(w * pixel); canvas.height = Math.round(h * pixel);
+      }
+      resize();
+      var visible = true, last = 0;
+      function frame(now) {
+        if (!visible) { return; }
+        var dt = Math.min((now - last) / 1000, 0.05); last = now; stepTweens(now);
+        if (motionOn) { state.spin += dt; state.time += dt; }
+        var m = state.mix, e = m < 0.5 ? 2 * m * m : 1 - Math.pow(-2 * m + 2, 2) / 2;
+        var spin = Math.sin(state.spin * 0.22) * 0.16 + state.mouseX * 0.25, tilt = state.tilt + state.mouseY * 0.15;
+        var cs = Math.cos(spin), sn = Math.sin(spin), ct = Math.cos(tilt), st = Math.sin(tilt);
+        var W = canvas.width, H = canvas.height, f = (H / 2) / Math.tan(fov / 2);
+        ctx.clearRect(0, 0, W, H);
+        ctx.globalCompositeOperation = "lighter";
+        var lift = Math.sin(e * Math.PI) * 0.9;
+        for (var i = 0; i < N; i++) {
+          var ax = cur.pos[i * 3], ay = cur.pos[i * 3 + 1], az = cur.pos[i * 3 + 2];
+          var x = ax + (nxt.pos[i * 3] - ax) * e, y = ay + (nxt.pos[i * 3 + 1] - ay) * e, z = az + (nxt.pos[i * 3 + 2] - az) * e;
+          var len = Math.sqrt(x * x + y * y + z * z) + 0.001; x += x / len * lift; y += y / len * lift + Math.sin(state.time * 0.6 + x * 1.3 + z) * 0.025; z += z / len * lift;
+          // rotate around y (spin), then x (tilt), then the camera at dist
+          var rx = x * cs - z * sn, rz = x * sn + z * cs; var ry = y * ct - rz * st; rz = y * st + rz * ct; rz = dist - rz;
+          if (rz < 0.5) { continue; }
+          var sx = W / 2 + rx * f / rz, sy = H / 2 - ry * f / rz;
+          var r0 = cur.col[i * 3] + (nxt.col[i * 3] - cur.col[i * 3]) * e, g0 = cur.col[i * 3 + 1] + (nxt.col[i * 3 + 1] - cur.col[i * 3 + 1]) * e, b0 = cur.col[i * 3 + 2] + (nxt.col[i * 3 + 2] - cur.col[i * 3 + 2]) * e;
+          var sz = (cur.size[i] + (nxt.size[i] - cur.size[i]) * e) * pixel * 18 / rz;
+          ctx.fillStyle = "rgba(" + ((r0 * 255) | 0) + "," + ((g0 * 255) | 0) + "," + ((b0 * 255) | 0) + ",0.85)";
+          ctx.fillRect(sx - sz / 2, sy - sz / 2, sz, sz);
+        }
+        ctx.globalCompositeOperation = "source-over";
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(function (now) { last = now; frame(now); });
+      window.addEventListener("resize", resize);
+      canvas.parentNode.addEventListener("pointermove", function (ev) { if (!motionOn) { return; } var r = canvas.getBoundingClientRect(); state.mouseX = (ev.clientX - r.left) / r.width - 0.5; state.mouseY = (ev.clientY - r.top) / r.height - 0.5; });
+      canvas.parentNode.addEventListener("pointerleave", function () { tween(state, "mouseX", 0, 0.8); tween(state, "mouseY", 0, 0.8); });
+      doc.addEventListener("visibilitychange", function () { visible = !doc.hidden; if (visible) { requestAnimationFrame(function (now) { last = now; frame(now); }); } });
+      return { morphTo: morphTo };
+    }
+    var stage = hasGL ? world(doc.getElementById("canvas"), "stage") : world2d(doc.getElementById("canvas"));
+    if (g && window.ScrollTrigger) { g.registerPlugin(window.ScrollTrigger); }
     chapters.forEach(function (chapter) {
       var name = sceneShape[chapter.getAttribute("data-scene") || "flow"] || "brain";
       function go() { stage.morphTo(name); }
-      if (window.ScrollTrigger) { window.ScrollTrigger.create({ trigger: chapter, start: "top 60%", end: "bottom 40%", onEnter: go, onEnterBack: go }); }
+      if (g && window.ScrollTrigger) { window.ScrollTrigger.create({ trigger: chapter, start: "top 60%", end: "bottom 40%", onEnter: go, onEnterBack: go }); }
+      else if ("IntersectionObserver" in window) { new IntersectionObserver(function (entries) { if (entries[0].isIntersecting) { go(); } }, { rootMargin: "-40% 0px -40% 0px" }).observe(chapter); }
     });
     // opens on scattered websites and gathers them into the four packages
     stage.morphTo("cloud");
     setTimeout(function () { stage.morphTo("grid"); }, reduced || !motionOn ? 0 : 900);
     // gentle text reveal from a visible resting state
-    if (!reduced) { chapters.forEach(function (c) { g.from(c, { opacity: 0.35, y: 12, duration: 0.6, ease: "power1.out", scrollTrigger: { trigger: c, start: "top 85%", once: true } }); }); }
+    if (!reduced && g && window.ScrollTrigger) { chapters.forEach(function (c) { g.from(c, { opacity: 0.35, y: 12, duration: 0.6, ease: "power1.out", scrollTrigger: { trigger: c, start: "top 85%", once: true } }); }); }
   }
   if (doc.readyState === "complete") { start(); } else { window.addEventListener("load", start); }
 })();
