@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -92,8 +92,8 @@
   .stage .draw { position: relative; flex: 1 1 auto; min-height: 0; }
   .stage canvas { display: block; width: 100%; height: 100%; }
   .stage .fallback { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; padding: .5rem 1rem; color: #e7e3d9; }
-  .stage.plain .fallback { display: flex; }
-  .stage.plain canvas { display: none; }
+  .stage.plain .fallback, html.no-js .stage .fallback { display: flex; }
+  .stage.plain canvas, html.no-js .stage canvas { display: none; }
   .fallback svg { width: min(100%, 720px); max-height: 100%; height: auto; }
 
   main { max-width: 1240px; margin: 0 auto; padding: 1rem 1rem 4rem; }
@@ -121,7 +121,6 @@
   .cmd { flex-wrap: wrap; }
   .toast { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: .5rem 1rem; border-radius: 8px; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 30; }
   .toast.show { opacity: 1; }
-  abbr.term { text-decoration: underline dotted var(--accent-2); text-underline-offset: 3px; cursor: help; }
   dl.glossary { display: grid; grid-template-columns: max-content 1fr; gap: .5rem 1.2rem; max-width: 80ch; }
   dl.glossary dt { font-weight: 700; color: var(--accent); scroll-margin-top: 5rem; }
   dl.glossary dd { margin: 0; }
@@ -144,6 +143,13 @@
     .stage .label { font-size: .7rem; }
     footer { grid-template-columns: 1fr; }
   }
+  @media (max-width: 640px) {
+    header.top .bar { flex-wrap: wrap; gap: .4rem .6rem; }
+    header.top .brand { font-size: 1rem; }
+    header.top .tools { margin-left: 0; width: 100%; justify-content: flex-end; }
+    .stats span { font-size: .74rem; }
+  }
+  html, body { max-width: 100%; overflow-x: clip; }
   @media (prefers-reduced-motion: reduce) { .reveal { transition: none !important; } }
 </style>
 </head>
@@ -369,6 +375,7 @@
 (function () {
   "use strict";
   var doc = document, root = doc.documentElement;
+  root.classList.remove("no-js");  // with JavaScript the canvas takes over; without it the SVG diagram stays
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var motionOn = !reduced;
 
@@ -435,7 +442,7 @@
     doc.getElementById("kick").textContent = (chapter.querySelector(".num") || {}).textContent || "";
   }
 
-  // ── libraries: ready when both loaded; otherwise the SVG stays ──
+  // ── renderers: WebGL with three.js when both are there, else the 2D canvas; the SVG only without JavaScript ──
   function webgl() {
     try { var c = doc.createElement("canvas"); return !!(window.WebGLRenderingContext && (c.getContext("webgl") || c.getContext("experimental-webgl"))); } catch (e) { return false; }
   }
