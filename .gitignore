@@ -1,0 +1,23 @@
+# This repository publishes the static site only. Keep local tooling on disk.
+/*
+!/.gitignore
+!/index.html
+
+# The tour links to these engineering-guide pages.
+!/docs/
+/docs/*
+!/docs/*.md
+
+# Media used by index.html; generation records and unused assets stay local.
+!/assets/
+/assets/*
+!/assets/mechanical-brain/
+/assets/mechanical-brain/*
+!/assets/mechanical-brain/anchor.png
+!/assets/mechanical-brain/brain-scroll.mp4
+!/assets/mechanical-brain/frame-02.webp
+!/assets/mechanical-brain/frame-03.webp
+!/assets/mechanical-brain/frame-05.webp
+!/assets/mechanical-brain/frame-06.webp
+!/assets/mechanical-brain/frame-08.webp
+!/assets/mechanical-brain/frame-12.webp
