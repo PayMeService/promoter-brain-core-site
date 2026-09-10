@@ -1,13 +1,19 @@
-# Promoter Brain Core — the guided tour
+# Promoter Brain Core — architecture, considered
 
-The public, single-page tour of [Promoter Brain Core](https://github.com/PayMeService/promoter-brain-core)
-(a private repository; team members get read access): the system in one picture, who owns
-what, the three phases, the data ladder, each engine's logic, the hand-off loop, the local
-infrastructure, how to install and run, and a plain-language glossary.
+A cinematic, scroll-driven tour of [Promoter Brain Core](https://github.com/PayMeService/promoter-brain-core) (private; team access). Seven compositions take the reader through the system overview, package boundaries, revision lifecycle, profiling, explicit RDS handoff, audience selection, and evidence. Ten expandable field-guide chapters retain the detailed explanations, commands, and glossary.
 
-Live page: https://paymeservice.github.io/promoter-brain-core-site/
+The architecture copy follows the source snapshot documented in [docs/](docs/README.md), inspected on 2026-09-10 at `3c8eb0841795b3f0f17fde5aad67a37f73726224`. The scenes are conceptual illustrations, not live data or application screenshots.
 
-One self-contained `index.html` (HTML, vanilla JavaScript, three.js and GSAP from cdnjs with
-integrity hashes). It carries no secret, host name, credential or e-mail address. The same file
-lives at the root of the project repository; this repository holds the copy that GitHub Pages
-serves.
+## Preview and check
+
+```sh
+python3 -m http.server 4173 --bind 127.0.0.1
+# Open http://127.0.0.1:4173
+node tests/check-tour.mjs
+```
+
+The site remains one `index.html`, with vanilla JavaScript and the existing integrity-pinned three.js dependency from cdnjs. No build or package installation is required. Google Fonts supplies the typography. Native scrolling drives a continuous 3D world with procedural studio lighting; no generated film or image assets are required. Motion can be paused, reduced-motion preferences are honored, and an inline illustration plus complete HTML content remain when WebGL or the CDN is unavailable. Direct chapter links open their corresponding field-guide panels.
+
+Visual direction: luxury typography, obsidian, parchment, champagne, and patinated brass. Design tokens live at the top of the inline stylesheet. Motion references: [Scroll World](https://github.com/cth9191/scroll-world) for connected spatial storytelling, and [Motion Design](https://github.com/cth9191/motion-design) for layered component reveals. This is a browser-rendered interpretation, not their Higgsfield video-generation pipeline.
+
+Live site: [paymeservice.github.io/promoter-brain-core-site](https://paymeservice.github.io/promoter-brain-core-site/). Local edits must be published separately to update it.

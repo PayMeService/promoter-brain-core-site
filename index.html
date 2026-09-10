@@ -1,220 +1,86 @@
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="The guided tour of Promoter Brain Core: what the two engines do, how the phases stay apart, how to install, and a plain-language glossary.">
-<title>Promoter Brain Core</title>
+<meta name="theme-color" content="#101110"> <!-- one-off: browser chrome requires a literal color, not a CSS variable. -->
+<meta name="description" content="A cinematic tour of Promoter Brain Core. Explore the independent engines, verified data revisions, and evidence behind every audience.">
+<title>Promoter Brain Core — Intelligence, by design.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f6e8c'/%3E%3Crect x='6' y='11' width='8' height='8' rx='2' fill='%23fffdf8'/%3E%3Crect x='18' y='11' width='8' height='8' rx='2' fill='%23e59a5a'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Italiana&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='20' fill='%23101110'/%3E%3Cpath d='m20 7 12 7v12l-12 7-12-7V14zm0 0v26M8 14l24 12M32 14 8 26' fill='none' stroke='%23c8b28a'/%3E%3C/svg%3E">
 <style>
-  :root {
-    --ink: #1c2128; --ink-2: #4b5563; --paper: #f6f4ee; --paper-2: #ece9e0; --line: #d8d3c6;
-    --accent: #0f6e8c; --accent-2: #b25a1c; --good: #2f7a3d; --warn: #9a6b00; --bad: #a8323a;
-    --box: #fffdf8; --code: #eef2f5; --shadow: 0 1px 2px rgba(20,25,30,.08), 0 8px 24px rgba(20,25,30,.06);
-    color-scheme: light dark;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root { --ink: #e7e3d9; --ink-2: #a8a49a; --paper: #14171c; --paper-2: #1b1f26; --line: #2b313b;
-      --accent: #6cc3de; --accent-2: #e59a5a; --good: #7fc98c; --warn: #e0b64a; --bad: #ef8a90;
-      --box: #1a1e25; --code: #0f1217; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35); }
-  }
-  html[data-theme="light"] { --ink: #1c2128; --ink-2: #4b5563; --paper: #f6f4ee; --paper-2: #ece9e0; --line: #d8d3c6; --accent: #0f6e8c; --accent-2: #b25a1c; --good: #2f7a3d; --warn: #9a6b00; --bad: #a8323a; --box: #fffdf8; --code: #eef2f5; }
-  html[data-theme="dark"] { --ink: #e7e3d9; --ink-2: #a8a49a; --paper: #14171c; --paper-2: #1b1f26; --line: #2b313b; --accent: #6cc3de; --accent-2: #e59a5a; --good: #7fc98c; --warn: #e0b64a; --bad: #ef8a90; --box: #1a1e25; --code: #0f1217; }
-
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-  body { margin: 0; background: var(--paper); color: var(--ink); font: 18px/1.62 "Source Sans 3", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
-  a { color: var(--accent); }
-  code, pre, kbd { font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: .88em; }
-  code { background: var(--code); padding: .1em .35em; border-radius: 4px; }
-  pre { background: var(--code); border: 1px solid var(--line); border-radius: 8px; padding: .8rem 1rem; overflow-x: auto; margin: .6rem 0; }
-  pre code { background: none; padding: 0; }
-  h1, h2, h3 { font-family: "Sora", "Source Sans 3", system-ui, sans-serif; line-height: 1.15; text-wrap: balance; margin: 0 0 .5rem; letter-spacing: -.012em; }
-  h1 { font-size: clamp(2.1rem, 4.6vw, 3.5rem); font-weight: 700; }
-  h2 { font-size: clamp(1.45rem, 2.6vw, 2rem); font-weight: 600; }
-  h3 { font-size: 1.08rem; font-weight: 600; }
-  .eyebrow { font-family: "Sora", system-ui, sans-serif; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: .74rem; }
-  p { margin: .5rem 0 .9rem; max-width: 68ch; }
-  ul, ol { max-width: 70ch; padding-left: 1.3rem; }
-  li { margin: .25rem 0; }
-  .skip { position: absolute; left: -999px; top: 0; background: var(--accent); color: #fff; padding: .5rem 1rem; z-index: 50; }
-  .skip:focus { left: 1rem; top: 1rem; }
-  :focus-visible { outline: 3px solid var(--accent-2); outline-offset: 2px; }
-
-  header.top { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-  header.top .bar { max-width: 1240px; margin: 0 auto; padding: .5rem 1rem; display: flex; gap: .9rem; align-items: center; flex-wrap: nowrap; position: relative; }
-  header.top .brand { display: inline-flex; align-items: center; gap: .55rem; flex: none; white-space: nowrap; font-family: "Sora", system-ui, sans-serif; font-weight: 700; letter-spacing: .01em; text-decoration: none; color: var(--ink); }
-  header.top .brand .mark { width: 22px; height: 22px; border-radius: 6px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); position: relative; flex: none; }
-  header.top .brand .mark::before, header.top .brand .mark::after { content: ""; position: absolute; top: 7px; width: 6px; height: 8px; border-radius: 2px; background: #fffdf8; }
-  header.top .brand .mark::before { left: 4px; } header.top .brand .mark::after { left: 12px; opacity: .75; }
-  .progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .15s linear; }
-  header.top details { display: none; }
-  header.top details summary { list-style: none; cursor: pointer; font-size: .9rem; padding: .25rem .6rem; border: 1px solid var(--line); border-radius: 999px; background: var(--box); }
-  header.top details[open] summary { background: var(--paper-2); }
-  header.top details nav { position: absolute; left: 1rem; right: 1rem; top: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: .2rem; padding: .6rem; background: var(--box); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
-  header.top nav.wide { display: flex; gap: .1rem .15rem; flex: 1 1 auto; min-width: 0; white-space: nowrap; font-size: .84rem; justify-content: center; }
-  header.top nav a { text-decoration: none; color: var(--ink-2); padding: .22rem .5rem; border-radius: 6px; position: relative; }
-  header.top nav a[aria-current="true"] { color: var(--ink); background: var(--paper-2); box-shadow: inset 0 -2px 0 var(--accent); }
-  header.top nav a:hover { color: var(--ink); background: var(--paper-2); }
-  header.top .tools { margin-left: auto; display: flex; gap: .35rem; flex: none; }
-  button.tool { font: inherit; font-size: .78rem; background: var(--box); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: .18rem .55rem; cursor: pointer; white-space: nowrap; }
-  button.tool[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
-
-  .hero { max-width: 1240px; margin: 0 auto; padding: 2.6rem 1rem 1.2rem; }
-  .hero h1 { max-width: 22ch; }
-  .hero .lede { max-width: 66ch; }
-  .stats { display: flex; gap: .6rem; flex-wrap: wrap; margin: 1.1rem 0 .2rem; }
-  .stats span { font-family: "Sora", system-ui, sans-serif; font-size: .82rem; font-weight: 600; letter-spacing: .02em; padding: .35rem .7rem; border-radius: 999px; border: 1px solid var(--line); background: var(--box); color: var(--ink-2); }
-  .stats span b { color: var(--accent); font-weight: 700; margin-right: .25rem; }
-  .hero .kicker { color: var(--accent-2); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: .8rem; }
-  .hero .lede { font-size: 1.15rem; color: var(--ink-2); }
-  .hero .cta { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1rem; }
-  .hero .cta a { text-decoration: none; padding: .6rem 1.05rem; border-radius: 9px; border: 1px solid var(--accent); font-weight: 600; transition: transform .12s ease, box-shadow .12s ease; }
-  .hero .cta a:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
-  .hero .cta a.primary { background: var(--accent); color: #fff; }
-
-  .stagewrap { position: sticky; top: var(--header-h, 3rem); z-index: 5; width: 100%; }
-  .stage { position: relative; display: flex; flex-direction: column; height: 32vh; min-height: 240px; max-height: 340px; border-top: 1px solid #2a3140; border-bottom: 1px solid #2a3140; color: #e7e3d9; overflow: hidden;
-    background: radial-gradient(120% 90% at 50% 110%, #16213a 0%, #0d1117 55%, #0a0d12 100%); box-shadow: 0 10px 40px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.04); }
-  .stage::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(70% 70% at 50% 50%, #000 40%, transparent 100%); pointer-events: none; }
-  .stage .labels { position: absolute; inset: 0; pointer-events: none; }
-  .stage .strip { flex: none; display: flex; align-items: center; gap: 1rem; height: 2.4rem; padding: 0 max(1rem, calc(50% - 620px + 1rem)); border-top: 1px solid rgba(255,255,255,.08); background: rgba(13,17,23,.6); font-size: .92rem; }
-  .stage .strip .kick { color: #e59a5a; font-family: "Sora", system-ui, sans-serif; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; flex: none; }
-  .stage .strip .caption { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #e7e3d9; }
-  .stage .strip .mode { flex: none; color: #8fa3b8; font-size: .78rem; }
-  .stage .label { position: absolute; transform: translate(-50%, -50%); font-family: "Sora", system-ui, sans-serif; font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: #dfe4ec; background: rgba(13,17,23,.78); border: 1px solid rgba(255,255,255,.14); padding: .22rem .6rem; border-radius: 999px; opacity: 0; transition: opacity .5s; white-space: nowrap; backdrop-filter: blur(4px); }
-  .stage .label.on { opacity: 1; }
-  .stage .label.hot { color: #ffd9a8; border-color: rgba(229,154,90,.5); }
-  .stage .draw { position: relative; flex: 1 1 auto; min-height: 0; }
-  .stage canvas { display: block; width: 100%; height: 100%; }
-  .stage .fallback { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; padding: .5rem 1rem; color: #e7e3d9; }
-  .stage.plain .fallback, html.no-js .stage .fallback { display: flex; }
-  .stage.plain canvas, html.no-js .stage canvas { display: none; }
-  .fallback svg { width: min(100%, 720px); max-height: 100%; height: auto; }
-
-  main { max-width: 1240px; margin: 0 auto; padding: 1rem 1rem 4rem; }
-  .story { display: block; }
-  section.chapter { padding: 2.4rem 0 1.4rem; border-top: 1px solid var(--line); scroll-margin-top: calc(var(--header-h, 3rem) + 32vh + 1rem); }
-  section.chapter .num { color: var(--accent-2); font-family: "Sora", system-ui, sans-serif; font-weight: 600; font-size: .74rem; letter-spacing: .12em; }
-  .totop { position: fixed; right: 1.1rem; bottom: 1.1rem; width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--box); color: var(--ink); font-size: 1.1rem; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .2s; box-shadow: var(--shadow); z-index: 25; }
-  .totop.show { opacity: 1; pointer-events: auto; }
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: .9rem; margin: .8rem 0; }
-  .card { background: var(--box); border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
-  .card:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
-  .card h3 { margin-bottom: .3rem; }
-  .card p { font-size: .95rem; margin: .3rem 0; }
-  .card .tag { display: inline-block; font-size: .75rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; padding: .1rem .5rem; border-radius: 999px; background: var(--paper-2); color: var(--ink-2); margin-bottom: .3rem; }
-  .card.good { border-left: 4px solid var(--good); } .card.never { border-left: 4px solid var(--bad); } .card.warn { border-left: 4px solid var(--warn); }
-  table { border-collapse: collapse; width: 100%; font-size: .93rem; }
-  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; margin: .6rem 0; }
-  th, td { text-align: left; padding: .5rem .7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-  th { background: var(--paper-2); }
-  tr:last-child td { border-bottom: none; }
-  .cmd { display: flex; gap: .5rem; align-items: flex-start; margin: .35rem 0; }
-  .cmd pre { flex: 1; margin: 0; }
-  .cmd button { font: inherit; font-size: .8rem; background: var(--box); border: 1px solid var(--line); border-radius: 6px; padding: .3rem .6rem; cursor: pointer; color: var(--ink); white-space: nowrap; }
-  .cmd .why { flex-basis: 100%; font-size: .9rem; color: var(--ink-2); margin: 0 0 .4rem; }
-  .cmd { flex-wrap: wrap; }
-  .toast { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: .5rem 1rem; border-radius: 8px; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 30; }
-  .toast.show { opacity: 1; }
-  dl.glossary { display: grid; grid-template-columns: max-content 1fr; gap: .5rem 1.2rem; max-width: 80ch; }
-  dl.glossary dt { font-weight: 700; color: var(--accent); scroll-margin-top: 5rem; }
-  dl.glossary dd { margin: 0; }
-  .callout { border-left: 4px solid var(--accent); background: var(--box); padding: .7rem 1rem; border-radius: 0 8px 8px 0; margin: .8rem 0; max-width: 72ch; }
-  .steps { counter-reset: step; list-style: none; padding: 0; max-width: 72ch; }
-  .steps li { counter-increment: step; position: relative; padding-left: 2.4rem; margin: .6rem 0; }
-  .steps li::before { content: counter(step); position: absolute; left: 0; top: .05rem; width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: .85rem; }
-  .qa { border: 1px solid var(--line); border-radius: 10px; padding: .8rem 1rem; background: var(--box); max-width: 72ch; }
-  .qa summary { cursor: pointer; font-weight: 600; }
-  footer { border-top: 1px solid var(--line); color: var(--ink-2); font-size: .92rem; padding: 1.6rem 1rem 3rem; max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  footer p { margin: .2rem 0; }
-  .reveal { opacity: 1; }
-  @media (max-width: 1180px) {
-    header.top nav.wide { display: none; }
-    header.top details { display: block; }
-  }
-  @media (max-width: 960px) {
-    .stagewrap { position: static; }
-    .stage { height: 34vh; }
-    .stage .label { font-size: .7rem; }
-    footer { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 640px) {
-    header.top .bar { flex-wrap: wrap; gap: .4rem .6rem; }
-    header.top .brand { font-size: 1rem; }
-    header.top .tools { margin-left: 0; width: 100%; justify-content: flex-end; }
-    .stats span { font-size: .74rem; }
-  }
-  html, body { max-width: 100%; overflow-x: clip; }
-  @media (prefers-reduced-motion: reduce) { .reveal { transition: none !important; } }
+/* Aesthetic direction: Luxury Typography × precision instrument.
+   Mood anchors: obsidian, parchment, champagne, patinated brass.
+   Type: Italiana / DM Sans / IBM Plex Mono. Elevation: light on metal.
+   This standalone page keeps its design tokens inline. */
+/* tokens:start */
+:root {
+  color-scheme: dark;
+  --paper:#101110; /* obsidian — a quiet, almost black gallery */
+  --surface:#161815; --surface-raised:#20221e;
+  --ink:#eeece5; /* parchment — soft printed ivory */
+  --muted:#acaea4; --faint:#85897e;
+  --gold:#c8b28a; /* champagne — restrained warm highlights */
+  --gold-bright:#e3d2ae; --line:#34392f; --line-soft:#242820;
+  --sage:#a7b595; /* patina — oxidized garden bronze */
+  --glass:rgba(16,17,16,.86); --shade:rgba(16,17,16,.96);
+  --glow:radial-gradient(ellipse at 68% 48%,#30372b55,transparent 52%);
+  --grid:rgba(200,178,138,.035); --shadow:0 20px 80px #0005;
+  --reflection-dark:#151914; --reflection-mid:#373d33; --reflection-light:#fff5da; --reflection-brass:#a2916e; --reflection-sage:#333e31; --reflection-white:#eff5e8; --reflection-edge:#596449;
+  --font-body:'DM Sans',sans-serif; --font-display:'Italiana',Georgia,serif;
+  --font-mono:'IBM Plex Mono',monospace;
+  --s1:.25rem; --s2:.5rem; --s3:.75rem; --s4:1rem; --s5:1.5rem; --s6:2rem; --s7:3rem; --s8:4rem; --s9:6rem;
+  --gutter:clamp(1.5rem,5vw,6rem); --radius:2px; --pill:99px;
+  --leading:1.7; --tight:1.04; --flat:1; --fast:240ms; --slow:900ms;
+  --ease:cubic-bezier(.22,1,.36,1); --transition:var(--fast) var(--ease);
+}
+/* tokens:end */
+*{box-sizing:border-box} html{scroll-behavior:smooth;scroll-padding-top:6rem} body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);line-height:var(--leading);-webkit-font-smoothing:antialiased} button,a{-webkit-tap-highlight-color:transparent} a{color:inherit;text-decoration:none} button{font:inherit;color:inherit;cursor:pointer} button,a,summary{touch-action:manipulation} ::selection{background:var(--gold);color:var(--paper)} :focus-visible{outline:2px solid var(--gold);outline-offset:6px} .skip{position:fixed;top:var(--s4);left:var(--s4);z-index:100;background:var(--gold);color:var(--paper);padding:var(--s4);transform:translateY(-200%)} .skip:focus{transform:none}
+.topbar{height:96px;position:fixed;inset:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter);z-index:30;background:var(--glass);backdrop-filter:blur(12px);gap:var(--s6)} .brand{display:flex;align-items:center;gap:var(--s3);font-size:12px;letter-spacing:.12em;line-height:1.4;text-transform:uppercase;font-weight:600}.brand svg{width:33px;height:38px;color:var(--gold)} .brand small{display:block;font-size:9px;letter-spacing:.27em;color:var(--muted);font-weight:400}.topbar nav{display:flex;align-items:center;gap:var(--s7);font-size:12px;color:var(--muted)} .topbar nav a:hover{color:var(--gold)} .topbar .nav-cta{color:var(--ink);border-bottom:1px solid var(--gold);padding-block:var(--s2)} .nav-cta span{margin-left:var(--s5);color:var(--gold)}
+.world{position:fixed;inset:0;pointer-events:none;z-index:0;background:var(--glow);overflow:hidden}.world::after{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:90px 90px;mask-image:radial-gradient(ellipse at 68% 50%,black,transparent 65%)} #canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity var(--slow)} .world.ready #canvas{opacity:1}.static-art{position:absolute;left:43%;top:17%;width:52%;height:67%;color:var(--gold);opacity:.7}.world.ready .static-art{display:none}.world-label{position:absolute;left:65%;top:78%;text-align:center;transform:translateX(-50%);font-family:var(--font-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}.world-label::before{content:'';display:block;width:1px;height:30px;background:var(--line);margin:0 auto var(--s4)}.world-label small{display:block;margin-top:var(--s2);font-size:8px;color:var(--faint);letter-spacing:.1em}
+main{position:relative;z-index:1}.scene{position:relative;min-height:140svh;padding:22svh var(--gutter) 0;scroll-margin-top:-6rem}.hero{min-height:110svh}.scene-copy{width:42%;max-width:560px;position:sticky;top:29svh;padding-bottom:var(--s8)}.hero .scene-copy{top:25svh;padding-top:0;margin-top:0;max-width:660px;width:53%}.eyebrow{display:flex;align-items:center;gap:var(--s4);font-family:var(--font-mono);font-size:10px;font-weight:400;letter-spacing:.17em;text-transform:uppercase;color:var(--gold);margin:0 0 var(--s6)}.eyebrow::before{content:'';height:1px;width:28px;background:var(--gold)}h1,h2,h3,p{margin:0}h1,h2{font-weight:400;line-height:var(--tight);letter-spacing:-.035em}h1{font-size:clamp(66px,7.8vw,124px)}h1 em,h2 em{font-family:var(--font-display);font-weight:400;color:var(--gold-bright);font-style:normal}h1 em{display:block;padding-left:var(--s7)}.hero p{font-size:14px;max-width:345px;color:var(--muted);margin-top:var(--s6)}.hero-actions{display:flex;align-items:center;gap:var(--s6);margin-top:var(--s7)}.button{display:inline-flex;align-items:center;justify-content:space-between;gap:var(--s7);font-size:11px;letter-spacing:.03em;padding:var(--s4) var(--s5);border:1px solid var(--gold);background:var(--gold);color:var(--paper);transition:background var(--transition),transform var(--transition)}.button:hover{background:var(--gold-bright);transform:translateY(-2px)}.text-link{font-size:11px;color:var(--muted);border-bottom:1px solid var(--line);padding-block:var(--s2)}.text-link:hover{color:var(--gold)}.hero-bottom{position:absolute;bottom:15svh;left:var(--gutter);right:var(--gutter);display:flex;justify-content:space-between;align-items:end;gap:var(--s6)}.hero-facts{display:flex;gap:var(--s7)}.hero-facts div{border-left:1px solid var(--line);padding-left:var(--s4)}.hero-facts strong{font-family:var(--font-display);font-size:29px;line-height:1.1;font-weight:400}.hero-facts span{display:block;font-family:var(--font-mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:var(--s2)}.scroll-note{display:flex;gap:var(--s4);align-items:center;font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.scroll-note b{display:grid;place-items:center;width:34px;height:46px;border:1px solid var(--line);border-radius:var(--pill);color:var(--gold);font-weight:400;animation:drift 3s ease-in-out infinite}@keyframes drift{50%{transform:translateY(7px)}}
+.scene:not(.hero) .scene-copy{padding-top:var(--s6)}h2{font-size:clamp(44px,5.1vw,76px)}.scene-copy>p{color:var(--muted);font-size:14px;max-width:380px;margin-top:var(--s6)}.scene-copy>p strong{font-weight:400;color:var(--ink)}.detail-line{border-top:1px solid var(--line);margin-top:var(--s6);padding-top:var(--s4);max-width:370px;font-family:var(--font-mono);font-size:10px;color:var(--gold);display:flex;gap:var(--s5);flex-wrap:wrap}.detail-line span{color:var(--faint)}.chapter-source{display:inline-block;color:var(--faint);font-size:10px;margin-top:var(--s6);border-bottom:1px solid var(--line)}.chapter-source:hover{color:var(--gold)}.scene-number{position:absolute;top:var(--s6);right:var(--gutter);font-family:var(--font-display);font-size:160px;line-height:var(--flat);color:var(--line-soft);pointer-events:none}.scene-tag{display:inline-flex;align-items:center;gap:var(--s3);font-family:var(--font-mono);font-size:9px;letter-spacing:.06em;color:var(--sage);margin-top:var(--s5)}.scene-tag::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--sage)}
+.rail{position:fixed;right:var(--s6);top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column}.rail a{height:30px;width:30px;display:grid;place-items:center;position:relative}.rail a::after{content:'';height:4px;width:4px;border:1px solid var(--faint);border-radius:50%;transition:var(--transition)}.rail a[aria-current="step"]::after{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 5px var(--line-soft)}.rail a span{position:absolute;right:35px;white-space:nowrap;color:var(--gold);background:var(--paper);font-family:var(--font-mono);font-size:9px;padding:var(--s2);opacity:0;pointer-events:none}.rail a:hover span,.rail a:focus-visible span{opacity:1}.hud{position:fixed;bottom:0;left:var(--gutter);right:var(--gutter);height:68px;display:flex;align-items:center;gap:var(--s6);z-index:25;background:linear-gradient(transparent,var(--paper) 38%);font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;color:var(--faint)}.hud-title{min-width:165px}.hud-title b{font-weight:400;color:var(--gold);margin-right:var(--s3)}.track{height:1px;background:var(--line);flex:1}.track span{display:block;width:100%;height:100%;background:var(--gold);transform:scaleX(0);transform-origin:left}.motion{display:flex;gap:var(--s3);align-items:center;background:none;border:none;font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;min-height:44px;padding:0}.motion svg{width:13px;height:13px}.hud-end{color:var(--muted)}
+.archive{position:relative;background:var(--paper);border-top:1px solid var(--line);padding:var(--s9) var(--gutter);z-index:2}.archive-header{display:flex;justify-content:space-between;align-items:end;gap:var(--s7);margin-bottom:var(--s8)}.archive-header h2{font-size:clamp(42px,5vw,70px)}.archive-header p{color:var(--muted);max-width:300px;font-size:13px}.doc-links{display:flex;gap:var(--s5);flex-wrap:wrap;margin-bottom:var(--s7);font-size:11px;color:var(--gold)}.doc-links a{border-bottom:1px solid var(--line);padding-block:var(--s2)}.field-note{border-top:1px solid var(--line);scroll-margin-top:110px}.field-note:last-of-type{border-bottom:1px solid var(--line)}.field-note>summary{list-style:none;display:flex;align-items:center;gap:var(--s6);cursor:pointer;padding:var(--s5) 0;font-size:17px;line-height:1.4}.field-note>summary::-webkit-details-marker{display:none}.note-num{font-family:var(--font-mono);font-size:10px;color:var(--gold);width:30px;flex-shrink:0}.plus{margin-left:auto;font-size:24px;color:var(--gold);font-weight:400}.field-note[open] .plus{transform:rotate(45deg)}.note-body{max-width:1050px;padding:var(--s4) 0 var(--s7) 62px;color:var(--muted);font-size:14px}.note-body p{margin-bottom:var(--s5);max-width:85ch}.note-body h3{color:var(--ink);font-size:16px;font-weight:500;margin-block:var(--s4)}.note-body strong{color:var(--ink)}.note-body a{color:var(--gold);text-decoration:underline}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s6);margin-block:var(--s6)}.card{padding:var(--s5);border:1px solid var(--line)}.tag{font-family:var(--font-mono);font-size:9px;color:var(--gold);text-transform:uppercase}.table-wrap{overflow-x:auto;margin-block:var(--s5)}table{width:100%;border-collapse:collapse;font-size:12px}td,th{text-align:left;vertical-align:top;padding:var(--s3);border-bottom:1px solid var(--line)}th{color:var(--ink)}pre,code{font-family:var(--font-mono);font-size:.86em}pre{padding:var(--s5);background:var(--surface);overflow-x:auto;max-width:100%}code{overflow-wrap:anywhere;color:var(--sage)}.callout{border-left:1px solid var(--gold);padding:var(--s4) var(--s5);background:var(--surface);margin-block:var(--s5)}li{margin-bottom:var(--s3)}.cmd{display:flex;align-items:start;gap:var(--s3);flex-wrap:wrap}.cmd pre{flex:1;min-width:0;margin:0}.cmd button{background:var(--surface-raised);border:1px solid var(--line);padding:var(--s3);font-size:11px;min-height:44px}.cmd .why{flex-basis:100%;font-size:12px}.glossary{display:grid;grid-template-columns:180px 1fr;gap:var(--s4) var(--s6)}dt{color:var(--gold)}dd{margin:0}.closing{padding:var(--s9) 0 var(--s8);display:flex;justify-content:space-between;align-items:end;gap:var(--s7)}.closing h2{font-size:clamp(40px,5vw,66px)}.closing p{margin-top:var(--s5);max-width:420px;font-size:13px;color:var(--muted)}footer{padding:var(--s6) 0 var(--s7);border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:var(--s6);font-family:var(--font-mono);font-size:9px;color:var(--faint)}footer a{color:var(--gold)}.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--paper);font-size:12px;padding:var(--s3) var(--s5);z-index:50;opacity:0;pointer-events:none;transition:opacity var(--transition)}.toast.show{opacity:1}
+/* One-off responsive camera composition: viewport dimensions align text and 3D projection. */
+@media(min-width:1700px){.scene-copy{max-width:650px}.scene-copy>p{font-size:17px;max-width:450px}}
+@media(max-width:900px){.topbar{height:80px}.topbar nav{gap:var(--s5)}.topbar nav a:first-child{display:none}.scene-copy{width:48%}.hero .scene-copy{width:60%}.rail{right:var(--s2)}h1{font-size:clamp(55px,8vw,80px)}.hero-facts{gap:var(--s5)}.hero-facts span{font-size:7px}.world-label{left:72%;font-size:8px}.note-body{padding-left:0}}
+@media(max-width:600px){html{scroll-padding-top:5rem}.topbar{height:76px}.brand{font-size:10px;gap:var(--s2)}.brand small{font-size:7px}.brand svg{width:27px}.topbar nav a:not(.nav-cta){display:none}.topbar .nav-cta{font-size:10px}.nav-cta span{margin-left:var(--s3)}.scene{min-height:130svh;padding-top:17svh;scroll-margin-top:-5rem}.hero{min-height:120svh}.scene-copy,.hero .scene-copy{width:100%;max-width:none;top:17svh;padding-bottom:var(--s6)}.hero .scene-copy{padding-top:0;margin-top:0;top:18svh}.eyebrow{font-size:8px;margin-bottom:var(--s5)}h1{font-size:clamp(47px,11.5vw,68px);max-width:90%}h1 em{padding-left:var(--s5)}h2{font-size:clamp(39px,10vw,55px)}.hero p,.scene-copy>p{font-size:12px;max-width:290px;margin-top:var(--s4)}.hero-actions{gap:var(--s5);margin-top:var(--s5)}.button{padding:var(--s3) var(--s4);min-height:44px;font-size:10px;gap:var(--s5)}.hero-bottom{bottom:13svh}.hero-facts{gap:var(--s5)}.hero-facts strong{font-size:24px}.hero-facts div{padding-left:var(--s3)}.hero-facts span{font-size:6px}.scroll-note{font-size:0;gap:0}.scroll-note b{font-size:13px;width:26px;height:36px}.detail-line{font-size:8px;margin-top:var(--s4);padding-top:var(--s3);max-width:280px}.chapter-source{margin-top:var(--s3);font-size:9px}.scene-tag{font-size:8px;margin-top:var(--s3)}.world-label{top:88%;left:57%;font-size:7px;white-space:nowrap}.world-label::before{height:12px;margin-bottom:var(--s2)}.world-label small{font-size:6px}.static-art{left:12%;top:48%;width:85%;height:35%}.scene-number{font-size:80px;top:var(--s7)}.hud{height:55px;gap:var(--s4)}.hud-title{min-width:130px;font-size:8px}.hud-end{display:none}.motion{font-size:8px}.rail{right:0;top:67%}.rail a{height:26px;width:26px}.archive{padding-top:var(--s8)}.archive-header{display:block;margin-bottom:var(--s6)}.archive-header p{margin-top:var(--s5)}.field-note>summary{font-size:14px;gap:var(--s3)}.note-num{width:23px}.note-body{font-size:12px}.cards{grid-template-columns:1fr;gap:var(--s4)}.glossary{grid-template-columns:1fr;gap:var(--s2)}dd{margin-bottom:var(--s4)}.closing{display:block;padding-block:var(--s8)}.closing .button{margin-top:var(--s6)}footer{flex-direction:column;gap:var(--s3)}.doc-links{font-size:10px;gap:var(--s4)}}
+html[data-motion="off"]{scroll-behavior:auto}html[data-motion="off"] *,html[data-motion="off"] *::before,html[data-motion="off"] *::after{animation:none!important;transition:none!important}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+@media print{.world,.topbar,.hud,.rail,.hero-bottom,.scene-number{display:none}.scene,.hero{min-height:0;padding:var(--s5) 0}.scene-copy,.hero .scene-copy{position:static;width:100%;margin:0;padding:0}.archive{padding:0}.field-note>summary{break-after:avoid}body{background:white;color:black}.scene-copy>p,.note-body{color:inherit}}
 </style>
 </head>
 <body>
-<a class="skip" href="#story">Skip to the tour</a>
-<header class="top">
-  <div class="bar">
-    <a class="brand" href="#top"><span class="mark" aria-hidden="true"></span>Promoter Brain Core</a>
-    <nav class="wide" aria-label="Chapters" id="nav">
-      <a href="#system">System</a><a href="#ownership">Ownership</a><a href="#phases">Phases</a><a href="#ladder">Data ladder</a><a href="#profiling">Profiling</a><a href="#serving">Serving</a><a href="#handoff">Hand-off</a><a href="#infra">Infrastructure</a><a href="#install">Install</a><a href="#glossary">Glossary</a>
-    </nav>
-    <details><summary>Chapters</summary><nav aria-label="Chapters (small screens)">
-      <a href="#system">System</a><a href="#ownership">Ownership</a><a href="#phases">Phases</a><a href="#ladder">Data ladder</a><a href="#profiling">Profiling</a><a href="#serving">Serving</a><a href="#handoff">Hand-off</a><a href="#infra">Infrastructure</a><a href="#install">Install</a><a href="#glossary">Glossary</a>
-    </nav></details>
-    <div class="tools">
-      <button class="tool" id="motion" aria-pressed="false" title="Turn the moving parts off or on">Motion: on</button>
-      <button class="tool" id="theme" aria-pressed="false" title="Switch between light and dark">Theme: auto</button>
-    </div>
-    <div class="progress" id="progress"></div>
-  </div>
+<a class="skip" href="#journey">Skip to architecture tour</a>
+<header class="topbar">
+<a class="brand" href="#top" aria-label="Promoter Brain Core home"><svg viewBox="0 0 36 40" fill="none" aria-hidden="true"><path d="m18 2 16 9v18l-16 9L2 29V11zm0 0v36M2 11l32 18M34 11 2 29M2 20l16 9 16-9" stroke="currentColor" stroke-width=".9"/></svg><span>Promoter Brain<small>Core architecture</small></span></a>
+<nav aria-label="Main navigation"><a href="#journey">The architecture</a><a href="#field-guide">Field guide</a><a class="nav-cta" href="#install">Explore the system <span aria-hidden="true">↗</span></a></nav>
 </header>
-
-<section class="hero" id="top">
-  <div>
-    <div class="kicker eyebrow">The guided tour</div>
-    <h1>Two engines, one boundary, no surprises.</h1>
-    <p class="lede">Promoter Brain Core is a small system: a profiling engine that asks an AI what websites are about, a serving engine that turns those answers and the company's buyer data into audience lists, and one shared way of moving data that keeps the company database read-only. This page explains how it is put together and why it behaves the way it does.</p>
-    <div class="stats" aria-label="At a glance"><span><b>2</b> engines</span><span><b>4</b> packages</span><span><b>1</b> read-only source session</span><span><b>1</b> write path, on a click</span><span><b>0</b> shared writable tables</span></div>
-    <div class="cta">
-      <a class="primary" href="#system">Start with the picture</a>
-      <a href="#install">Install and run</a>
-      <a href="#glossary">Plain-language glossary</a>
-    </div>
-  </div>
-</section>
-<div class="stagewrap">
-  <div class="stage" id="stage" aria-label="A moving picture of the system: thousands of points form the packages, the stores, the phases and the hand-off as you read">
-    <div class="draw">
-      <canvas id="canvas"></canvas>
-      <div class="labels" id="labels"></div>
-      <div class="fallback" id="fallback">
-      <svg viewBox="0 0 560 240" role="img" aria-label="contracts, then data-transfer, then the profiling and serving engines; the company database read-only; audience lists out">
-        <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
-        <g fill="none" stroke="currentColor" stroke-width="2" font-family="system-ui" font-size="14">
-          <rect x="20" y="95" width="110" height="50" rx="10"/><text x="75" y="125" text-anchor="middle" fill="currentColor" stroke="none">contracts</text>
-          <line x1="130" y1="120" x2="180" y2="120" marker-end="url(#arr)"/>
-          <rect x="185" y="95" width="130" height="50" rx="10"/><text x="250" y="125" text-anchor="middle" fill="currentColor" stroke="none">data-transfer</text>
-          <line x1="315" y1="120" x2="365" y2="70" marker-end="url(#arr)"/><line x1="315" y1="120" x2="365" y2="170" marker-end="url(#arr)"/>
-          <rect x="370" y="45" width="120" height="50" rx="10"/><text x="430" y="75" text-anchor="middle" fill="currentColor" stroke="none">profiling</text>
-          <rect x="370" y="145" width="120" height="50" rx="10"/><text x="430" y="175" text-anchor="middle" fill="currentColor" stroke="none">serving</text>
-        </g>
-      </svg>
-    </div>
-    </div>
-    <div class="strip"><span class="kick" id="kick">Chapter 1</span><span class="caption" id="caption">Four packages, one direction of dependence.</span><span class="mode" id="mode"></span></div>
-  </div>
+<div class="world" id="world" aria-hidden="true">
+<canvas id="canvas"></canvas>
+<svg class="static-art" viewBox="0 0 700 600" fill="none"><g stroke="currentColor"><ellipse cx="350" cy="300" rx="240" ry="95" transform="rotate(-35 350 300)"/><ellipse cx="350" cy="300" rx="240" ry="95" transform="rotate(45 350 300)"/><ellipse cx="350" cy="300" rx="235" ry="220" stroke-dasharray="1 12"/><path d="m350 155 150 85v145l-150 85-150-85V240zm0 0v315m-150-230 150 85 150-85m-300 75 150 85 150-85m-300-30 150 85 150-85"/><path d="m350 245 80 45-80 45-80-45z" fill="currentColor" fill-opacity=".1"/></g></svg>
+<div class="world-label" id="world-label">Two independent engines<small>One deliberately connected system</small></div>
 </div>
-
-<main id="story">
-<div class="story">
-<div class="text">
-
-<section class="chapter reveal" id="system" data-scene="curious">
-  <div class="num">CHAPTER 1</div>
-  <h2>The system in one picture</h2>
+<nav class="rail" aria-label="Tour chapters">
+<a href="#top" aria-label="00 Overview" aria-current="step"><span>00 — Overview</span></a><a href="#journey" aria-label="01 Foundation"><span>01 — Foundation</span></a><a href="#revisions" aria-label="02 Data lifecycle"><span>02 — Data lifecycle</span></a><a href="#understanding" aria-label="03 Profiling"><span>03 — Profiling</span></a><a href="#bridge" aria-label="04 Handoff"><span>04 — Handoff</span></a><a href="#selection" aria-label="05 Serving"><span>05 — Serving</span></a><a href="#evidence" aria-label="06 Evidence"><span>06 — Evidence</span></a>
+</nav>
+<main>
+<section class="scene hero" id="top" data-world="0" data-title="The overview">
+<div class="scene-copy"><div class="eyebrow">A journey beneath the interface</div><h1>Intelligence,<em>by design.</em></h1><p>From understanding a website to finding its next audience. Two independent engines. Every connection intentional.</p><div class="hero-actions"><a class="button" href="#journey">Enter the architecture <span aria-hidden="true">↘</span></a><a class="text-link" href="#field-guide">Read the field guide</a></div></div>
+<div class="hero-bottom"><div class="hero-facts"><div><strong>02</strong><span>Independent engines</span></div><div><strong>04</strong><span>Purposeful packages</span></div><div><strong>01</strong><span>Explicit data bridge</span></div></div><a class="scroll-note" href="#journey">Scroll to discover <b aria-hidden="true">↓</b></a></div>
+</section>
+<section class="scene" id="journey" data-world="1" data-title="The foundation"><span class="scene-number" aria-hidden="true">01</span><div class="scene-copy"><div class="eyebrow">01 / The foundation</div><h2>Independence.<br><em>Built in.</em></h2><p>Four packages, each with a precise responsibility. <strong>Contracts</strong> define the language. <strong>Data-transfer</strong> moves it safely. Profiling and serving build on both, without importing each other.</p><div class="detail-line">CONTRACTS <span>←</span> TRANSFER <span>←</span> ENGINES</div><span class="scene-tag">Install profiling, serving, or both</span><br><a class="chapter-source" href="docs/01-system-architecture.md">Explore package boundaries ↗</a></div></section>
+<section class="scene" id="revisions" data-world="2" data-title="The data lifecycle"><span class="scene-number" aria-hidden="true">02</span><div class="scene-copy"><div class="eyebrow">02 / The data lifecycle</div><h2>Trust is a<br><em>sequence.</em></h2><p>A read-only source snapshot enters staging. Copies are verified, engine gates run, and a manifest is sealed. Only then does an atomic local promotion make the revision visible.</p><div class="detail-line">STAGING <span>→</span> ACTIVE <span>→</span> PREVIOUS</div><span class="scene-tag">One previous revision. Local, reversible rollback.</span><br><a class="chapter-source" href="docs/03-transfer-and-revisions.md">Follow a verified revision ↗</a></div></section>
+<section class="scene" id="understanding" data-world="3" data-title="The profiling engine"><span class="scene-number" aria-hidden="true">03</span><div class="scene-copy"><div class="eyebrow">03 / The profiling engine</div><h2>Content becomes<br><em>understanding.</em></h2><p>One shared website workload. One extraction pass. Three configurable lenses: purchase drivers, psychological, and political. Gemini turns content into structured attributes and summaries.</p><div class="detail-line">WEBSITES <span>→</span> LENSES <span>→</span> ATTRIBUTES</div><span class="scene-tag">Results and registry changes commit per window</span><br><a class="chapter-source" href="docs/04-profiling-engine.md">Look inside the profiling engine ↗</a></div></section>
+<section class="scene" id="bridge" data-world="4" data-title="The explicit handoff"><span class="scene-number" aria-hidden="true">04</span><div class="scene-copy"><div class="eyebrow">04 / The explicit handoff</div><h2>Connected.<br><em>On your terms.</em></h2><p>“Copy now” publishes local result tables through a separate write-scoped RDS session. “Later” records a deferred handoff. Serving receives the published profiles on its next explicit data refresh.</p><div class="detail-line">PROFILING <span>→</span> RDS TABLES <span>→</span> SERVING</div><span class="scene-tag">Append-only, per-table transactions. No timer sync.</span><br><a class="chapter-source" href="docs/06-handoff-export-and-evidence.md">Understand the handoff boundary ↗</a></div></section>
+<section class="scene" id="selection" data-world="5" data-title="The serving engine"><span class="scene-number" aria-hidden="true">05</span><div class="scene-copy"><div class="eyebrow">05 / The serving engine</div><h2>Relationships.<br><em>Refined into reach.</em></h2><p>Purchase relationships shape a local graph. Warm sellers use collaborative filtering; cold and day-zero paths use attribute-sharing purchase counts. Existing buyers stay outside the eligible audience.</p><div class="detail-line">ELIGIBILITY <span>→</span> SCORING <span>→</span> EXACT QUOTA</div><span class="scene-tag">Deterministic ties. No padding with zero scores.</span><br><a class="chapter-source" href="docs/05-serving-engine.md">Inspect the selection logic ↗</a></div></section>
+<section class="scene" id="evidence" data-world="6" data-title="The evidence trail"><span class="scene-number" aria-hidden="true">06</span><div class="scene-copy"><div class="eyebrow">06 / The evidence trail</div><h2>Every audience.<br><em>A reason why.</em></h2><p>Ranked prospects become contact exports, with suppression and deduplication. Receipts explain the selected lane. Per-run snapshots preserve the story; optional Neo4j publication makes the evidence explorable.</p><div class="detail-line">RECEIPTS <span>·</span> CSV <span>·</span> RUN SNAPSHOTS</div><span class="scene-tag">Neo4j explains the result; it does not score it</span><br><a class="chapter-source" href="docs/06-handoff-export-and-evidence.md">Trace a result back to its evidence ↗</a></div></section>
+<section class="archive" id="field-guide"><div class="archive-header"><div><div class="eyebrow">For the curious. And the builders.</div><h2>The field <em>guide.</em></h2></div><p>The mechanics beneath the motion. Open a chapter for the details, commands, and boundaries of the system.</p></div>
+<div class="doc-links"><a href="docs/README.md">Complete engineering guide ↗</a><a href="docs/07-applications-and-apis.md">Applications & APIs ↗</a><a href="docs/09-engineering-and-verification.md">Verification & limitations ↗</a><a href="docs/10-source-reference.md">Source reference ↗</a></div>
+<details class="field-note" id="system"><summary><span class="note-num">01</span><span>The system in one picture</span><span class="plus" aria-hidden="true">+</span></summary><div class="note-body">
   <p>Four packages in one workspace, one Python environment, one lock file. Two of them are engines a person uses; two are the ground they stand on.</p>
   <div class="cards">
     <div class="card"><span class="tag">ground</span><h3>contracts</h3><p>Pure shared definitions: names, shapes, compatibility rules. No database, no network, no secrets. Everything imports it; it imports nothing of ours.</p></div>
@@ -225,40 +91,31 @@
   <pre><code>contracts  ←  data-transfer  ←  { profiling, serving }</code></pre>
   <p>The arrow is the whole architecture: dependencies point one way. The engines share contracts and transfer mechanics, never runtime modules and never a writable table. They never import each other. A check runs on every change to keep the arrow pointing that way.</p>
   <p>Each engine is a website on your own machine: the profiling app on port 8010, the serving studio on 8020. Everything they read and write lives in one local PostgreSQL container; serving adds a small Neo4j graph for the evidence behind a list.</p>
-</section>
-
-<section class="chapter reveal" id="ownership" data-scene="stores">
-  <div class="num">CHAPTER 2</div>
-  <h2>Who owns what</h2>
+</div></details>
+<details class="field-note" id="ownership"><summary><span class="note-num">02</span><span>Who owns what</span><span class="plus" aria-hidden="true">+</span></summary><div class="note-body">
   <p>Every store has exactly one writer. That single rule is what makes rollback, promotion and the hand-off safe: nobody ever writes into a table somebody else is swapping.</p>
   <div class="table-wrap"><table>
     <tr><th>Store</th><th>Sole writer</th><th>Readers</th><th>Holds</th></tr>
     <tr><td><code>profiling_staging</code> → <code>profiling_source</code> → <code>profiling_previous</code></td><td>the profiling data ladder</td><td>the profiling worker</td><td>the website list copied from the company database: incoming, live, and the one rollback slot</td></tr>
-    <tr><td><code>profiling</code>, <code>profiling_registry</code></td><td>the profiling app's storage module</td><td>the profiling app</td><td>a run's result tables per workspace and lens; the growing registry of answer labels</td></tr>
+    <tr><td><code>profiling</code>, <code>profiling_registry</code></td><td>the profiling app's storage module</td><td>the profiling app</td><td>cumulative result tables per workspace and lens; the growing registry of answer labels</td></tr>
     <tr><td><code>serving_staging</code> → <code>serving_active</code> → <code>serving_previous</code></td><td>the serving writer plus the shared promotion primitives</td><td>the serving runtime</td><td>one coherent, gate-checked vintage of the buyer data, and the one rollback slot</td></tr>
     <tr><td><code>serving_evidence</code>; local Neo4j</td><td>the serving evidence module; the graph module</td><td>the studio</td><td>the receipts behind each run; the published evidence graph</td></tr>
     <tr><td><code>*_state</code></td><td>data-transfer, on behalf of each engine</td><td>the engine</td><td>transfer progress, the sealed manifest, the authoritative stamp</td></tr>
     <tr><td>company database, schema <code>profiling</code></td><td>the hand-off's publish session only</td><td>the serving data commands, read-only</td><td>the published copy of a person's result tables</td></tr>
   </table></div>
   <p>Contracts own no store at all. Data-transfer writes local data only through three named modules and only over loopback. Setup writes settings files and starts containers, nothing in a database.</p>
-</section>
-
-<section class="chapter reveal" id="phases" data-scene="phases">
-  <div class="num">CHAPTER 3</div>
-  <h2>Three phases and what never happens</h2>
+</div></details>
+<details class="field-note" id="phases"><summary><span class="note-num">03</span><span>Three phases and what never happens</span><span class="plus" aria-hidden="true">+</span></summary><div class="note-body">
   <p>Setting up, moving data, and operating are separate phases. Nothing slides from one into the next on its own; each is started by a person, on purpose.</p>
   <div class="cards">
     <div class="card good"><span class="tag">1 · setup</span><h3>Provisions, only</h3><p>The uv preflight, host checks, the shared environment, the two settings files, the resource profile, the containers with health checks, and a record of what is installed.</p><p><strong>Never:</strong> a copy from the company database, a job, an outside call, a refresh or rollback, an engine process, or a deletion of settings, volumes or data.</p></div>
     <div class="card warn"><span class="tag">2 · data</span><h3>Explicit, read-only at the source</h3><p>A person types <code>data bootstrap</code>, <code>refresh</code> or <code>rollback</code>. Only these commands open a session to the company database, and that session can only read.</p><p><strong>Never:</strong> a user workload, scoring, export or evidence publication.</p></div>
-    <div class="card good"><span class="tag">3 · operate</span><h3>Local only</h3><p>The apps, the profiling jobs and the serving runs work against local stores. The studio's refresh and rollback buttons start a phase-2 operation, on purpose, with the same read-only session the command line uses.</p><p><strong>Never:</strong> company-database access outside a started data operation or the person's hand-off answer.</p></div>
+    <div class="card good"><span class="tag">3 · operate</span><h3>Local data, explicit external calls</h3><p>The apps, profiling jobs and serving runs use local stores. Profiling can also call website extraction and Gemini APIs. The studio's refresh and rollback buttons start a phase-2 operation, on purpose, with the same read-only session the command line uses.</p><p><strong>Never:</strong> company-database access outside a started data operation or the person's hand-off answer.</p></div>
     <div class="card warn"><span class="tag">4 · hand-off</span><h3>The one write</h3><p>After a run, on the person's click, the result tables are published into one schema of the company database through a separate, write-scoped session. Chapter 7.</p></div>
   </div>
-</section>
-
-<section class="chapter reveal" id="ladder" data-scene="stores">
-  <div class="num">CHAPTER 4</div>
-  <h2>The data ladder: how a copy becomes the live copy</h2>
-  <p>Both engines move data the same way, rung by rung. A failure on any rung leaves the live copy exactly as it was; staging is disposable.</p>
+</div></details>
+<details class="field-note" id="ladder"><summary><span class="note-num">04</span><span>The data ladder: how a copy becomes the live copy</span><span class="plus" aria-hidden="true">+</span></summary><div class="note-body">
+  <p>Both engines move data the same way, rung by rung. Copy or gate failures leave the active copy untouched. After a committed promotion, interrupted file finalization is healed from the authoritative database stamp.</p>
   <ol class="steps">
     <li><strong>Preflight.</strong> Read the company database's catalog only: are the expected tables and columns there, with the expected types; is there room on the local volume (2.2 times the source estimate). Copies nothing; every issue is one line naming the table or column.</li>
     <li><strong>Snapshot.</strong> Open one consistent view of the source so a long copy never sees half an update. While tables stream, the session that holds the snapshot is kept alive every 30 seconds.</li>
@@ -270,39 +127,27 @@
     <li><strong>Stamp.</strong> The database stamp is the authority; filesystem pointers heal from it.</li>
   </ol>
   <div class="callout"><strong>Rollback</strong> swaps active and previous: local, atomic, no remote access. Doing it twice rolls forward again. Each engine keeps exactly one previous vintage. Two advisory locks guard all of this: an engine mutex, so two data operations cannot overlap, and a swap key held shared by readers and exclusive by promote and rollback.</div>
-</section>
-
-<section class="chapter reveal" id="profiling" data-scene="flow">
-  <div class="num">CHAPTER 5</div>
-  <h2>Inside the profiling engine</h2>
+</div></details>
+<details class="field-note" id="profiling"><summary><span class="note-num">05</span><span>Inside the profiling engine</span><span class="plus" aria-hidden="true">+</span></summary><div class="note-body">
   <p>Its source is the website list copied by the ladder. A <em>job</em> takes a selection of websites and a <em>lens</em> (purchase drivers, political, or psychological: the set of questions the AI is asked), streams the pages, asks, and writes one row per website.</p>
   <p>Answers land in a <em>workspace</em>: the person's name plus an optional selection tag. Each workspace has its own result table per lens, <code>profiling.&lt;person&gt;_&lt;tag&gt;_&lt;lens&gt;_websites</code>, and its own registry of labels. Two jobs with the same workspace and lens append to the same table; a new tag re-profiles addresses another tag already covered. The name bound (12 characters) and the tag bound (22) are chosen so every allowed table name fits PostgreSQL's identifier limit exactly.</p>
-  <p>The worker reads the live source while holding the swap key shared, so a refresh can never swap the schema out from under a running job. The app's storage module is the only writer of the result and registry schemas.</p>
-</section>
-
-<section class="chapter reveal" id="serving" data-scene="lists">
-  <div class="num">CHAPTER 6</div>
-  <h2>Inside the serving engine</h2>
-  <p>Its vintage is the buyer data plus one <em>profiles table</em>: the person's published purchase-drivers answers. The data commands resolve which table that is, in a fixed order: an explicit pin in the settings, else the person's own published table, else a documented fallback. The choice is printed as a report-only gate and recorded in the manifest, so every vintage says where its labels came from.</p>
+  <p>The worker holds the shared swap lock while streaming its source workload. Once the workload is frozen in memory, model analysis releases that source-table lock. The app's storage module is the only writer of the result and registry schemas.</p>
+</div></details>
+<details class="field-note" id="serving"><summary><span class="note-num">06</span><span>Inside the serving engine</span><span class="plus" aria-hidden="true">+</span></summary><div class="note-body">
+  <p>Its vintage is the buyer data plus one <em>profiles table</em>: the person's published purchase-drivers answers. The data commands resolve which table that is, in a fixed order: an explicit pin in the settings, else the person's own published table, else a documented fallback. An absent explicit pin does not fall through. The choice is printed as a report-only gate and recorded in the manifest, so every vintage says where its labels came from.</p>
   <p>From that table the engine derives two surfaces during the ladder's derive rung: a label cell per website (the analyst's flattening of the answer JSON at a fixed score and confidence bar) and a seller write-up. A run then builds an audience list for a seller against the active vintage, breaking ties with the person's tie salt so the same input always gives the same list, and can keep the evidence behind it and publish that evidence to the local graph on request.</p>
   <p>Runs hold the runtime reader lock; a refresh or rollback that needs the exclusive swap key waits for them, then refuses rather than swapping under a run.</p>
-</section>
-
-<section class="chapter reveal" id="handoff" data-scene="handoff">
-  <div class="num">CHAPTER 7</div>
-  <h2>The hand-off loop</h2>
+</div></details>
+<details class="field-note" id="handoff"><summary><span class="note-num">07</span><span>The hand-off loop</span><span class="plus" aria-hidden="true">+</span></summary><div class="note-body">
   <p>The only write this system ever makes to the company database. When a profiling job finishes, its page asks: <strong>copy these result tables now, or later?</strong></p>
   <ul>
-    <li><strong>Copy now</strong> first checks reachability within five seconds, then, in one transaction: create <code>profiling.&lt;table&gt;</code> if absent with the local table's exact columns, copy the rows into a temporary table, insert the new ones (<code>ON CONFLICT DO NOTHING</code>). A second copy inserts zero rows.</li>
+    <li><strong>Copy now</strong> first checks reachability within five seconds, then, in a separate transaction for each table: create <code>profiling.&lt;table&gt;</code> if absent with the local table's exact columns, copy the rows into a temporary table, insert the new ones (<code>ON CONFLICT DO NOTHING</code>). Repeating the same rows inserts zero rows; later additions to the workspace can still be published. Multi-table publication is not one all-or-nothing transaction.</li>
     <li><strong>Later</strong> runs the same check and records a milestone; the banner and the Hand-offs panel show it until the person acts. Nothing is scheduled, nothing retries on a timer, nothing runs at start-up or from setup.</li>
   </ul>
-  <p>The session is a separate login that holds only <code>USAGE, CREATE</code> on that one schema. Its statement allowlist is pinned by value: it can issue nothing else, no drop, delete, update, alter or grant. The loop closes when the serving data commands resolve that published table as their profiles source (chapter 6): websites in, answers published, audience lists built from the person's own answers.</p>
+  <p>The session uses separate credentials with privileges to create and fill tables in the <code>profiling</code> schema and to create temporary tables. Its statement allowlist is pinned by value: it can issue nothing else, no drop, delete, update, alter or grant. The loop closes when the serving data commands resolve that published table as their profiles source (chapter 6): websites in, answers published, audience lists built from the person's own answers.</p>
   <div class="callout">Milestones outlive the process: a copy that was mid-flight when the app stopped comes back as failed and retryable; a postponed one stays listed even after the job's page is gone, because the tables are still local.</div>
-</section>
-
-<section class="chapter reveal" id="infra" data-scene="pipeline">
-  <div class="num">CHAPTER 8</div>
-  <h2>Local infrastructure and settings</h2>
+</div></details>
+<details class="field-note" id="infra"><summary><span class="note-num">08</span><span>Local infrastructure and settings</span><span class="plus" aria-hidden="true">+</span></summary><div class="note-body">
   <p>One PostgreSQL container serves both engines with two least-privilege roles and engine-prefixed schemas, bound to the machine itself only. Serving adds Neo4j. Committed Compose files carry portable defaults; setup measures the machine (CPU, memory, disk, free ports), picks a resource profile, computes one host-wide budget for the installed scopes, and writes it to an ignored <code>infra/resources.env</code>. A busy default port gets an override there, never an edit to the committed defaults.</p>
   <p>Each engine keeps its settings in one file only the person can read. The keys, never the values:</p>
   <div class="table-wrap"><table>
@@ -315,11 +160,8 @@
     <tr><td><code>SERVING_TIE_SALT</code></td><td>the tie-breaker that makes lists repeatable</td></tr>
     <tr><td><code>PROFILING_API_PORT</code>, <code>SERVING_STUDIO_PORT</code></td><td>where the two apps listen</td></tr>
   </table></div>
-</section>
-
-<section class="chapter reveal" id="install" data-scene="screen" data-caption="One line, then a guided screen on your own branch.">
-  <div class="num">CHAPTER 9</div>
-  <h2>Install and run</h2>
+</div></details>
+<details class="field-note" id="install"><summary><span class="note-num">09</span><span>Install and run</span><span class="plus" aria-hidden="true">+</span></summary><div class="note-body">
   <p>The repository is private; a team member gives your GitHub account read access. On Ubuntu 22.04 or newer (or WSL), once: <code>sudo apt install gh</code>, then <code>gh auth login</code>. Then one line:</p>
   <div class="cmd"><pre><code>gh repo clone PayMeService/promoter-brain-core ~/promoter-brain-core &amp;&amp; ~/promoter-brain-core/install.sh</code></pre><button data-copy>Copy</button></div>
   <p>A guided screen asks which engine (or "not sure"), your settings in plain language, reads your GitHub account, makes a branch named after you, runs setup with a progress bar, writes your notes into the README and the rules, and offers, never forces, the data copy. Re-running it is safe.</p>
@@ -330,11 +172,8 @@
   <div class="cmd"><pre><code>uv run promoter-brain-&lt;engine&gt; data bootstrap</code></pre><button data-copy>Copy</button><p class="why">The first copy, the whole ladder. <code>refresh</code> later, <code>rollback</code> to go back one vintage, <code>status</code> to see where you stand.</p></div>
   <div class="cmd"><pre><code>~/promoter-brain-core/install.sh --check</code></pre><button data-copy>Copy</button><p class="why">What is installed here, and is it healthy.</p></div>
   <p>When something goes wrong, every message ends with what to do next; the README's "Common failures" table lists them with the exact text.</p>
-</section>
-
-<section class="chapter reveal" id="glossary" data-scene="flow" data-caption="Every term of art, in plain words.">
-  <div class="num">CHAPTER 10</div>
-  <h2>Glossary</h2>
+</div></details>
+<details class="field-note" id="glossary"><summary><span class="note-num">10</span><span>Glossary</span><span class="plus" aria-hidden="true">+</span></summary><div class="note-body">
   <dl class="glossary">
     <dt id="g-engine">engine</dt><dd>One of the two machines, profiling or serving, each with its own browser page.</dd>
     <dt id="g-contracts">contracts</dt><dd>The shared definitions everything agrees on. Pure: no database, no network.</dd>
@@ -346,7 +185,7 @@
     <dt id="g-vintage">vintage / active / previous</dt><dd>A finished, checked copy; the live one; the one before it, kept for rollback.</dd>
     <dt id="g-manifest">manifest</dt><dd>The sealed receipt of a copy. Nothing goes live without one.</dd>
     <dt id="g-promotion">promotion</dt><dd>The atomic swap that makes a checked copy the live one.</dd>
-    <dt id="g-gate">gate</dt><dd>A check a refresh must pass before promotion. A failed gate leaves the live copy untouched.</dd>
+    <dt id="g-gate">gate</dt><dd>A check a refresh must pass before promotion. A failed blocking gate leaves the live copy untouched; report-only failures are disclosed.</dd>
     <dt id="g-lock">advisory lock</dt><dd>A "do not disturb" sign inside the database: no swap under a reader, no two data operations at once.</dd>
     <dt id="g-lens">lens</dt><dd>The set of questions the AI is asked about a website.</dd>
     <dt id="g-workspace">workspace</dt><dd>The person's name plus a selection tag: the label under which a run's answers are stored.</dd>
@@ -355,377 +194,200 @@
     <dt id="g-gh">gh</dt><dd>GitHub's command-line tool: signs you in once, clones the private repository, and tells the installer which account you are.</dd>
     <dt id="g-uv">uv</dt><dd>Installs the project's own Python and libraries into a private folder.</dd>
   </dl>
+</div></details><div class="closing"><div><div class="eyebrow">Explore what comes next</div><h2>A clear system.<br><em>A considered start.</em></h2><p>A developer-local workspace with two browser applications. Start with the installation guide, then choose the engine you need.</p></div><a class="button" href="#install">Install & explore <span aria-hidden="true">↗</span></a></div>
+<footer><span>Promoter Brain Core · Architecture, considered.</span><span>Source snapshot <a href="docs/11-source-snapshot.md">10.09.2026 / 3c8eb08 ↗</a></span><a href="#top">Back to the beginning ↑</a></footer>
 </section>
-
-</div>
-</div>
 </main>
-
-<footer>
-  <div><p><strong>Promoter Brain Core</strong> is a private project of its team; this tour names no secret, no server and no credential. The repository is <a href="https://github.com/PayMeService/promoter-brain-core">github.com/PayMeService/promoter-brain-core</a> (team access).</p></div>
-  <div><p>One self-contained file, <code>index.html</code>, at the root of that repository and on <a href="https://paymeservice.github.io/promoter-brain-core-site/">its public tour site</a>. Built with HTML, vanilla JavaScript, <a href="https://threejs.org/">three.js</a> and <a href="https://gsap.com/">GSAP</a>. If the moving picture does not show, every word of the tour is still here.</p></div>
-</footer>
-<button class="totop" id="totop" aria-label="Back to the top">↑</button>
+<div class="hud"><div class="hud-title"><b id="chapter-number">00 / 06</b><span id="chapter-title">The overview</span></div><div class="track" aria-hidden="true"><span id="progress"></span></div><span class="hud-end">SCROLL TO EXPLORE</span><button class="motion" id="motion" aria-pressed="false" aria-label="Pause motion"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 3v10M11 3v10" stroke="currentColor" stroke-width="2"/></svg><span>Motion on</span></button></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.149.0/three.min.js" integrity="sha384-RRHfJ6w1mTlKUBMYT/hvnRiOzEB/vyRV3DrQOseb6oYfvaZSfdd0byS4bHps0k2R" crossorigin="anonymous" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous" defer></script>
 <script>
-(function () {
-  "use strict";
-  var doc = document, root = doc.documentElement;
-  root.classList.remove("no-js");  // with JavaScript the canvas takes over; without it the SVG diagram stays
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var motionOn = !reduced;
-
-  // ── theme and motion toggles (per-viewer conveniences; storage is optional) ──
-  function store(key, value) { try { localStorage.setItem(key, value); } catch (e) { /* private window */ } }
-  function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
-  var themeBtn = doc.getElementById("theme"), motionBtn = doc.getElementById("motion");
-  function applyTheme(t) {
-    if (t === "light" || t === "dark") { root.setAttribute("data-theme", t); } else { root.removeAttribute("data-theme"); t = "auto"; }
-    themeBtn.textContent = "Theme: " + t; themeBtn.setAttribute("aria-pressed", t !== "auto");
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const scenes = [...document.querySelectorAll('[data-world]')];
+const rail = [...document.querySelectorAll('.rail a')];
+const media = matchMedia('(prefers-reduced-motion: reduce)');
+let preference = null;
+try { preference = localStorage.getItem('pb-motion'); } catch {}
+let motionOn = !media.matches && preference !== 'off';
+let starts = [], active = -1, sceneProgress = 0, drawWorld = null, raf = 0, lastTime = 0, clock = 0;
+const pointer = {x:0,y:0};
+const labels = [
+ ['Two independent engines','One deliberately connected system'],
+ ['Contracts · Transfer · Profiling · Serving','Exploded view / package boundaries'],
+ ['Staging · Active · Previous','Verified before visibility'],
+ ['Purchase · Psychological · Political','Three configurable lenses'],
+ ['Publish · Refresh','Two explicit operations / one data bridge'],
+ ['Purchase graph → Eligible audience','Conceptual graph / illustrative nodes'],
+ ['Export · Snapshot · Explain','An evidence trail for every run']
+];
+// Pure scroll mapping; shared by live rendering and the runnable regression check.
+function scenePosition(y, offsets) {
+  if (offsets.length < 2 || y <= offsets[0]) return 0;
+  for (let i = 0; i < offsets.length - 1; i++) {
+    if (y < offsets[i + 1]) return i + (y - offsets[i]) / Math.max(1, offsets[i + 1] - offsets[i]);
   }
-  applyTheme(load("pb-theme"));
-  themeBtn.addEventListener("click", function () {
-    var order = ["auto", "light", "dark"], now = root.getAttribute("data-theme") || "auto";
-    var next = order[(order.indexOf(now) + 1) % order.length]; applyTheme(next); store("pb-theme", next);
-  });
-  var savedMotion = load("pb-motion"); if (savedMotion === "off") { motionOn = false; }
-  function applyMotion() { motionBtn.textContent = "Motion: " + (motionOn ? "on" : "off"); motionBtn.setAttribute("aria-pressed", !motionOn); }
-  applyMotion();
-  motionBtn.addEventListener("click", function () { motionOn = !motionOn; applyMotion(); store("pb-motion", motionOn ? "on" : "off"); });
+  return offsets.length - 1;
+}
+function measure() { starts = scenes.map(el => el.offsetTop); update(); }
+function update() {
+  sceneProgress = scenePosition(scrollY, starts);
+  const index = Math.min(6, Math.floor(sceneProgress + .12));
+  if (index !== active) {
+    active = index;
+    $('#chapter-number').textContent = `${String(index).padStart(2,'0')} / 06`;
+    $('#chapter-title').textContent = scenes[index].dataset.title;
+    $('#world-label').replaceChildren(document.createTextNode(labels[index][0]));
+    const small = document.createElement('small'); small.textContent = labels[index][1]; $('#world-label').append(small);
+    rail.forEach((link,i) => i === index ? link.setAttribute('aria-current','step') : link.removeAttribute('aria-current'));
+  }
+  const archiveTop = $('#field-guide').getBoundingClientRect().top;
+  $('#world').style.visibility = archiveTop <= 0 ? 'hidden' : 'visible';
+  $('.rail').style.visibility = archiveTop < innerHeight * .5 ? 'hidden' : 'visible';
+  $('#progress').style.transform = `scaleX(${Math.min(1,scrollY / Math.max(1,document.documentElement.scrollHeight-innerHeight))})`;
+  requestDraw();
+}
+function requestDraw() { if (!raf && !document.hidden) raf = requestAnimationFrame(frame); }
+function frame(now) {
+  raf = 0;
+  const visible = $('#field-guide').getBoundingClientRect().top > 0;
+  if (motionOn && visible) clock += Math.min(.05,(now-lastTime)/1000 || 0);
+  lastTime = now;
+  if (drawWorld && visible) drawWorld(sceneProgress,clock,motionOn ? pointer : {x:0,y:0});
+  if (drawWorld && visible && motionOn) requestDraw();
+}
+function applyMotion() {
+  document.documentElement.dataset.motion = motionOn ? 'on' : 'off';
+  $('#motion').setAttribute('aria-pressed',String(!motionOn));
+  $('#motion').setAttribute('aria-label',motionOn ? 'Pause motion' : 'Enable motion');
+  $('#motion span').textContent = motionOn ? 'Motion on' : 'Motion off';
+  requestDraw();
+}
+$('#motion').addEventListener('click',() => {motionOn=!motionOn;try{localStorage.setItem('pb-motion',motionOn?'on':'off');}catch{}applyMotion();});
+media.addEventListener('change',() => {motionOn=!media.matches;applyMotion();});
+applyMotion();
+addEventListener('scroll',update,{passive:true});
+addEventListener('resize',measure);
+addEventListener('pointermove',e => {if(e.pointerType==='mouse' && motionOn){pointer.x=e.clientX/innerWidth-.5;pointer.y=e.clientY/innerHeight-.5;}},{passive:true});
+document.addEventListener('visibilitychange',() => {if(document.hidden){cancelAnimationFrame(raf);raf=0;}else{lastTime=performance.now();requestDraw();}});
+function revealHash() {
+  let target;try{target=document.getElementById(decodeURIComponent(location.hash.slice(1)));}catch{return;}
+  const detail=target?.closest('details');
+  if(detail){detail.open=true;requestAnimationFrame(()=>target.scrollIntoView({behavior:'instant',block:'start'}));}
+}
+addEventListener('hashchange',revealHash);
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{const target=document.getElementById(a.hash.slice(1));const detail=target?.closest('details');if(detail)detail.open=true;}));
+let toastTimer;
+document.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener('click',async()=>{
+  const code=button.parentElement.querySelector('code');
+  try{await navigator.clipboard.writeText(code.textContent);$('#toast').textContent='Command copied';}
+  catch{const selection=getSelection(),range=document.createRange();range.selectNodeContents(code);selection.removeAllRanges();selection.addRange(range);$('#toast').textContent='Command selected — press Ctrl+C / ⌘C';}
+  $('#toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),2400);
+}));
+measure();revealHash();document.fonts?.ready.then(measure);
 
-  // ── copy buttons ──
-  var toast = doc.getElementById("toast"), toastTimer = 0;
-  function say(text) { toast.textContent = text; toast.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 1600); }
-  Array.prototype.forEach.call(doc.querySelectorAll("[data-copy]"), function (btn) {
-    btn.addEventListener("click", function () {
-      var code = btn.parentNode.querySelector("code");
-      var text = code ? code.textContent : "";
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function () { say("Copied"); }, function () { say("Select the text and copy it yourself"); });
-      } else { say("Select the text and copy it yourself"); }
+// A single continuous 3D world. Geometry is illustrative; all architectural claims stay in HTML.
+function mountWorld() {
+  const T=window.THREE;if(!T)return;
+  let renderer;
+  try{renderer=new T.WebGLRenderer({canvas:$('#canvas'),alpha:true,antialias:true,powerPreference:'low-power'});}catch{return;}
+  renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
+  renderer.outputEncoding=T.sRGBEncoding;renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=.9;
+  const scene=new T.Scene(),camera=new T.PerspectiveCamera(34,innerWidth/innerHeight,.1,100);
+  const root=new T.Group();scene.add(root);
+  scene.add(new T.HemisphereLight(0xf1e6d1,0x151a16,.65));
+  function light(color,power,x,y,z){const l=new T.DirectionalLight(color,power);l.position.set(x,y,z);scene.add(l);}
+  light(0xffe2a3,1.1,3,5,4);light(0xcadbbd,.7,-4,2,-3);light(0xffffff,.4,1,-3,3);
+  // Procedural studio reflections, generated locally; no downloaded texture or film assets.
+  const css=getComputedStyle(document.documentElement),color=name=>css.getPropertyValue(name).trim();
+  const envCanvas=document.createElement('canvas');envCanvas.width=512;envCanvas.height=256;
+  const ec=envCanvas.getContext('2d');ec.fillStyle=color('--surface');ec.fillRect(0,0,512,256);
+  const gradient=ec.createLinearGradient(0,0,512,0);gradient.addColorStop(0,color('--reflection-dark'));gradient.addColorStop(.22,color('--reflection-mid'));gradient.addColorStop(.25,color('--reflection-light'));gradient.addColorStop(.32,color('--reflection-brass'));gradient.addColorStop(.48,color('--reflection-dark'));gradient.addColorStop(.7,color('--reflection-sage'));gradient.addColorStop(.73,color('--reflection-white'));gradient.addColorStop(.8,color('--reflection-edge'));gradient.addColorStop(1,color('--reflection-dark'));ec.fillStyle=gradient;ec.fillRect(0,0,512,256);
+  const envTexture=new T.CanvasTexture(envCanvas);envTexture.mapping=T.EquirectangularReflectionMapping;
+  const pmrem=new T.PMREMGenerator(renderer),env=pmrem.fromEquirectangular(envTexture);scene.environment=env.texture;envTexture.dispose();pmrem.dispose();
+  const gold=new T.MeshStandardMaterial({color:0x9f8050,metalness:1,roughness:.21,envMapIntensity:.9});
+  const dark=new T.MeshStandardMaterial({color:0x101b12,metalness:.92,roughness:.22,envMapIntensity:.65});
+  const glass=new T.MeshStandardMaterial({color:0x71846b,metalness:.72,roughness:.16,transparent:true,opacity:.3,depthWrite:false});
+  const bright=new T.MeshBasicMaterial({color:0xe5d5ae});
+  const groups=Array.from({length:7},()=>{const g=new T.Group();root.add(g);return g;});
+  function mesh(parent,geo,mat,x=0,y=0,z=0){const m=new T.Mesh(geo,mat);m.position.set(x,y,z);parent.add(m);return m;}
+  function outline(parent,geo,x=0,y=0,z=0,color=0xa99571){const l=new T.LineSegments(new T.EdgesGeometry(geo),new T.LineBasicMaterial({color,transparent:true,opacity:.55}));l.position.set(x,y,z);parent.add(l);return l;}
+  function ring(parent,r,tube,x=0,y=0,z=0,arc=Math.PI*2){return mesh(parent,new T.TorusGeometry(r,tube,12,128,arc),gold,x,y,z);}
+  function plate(parent,w,d,y){const geo=new T.BoxGeometry(w,.085,d);mesh(parent,geo,dark,0,y);outline(parent,geo,0,y);const top=new T.BoxGeometry(w*.94,.015,d*.94);mesh(parent,top,glass,0,y+.053);}
+  function lettering(parent,text,x,y,z,size=.15){const c=document.createElement('canvas');c.width=1024;c.height=128;const ctx=c.getContext('2d');ctx.fillStyle=color('--gold-bright');ctx.font='500 48px monospace';ctx.textAlign='center';ctx.fillText(text,512,78);const texture=new T.CanvasTexture(c);texture.encoding=T.sRGBEncoding;const sprite=new T.Sprite(new T.SpriteMaterial({map:texture,transparent:true,depthTest:false}));sprite.position.set(x,y,z);sprite.scale.set(size*8,size,1);parent.add(sprite);return sprite;}
+  function path(parent,points,color=0xbfa77d){const geo=new T.BufferGeometry().setFromPoints(points.map(p=>new T.Vector3(...p)));const line=new T.Line(geo,new T.LineBasicMaterial({color,transparent:true,opacity:.45}));parent.add(line);return line;}
+  // 00 — precision assembly: two engine cores held above two shared foundations.
+  const hero=groups[0];
+  plate(hero,2.65,2.15,-1);plate(hero,2.35,1.9,-.69);
+  [-.57,.57].forEach((x,i)=>{const box=new T.BoxGeometry(.95,.85,1.2);mesh(hero,box,i?dark:gold,x,.02);outline(hero,box,x,.02);for(let j=0;j<9;j++)mesh(hero,new T.BoxGeometry(.72,.014,.015),gold,x,.46,-.46+j*.115);lettering(hero,i?'SERVING':'PROFILING',x,.75,0,.115);});
+  for(let i=0;i<4;i++){const r=ring(hero,1.8+i*.13,.012,0,-.22);r.rotation.set(Math.PI/2,.15+i*.18,.2+i*.3);}
+  const orbit=ring(hero,2.15,.027,0,0,0,Math.PI*1.7);orbit.rotation.set(.9,.45,-.3);
+  const orbit2=ring(hero,2.31,.012,0,0,0,Math.PI*1.4);orbit2.rotation.set(-.2,1.1,.4);
+  for(let i=0;i<56;i++){const a=i/56*Math.PI*2;const mark=mesh(hero,new T.BoxGeometry(.012,.06,.015),i%7===0?bright:gold,Math.cos(a)*2.5,Math.sin(a)*2.5,0);mark.rotation.z=a-Math.PI/2;}
+  lettering(hero,'P B / C O R E',0,-1.38,0,.13);
+  // 01 — an exploded dependency stack, not a third parent runtime.
+  const foundation=groups[1];plate(foundation,3,2.2,-1.4);plate(foundation,2.8,2,-.5);
+  lettering(foundation,'CONTRACTS',0,-1.65,1.2,.15);lettering(foundation,'DATA-TRANSFER',0,-.65,1.25,.15);
+  [-.86,.86].forEach((x,i)=>{const sub=new T.Group();foundation.add(sub);sub.position.set(x,.6,0);plate(sub,1.35,1.7,0);mesh(sub,new T.BoxGeometry(1,.35,1.2),i?dark:gold,0,.23);lettering(foundation,i?'SERVING':'PROFILING',x,1.23,0,.13);path(foundation,[[x,.55,0],[x,-.45,0],[0,-.45,0],[0,-1.35,0]]);});
+  // 02 — a coherent revision and its one rollback slot.
+  const revisions=groups[2];
+  ['STAGING','ACTIVE','PREVIOUS'].forEach((name,i)=>{const y=1.2-i*1.2;for(let j=0;j<3;j++){mesh(revisions,new T.CylinderGeometry(1.2,1.2,.13,64),i===1?gold:dark,0,y+j*.13);const r=ring(revisions,1.2,.01,0,y+j*.13+.065);r.rotation.x=Math.PI/2;}lettering(revisions,name,1.85,y+.1,.4,.14);});
+  path(revisions,[[-1.6,1.4,0],[-1.8,1.4,0],[-1.8,-1,0],[-1.6,-1,0]]);
+  // 03 — three lens elements focus shared content into reusable attributes.
+  const profiling=groups[3];
+  ['PURCHASE','PSYCHOLOGICAL','POLITICAL'].forEach((name,i)=>{const z=(i-1)*1.1;const r=ring(profiling,1.12,.11,0,0,z);mesh(profiling,new T.CircleGeometry(1.06,80),glass,0,0,z);const fine=ring(profiling,1.3,.009,0,0,z);lettering(profiling,name,0,-1.6,z,.13);});
+  for(let i=0;i<10;i++){const a=i/10*Math.PI*2;path(profiling,[[Math.cos(a)*.7,Math.sin(a)*.7,-2.1],[Math.cos(a)*.7,Math.sin(a)*.7,0],[0,0,2.15]],0xbfae86);}
+  mesh(profiling,new T.IcosahedronGeometry(.21,1),bright,0,0,2.15);
+  // 04 — physical separation makes the explicit publish/refresh boundary visible.
+  const handoff=groups[4];
+  [-1.8,1.8].forEach((x,i)=>{const g=new T.Group();handoff.add(g);g.position.x=x;plate(g,1.1,1.4,-.5);mesh(g,new T.BoxGeometry(.75,.7,1),i?dark:gold,0,0);lettering(handoff,i?'SERVING':'PROFILING',x,-.95,0,.13);});
+  mesh(handoff,new T.CylinderGeometry(.52,.52,.8,48),gold);lettering(handoff,'RDS',0,1,0,.16);
+  const bridgeCurve=new T.CatmullRomCurve3([new T.Vector3(-1.8,.4,0),new T.Vector3(-.9,1.3,0),new T.Vector3(0,.4,0),new T.Vector3(.9,1.3,0),new T.Vector3(1.8,.4,0)]);
+  mesh(handoff,new T.TubeGeometry(bridgeCurve,100,.015,8,false),gold);
+  const packet=mesh(handoff,new T.SphereGeometry(.075,16,12),bright);
+  // 05 — deterministic illustrative network; never presented as live user data.
+  const serving=groups[5],nodes=[];
+  for(let i=0;i<42;i++){const a=i*2.39996,r=.5+Math.sqrt(i/42)*1.65;const p=[Math.cos(a)*r,Math.sin(a)*r*.82,Math.sin(i*4.7)*.8];nodes.push(p);mesh(serving,new T.SphereGeometry(i%7===0?.11:.055,12,8),i%7===0?bright:gold,...p);if(i>0)path(serving,[p,nodes[Math.floor((i-1)/2)]]);}
+  const selected=ring(serving,.32,.014,...nodes[7]);lettering(serving,'ELIGIBLE POPULATION',0,-2,0,.14);
+  // 06 — receipts, contact export and immutable run snapshots, in distinct layers.
+  const evidence=groups[6];
+  ['RECEIPT','AUDIENCE.CSV','RUN SNAPSHOT'].forEach((name,i)=>{const group=new T.Group();group.position.set((i-1)*.7,(i-1)*.5,-i*.45);evidence.add(group);const geo=new T.BoxGeometry(2,2.5,.06);mesh(group,geo,dark);outline(group,geo);lettering(group,name,0,.89,.07,.15);for(let j=0;j<7;j++)mesh(group,new T.BoxGeometry(j%3===0?1.4:.95,.015,.01),j===0?gold:glass,-.15,.48-j*.2,.06);const stamp=ring(group,.2,.015,.58,-.87,.07);});
+  // Separate cloned materials allow opacity to follow scroll, including line work and labels.
+  groups.forEach(group=>group.traverse(obj=>{if(obj.material){obj.material=obj.material.clone();obj.material.transparent=true;obj.userData.baseOpacity=obj.material.opacity;}}));
+  function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();requestDraw();}
+  addEventListener('resize',resize);resize();
+  drawWorld=(progress,time,mouse)=>{
+    const base=Math.floor(progress),raw=progress-base;
+    // Hold each composition for reading, then travel to the next with a smooth camera move.
+    let mix=Math.max(0,Math.min(1,(raw-.68)/.32));mix=mix*mix*(3-2*mix);
+    if(!motionOn)mix=raw>.88?1:0;
+    const mobile=innerWidth<=600;
+    camera.position.set(0,0,mobile?12.8:10.8);camera.lookAt(0,0,0);
+    root.position.set(mobile?.3:camera.aspect*1.42,mobile?-1.9:0,0);
+    root.scale.setScalar(mobile?.58:.82);
+    root.rotation.set(.22+mouse.y*.07,-.45+mouse.x*.12,0);
+    groups.forEach((group,i)=>{
+      const weight=i===base?1-mix:i===base+1?mix:0;
+      group.visible=weight>.001;if(!group.visible)return;
+      group.position.y=(i===base?-mix:1-mix)*.55;
+      const rot=[0,.16,0,-.72,0,.14,.1][i];
+      group.rotation.y=rot+(motionOn?Math.sin(time*.16)*.085:0)+(i===base?-mix:1-mix)*.3;
+      group.scale.setScalar(.85+.15*weight);
+      group.traverse(obj=>{if(obj.material)obj.material.opacity=obj.userData.baseOpacity*weight;});
     });
-  });
-
-  // ── the chapter in view lights its link ──
-  var links = Array.prototype.slice.call(doc.querySelectorAll("header.top nav a"));
-  var progress = doc.getElementById("progress"), totop = doc.getElementById("totop"), menu = doc.querySelector("header.top details");
-  function onScroll() {
-    var h = doc.documentElement, max = h.scrollHeight - h.clientHeight, y = h.scrollTop || doc.body.scrollTop;
-    progress.style.width = (max > 0 ? (y / max) * 100 : 0) + "%";
-    totop.classList.toggle("show", y > 600);
-  }
-  function measure() { root.style.setProperty("--header-h", doc.querySelector("header.top").getBoundingClientRect().height + "px"); }
-  measure(); window.addEventListener("resize", measure); if (doc.fonts && doc.fonts.ready) { doc.fonts.ready.then(measure); }
-  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
-  totop.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" }); });
-  if (menu) { menu.addEventListener("click", function (e) { if (e.target.tagName === "A") { menu.removeAttribute("open"); } }); }
-  var chapters = Array.prototype.slice.call(doc.querySelectorAll("section.chapter"));
-  var captions = {
-    curious: "Four packages, one direction of dependence.",
-    stores: "Staging, active, previous: one writer each, the swap all or nothing.",
-    phases: "Setup, then data, then operate. Nothing slides on its own.",
-    flow: "Websites become labelled rows in a workspace.",
-    lists: "A vintage, a seller, a repeatable audience list.",
-    handoff: "One drawer, one dedicated login, one click.",
-    pipeline: "One database container, two roles, portable defaults.",
-    screen: "One line, then a guided screen on your own branch."
+    orbit.rotation.z=-.3+time*.035;orbit2.rotation.z=.4-time*.025;
+    packet.position.copy(bridgeCurve.getPoint((time*.13)%1));
+    selected.rotation.z=time*.1;
+    renderer.render(scene,camera);
   };
-  function announce(chapter) {  // the chapter in view (or null for the opening): its link, the band's caption and label
-    var id = chapter ? chapter.id : "";
-    links.forEach(function (a) { a.setAttribute("aria-current", chapter && a.getAttribute("href") === "#" + id ? "true" : "false"); });
-    if (!chapter) { doc.getElementById("caption").textContent = captions.curious; doc.getElementById("kick").textContent = "The guided tour"; return; }
-    var scene = chapter.getAttribute("data-scene") || "flow";
-    doc.getElementById("caption").textContent = chapter.getAttribute("data-caption") || captions[scene] || captions.flow;
-    doc.getElementById("kick").textContent = (chapter.querySelector(".num") || {}).textContent || "";
-  }
-  announce(null);
-
-  // ── renderers: WebGL with three.js when both are there, else the 2D canvas; the SVG only without JavaScript ──
-  function webgl() {
-    try { var c = doc.createElement("canvas"); return !!(window.WebGLRenderingContext && (c.getContext("webgl") || c.getContext("experimental-webgl"))); } catch (e) { return false; }
-  }
-  function plain(reason) {
-    Array.prototype.forEach.call(doc.querySelectorAll(".stage"), function (s) { s.classList.add("plain"); });
-    doc.getElementById("mode").textContent = reason;
-    if ("IntersectionObserver" in window) {
-      chapters.forEach(function (c, i) { new IntersectionObserver(function (entries) { var e = entries[0]; if (e.isIntersecting) { announce(c); } else if (e.boundingClientRect.top > 0) { announce(i === 0 ? null : chapters[i - 1]); } }, { rootMargin: "-40% 0px -40% 0px" }).observe(c); });
-    }
-  }
-  function start() {
-    try { scenes(); } catch (e) { plain("static picture"); }
-  }
-
-  // ── the scenes: one particle world, drawn in the hero and in the rail ──
-  // Six thousand points morph between shapes as the chapters scroll by. Each shape is a
-  // set of positions and colours; GSAP tweens the mix between the current pair.
-  function scenes() {
-    var T = window.THREE, g = window.gsap;
-    var hasGL = !!T && webgl() && !/[?&]render=2d/.test(location.search);  // ?render=2d shows the canvas-2D path on purpose
-    doc.getElementById("mode").textContent = hasGL ? "" : "drawn without WebGL";
-    // a small tween of one number, used when GSAP is not there
-    var tweens = [];
-    function tween(obj, key, to, seconds) {
-      tweens = tweens.filter(function (t) { return t.obj !== obj || t.key !== key; });
-      if (seconds <= 0) { obj[key] = to; return; }
-      tweens.push({ obj: obj, key: key, from: obj[key], to: to, t0: performance.now(), d: seconds * 1000 });
-    }
-    function stepTweens(now) {
-      tweens = tweens.filter(function (t) {
-        var k = Math.min(1, (now - t.t0) / t.d), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-        t.obj[t.key] = t.from + (t.to - t.from) * e; return k < 1;
-      });
-    }
-    var N = 9000;
-    var COLD = [0.36, 0.72, 0.86], WARM = [0.93, 0.60, 0.33], LIST = [0.52, 0.80, 0.55], RED = [0.94, 0.45, 0.48], DIM = [0.45, 0.50, 0.58];
-    function rnd(seed) { var x = Math.sin(seed * 9301 + 49297) * 233280; return x - Math.floor(x); }
-    var PHI = Math.PI * (3 - Math.sqrt(5));
-    function tile(i, count, cx, cy, w, h, jitter) {   // an even lattice inside a rectangle
-      var cols = Math.max(2, Math.round(Math.sqrt(count * w / h))), rows = Math.max(2, Math.ceil(count / cols));
-      var c = i % cols, r = Math.floor(i / cols) % rows;
-      return [cx - w / 2 + (c + 0.5) * w / cols + (rnd(i + 17) - 0.5) * jitter, cy - h / 2 + (r + 0.5) * h / rows + (rnd(i + 29) - 0.5) * jitter];
-    }
-    function disc(i, count, cx, cy, rx, ry) {          // a sunflower spiral: even density on a disc
-      var r = Math.sqrt((i + 0.5) / count), a = i * PHI;
-      return [cx + Math.cos(a) * r * rx, cy + Math.sin(a) * r * ry];
-    }
-    function ring(i, count, cx, cy, rx, ry, thick) {
-      var r = 1 - (i % 7) * thick / 7, a = i * PHI;
-      return [cx + Math.cos(a) * r * rx, cy + Math.sin(a) * r * ry];
-    }
-    function shape(name) {
-      var pos = new Float32Array(N * 3), col = new Float32Array(N * 3), size = new Float32Array(N);
-      for (var i = 0; i < N; i++) {
-        var u = rnd(i + 1), w = rnd(i + 104729), q = i / N;
-        var x = 0, y = 0, z = 0, c = COLD, sz = 1, pt;
-        if (name === "cloud") {            // scattered websites, deliberately loose
-          x = (u - 0.5) * 17; y = (rnd(i + 7919) - 0.5) * 5.2; z = (w - 0.5) * 6; c = COLD; sz = 0.7 + w * 0.8;
-        } else if (name === "brain") {     // a Fibonacci sphere: labelled knowledge, three lenses
-          var yy = 1 - (i / (N - 1)) * 2, rr = Math.sqrt(1 - yy * yy), th = PHI * i;
-          x = Math.cos(th) * rr * 2.9; y = yy * 2.3; z = Math.sin(th) * rr * 2.6;
-          c = q < 0.34 ? WARM : q < 0.67 ? [0.80, 0.55, 0.85] : [0.95, 0.80, 0.40]; sz = 0.85;
-        } else if (name === "grid") {      // four package tiles and the dependency trail between them
-          var k4 = i % 5, j4 = Math.floor(i / 5), per = Math.floor(N / 5);
-          if (k4 === 4) {                  // the trail: contracts → data-transfer → the two engines
-            var t = j4 / per; if (t < 0.4) { x = -4.0 + t / 0.4 * 1.9; y = 0; } else if (t < 0.7) { var t2 = (t - 0.4) / 0.3; x = -0.4 + t2 * 1.8; y = t2 * 1.3; } else { var t3 = (t - 0.7) / 0.3; x = -0.4 + t3 * 1.8; y = -t3 * 1.3; }
-            y += Math.sin(t * 40) * 0.02; z = 0; c = [1, 0.92, 0.75]; sz = 0.55;
-          } else { var TX = [-5.2, -1.7, 2.7, 2.7][k4], TY = [0, 0, 1.4, -1.4][k4]; pt = tile(j4, per, TX, TY, 2.3, 1.5, 0.05); x = pt[0]; y = pt[1]; z = (rnd(i + 11) - 0.5) * 0.25; c = k4 === 0 ? DIM : k4 === 1 ? COLD : k4 === 2 ? WARM : LIST; sz = 0.9; }
-        } else if (name === "stack") {     // staging above, active in the middle, previous below
-          var d = i % 3, j3 = Math.floor(i / 3), per3 = Math.floor(N / 3);
-          pt = disc(j3, per3, 0, 0, 3.6, 1.0); x = pt[0]; y = 1.9 - d * 1.9 + pt[1] * 0.75; z = pt[1] * 0.9;
-          c = d === 1 ? WARM : d === 0 ? COLD : DIM; sz = d === 1 ? 1.15 : 0.8;
-        } else if (name === "pipeline") {  // three phase tiles with two arrows
-          var k3 = i % 4, j5 = Math.floor(i / 4), per4 = Math.floor(N / 4);
-          if (k3 === 3) { var tt = j5 / per4, seg = tt < 0.5 ? 0 : 1, tl = (tt - seg * 0.5) / 0.5; x = -3.05 + seg * 4.4 + tl * 1.7; y = Math.abs(tl - 0.85) < 0.15 ? (rnd(i + 3) - 0.5) * 0.5 * (1 - (tl - 0.85) / 0.15) : 0; z = 0; c = [1, 0.92, 0.75]; sz = 0.55; }
-          else { pt = tile(j5, per4, -4.4 + k3 * 4.4, 0, 2.6, 2.2, 0.05); x = pt[0]; y = pt[1]; z = (rnd(i + 31) - 0.5) * 0.25; c = k3 === 0 ? LIST : k3 === 1 ? WARM : COLD; sz = 0.95; }
-        } else if (name === "beam") {      // the hand-off: the run's tables, one beam, the company database's one schema
-          var k2 = i % 4, j2 = Math.floor(i / 4), per2 = Math.floor(N / 4);
-          if (k2 < 2) { pt = disc(j2 * 2 + k2, per2 * 2, -4.3, 0, 1.9, 1.5); x = pt[0]; y = pt[1]; z = (rnd(i + 3) - 0.5) * 0.4; c = WARM; sz = 0.85; }
-          else if (k2 === 2) { var tb = j2 / per2; x = -2.3 + tb * 6.4; y = (rnd(i + 5) - 0.5) * 0.12; z = (rnd(i + 9) - 0.5) * 0.12; c = [1, 0.9, 0.7]; sz = 0.5 + tb * 0.5; }
-          else { pt = ring(j2, per2, 4.7, 0, 1.25, 1.25, 0.5); x = pt[0]; y = pt[1]; z = (rnd(i + 13) - 0.5) * 0.3; c = RED; sz = 0.9; }
-        } else if (name === "lists") {     // an audience list: dense rows, the top three lit, a rank column
-          var rows = 11, colsL = 70, r = Math.floor(i / colsL) % rows, cc = i % colsL;
-          if (cc < 3) { x = -5.6 + cc * 0.22; y = 2.2 - r * 0.44; z = 0; c = r < 3 ? WARM : DIM; sz = 1.2; }
-          else { x = -4.6 + (cc - 3) / (colsL - 4) * 10.2; y = 2.2 - r * 0.44 + (rnd(i + 21) - 0.5) * 0.03; z = 0; c = r < 3 ? LIST : DIM; sz = r < 3 ? 1.1 : 0.7; }
-        } else if (name === "screen") {    // the guided screen: lines of a terminal, one highlighted
-          var ln = i % 11, jl = Math.floor(i / 11), perl = Math.floor(N / 11), len = 0.35 + rnd(ln + 5) * 0.65;
-          x = -5.5 + (jl / perl) * 11 * len; y = 2.2 - ln * 0.44; z = 0; c = ln === 3 ? WARM : COLD; sz = 0.85;
-        }
-        pos[i * 3] = x; pos[i * 3 + 1] = y; pos[i * 3 + 2] = z; col[i * 3] = c[0]; col[i * 3 + 1] = c[1]; col[i * 3 + 2] = c[2]; size[i] = sz;
-      }
-      return { pos: pos, col: col, size: size };
-    }
-    var shapes = { cloud: shape("cloud"), brain: shape("brain"), pipeline: shape("pipeline"), stack: shape("stack"), beam: shape("beam"), lists: shape("lists"), grid: shape("grid"), screen: shape("screen") };
-    // overlay labels per shape: text, x%, y% of the stage
-    var labelSets = {
-      grid: [["contracts", 32, 38], ["data-transfer", 44, 38], ["profiling", 58, 16, "hot"], ["serving", 58, 90]],
-      stack: [["staging · incoming, checked", 50, 10], ["active · the live vintage", 50, 50, "hot"], ["previous · one rollback slot", 50, 90]],
-      pipeline: [["1 · setup", 34, 88], ["2 · data", 50, 88, "hot"], ["3 · operate", 66, 88]],
-      brain: [["labelled answers, one row per website, three lenses", 50, 92, "hot"]],
-      lists: [["a repeatable audience list, best fit first", 50, 92]],
-      beam: [["your run's tables", 34, 90, "hot"], ["one write-scoped login", 50, 36], ["company database · schema profiling", 67, 90]],
-      screen: [["the guided screen", 50, 92]],
-      cloud: [["websites", 50, 92]]
-    };
-    var labelsBox = doc.getElementById("labels");
-    function showLabels(name) {
-      labelsBox.innerHTML = "";
-      (labelSets[name] || []).forEach(function (l) {
-        var el = doc.createElement("span"); el.className = "label" + (l[3] ? " " + l[3] : ""); el.textContent = l[0]; el.style.left = l[1] + "%"; el.style.top = l[2] + "%"; labelsBox.appendChild(el);
-        setTimeout(function () { el.classList.add("on"); }, reduced || !motionOn ? 0 : 700);
-      });
-    }
-    var sceneShape = { curious: "grid", stores: "stack", phases: "pipeline", flow: "brain", lists: "lists", handoff: "beam", pipeline: "pipeline", screen: "screen" };
-    var vert = [
-      "attribute vec3 posB; attribute vec3 colA; attribute vec3 colB; attribute float sizeA; attribute float sizeB;",
-      "uniform float uMix; uniform float uTime; uniform float uPixel; varying vec3 vColor; varying float vFade;",
-      "void main() {",
-      "  float m = smoothstep(0.0, 1.0, uMix);",
-      "  vec3 p = mix(position, posB, m);",
-      "  float lift = sin(uTime * 0.6 + p.x * 1.3 + p.z) * 0.025;",
-      "  p.y += lift; p += normalize(p + 0.001) * sin(m * 3.14159) * 0.9;",
-      "  vColor = mix(colA, colB, m); vFade = 1.0;",
-      "  vec4 mv = modelViewMatrix * vec4(p, 1.0);",
-      "  float s = mix(sizeA, sizeB, m);",
-      "  gl_PointSize = s * uPixel * 18.0 / -mv.z;",
-      "  gl_Position = projectionMatrix * mv;",
-      "}"].join("\n");
-    var frag = [
-      "varying vec3 vColor; varying float vFade;",
-      "void main() {",
-      "  vec2 d = gl_PointCoord - 0.5; float r = dot(d, d);",
-      "  if (r > 0.25) discard;",
-      "  float a = smoothstep(0.25, 0.0, r);",
-      "  gl_FragColor = vec4(vColor * (0.55 + a * 0.9), a * 0.9);",
-      "}"].join("\n");
-    function world(canvas, mode) {
-      var renderer = new T.WebGLRenderer({ canvas: canvas, antialias: false, alpha: true, powerPreference: "low-power" });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      renderer.setClearColor(0x000000, 0);
-      var scene = new T.Scene();
-      var camera = new T.PerspectiveCamera(30, 1, 0.1, 60);
-      var dist = 12.2;
-      var geo = new T.BufferGeometry();
-      var current = shapes.brain, next = shapes.brain;
-      geo.setAttribute("position", new T.BufferAttribute(current.pos.slice(), 3));
-      geo.setAttribute("posB", new T.BufferAttribute(next.pos.slice(), 3));
-      geo.setAttribute("colA", new T.BufferAttribute(current.col.slice(), 3));
-      geo.setAttribute("colB", new T.BufferAttribute(next.col.slice(), 3));
-      geo.setAttribute("sizeA", new T.BufferAttribute(current.size.slice(), 1));
-      geo.setAttribute("sizeB", new T.BufferAttribute(next.size.slice(), 1));
-      var material = new T.ShaderMaterial({ vertexShader: vert, fragmentShader: frag, transparent: true, depthWrite: false, blending: T.AdditiveBlending,
-        uniforms: { uMix: { value: 0 }, uTime: { value: 0 }, uPixel: { value: renderer.getPixelRatio() } } });
-      var points = new T.Points(geo, material); scene.add(points);
-      var glowMat = material.clone(); glowMat.uniforms = { uMix: material.uniforms.uMix, uTime: material.uniforms.uTime, uPixel: { value: material.uniforms.uPixel.value * 3.4 } };
-      glowMat.fragmentShader = frag.replace("a * 0.9)", "a * 0.07)");
-      var glow = new T.Points(geo, glowMat); scene.add(glow);
-      var state = { mix: 0, spin: 0, tilt: 0.16, mouseX: 0, mouseY: 0 };
-      function setShapes(fromName, toName) {
-        var a = shapes[fromName], b = shapes[toName];
-        geo.attributes.position.array.set(a.pos); geo.attributes.position.needsUpdate = true;
-        geo.attributes.posB.array.set(b.pos); geo.attributes.posB.needsUpdate = true;
-        geo.attributes.colA.array.set(a.col); geo.attributes.colA.needsUpdate = true;
-        geo.attributes.colB.array.set(b.col); geo.attributes.colB.needsUpdate = true;
-        geo.attributes.sizeA.array.set(a.size); geo.attributes.sizeA.needsUpdate = true;
-        geo.attributes.sizeB.array.set(b.size); geo.attributes.sizeB.needsUpdate = true;
-      }
-      var shown = "";
-      function morphTo(name) {
-        if (name === shown) { return; }
-        var from = shown || name; shown = name;
-        if (g) { g.killTweensOf(state); }
-        setShapes(from, name); state.mix = 0;
-        if (g) { g.to(state, { mix: 1, duration: reduced || !motionOn ? 0 : 1.6, ease: "power2.inOut" }); } else { tween(state, "mix", 1, reduced || !motionOn ? 0 : 1.6); }
-        showLabels(name);
-      }
-      function resize() {
-        var w = canvas.parentNode.clientWidth, h = canvas.parentNode.clientHeight;
-        if (!w || !h) { return; }
-        renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
-      }
-      resize();
-      var visible = true, last = 0;
-      function frame(now) {
-        if (!visible) { return; }
-        var dt = Math.min((now - last) / 1000, 0.05); last = now; stepTweens(now);
-        if (motionOn) { state.spin += dt; material.uniforms.uTime.value += dt; }
-        material.uniforms.uMix.value = state.mix;
-        // a gentle sway, never a full turn: the layouts stay readable
-        var spin = Math.sin(state.spin * 0.22) * 0.16 + state.mouseX * 0.25, tilt = state.tilt + state.mouseY * 0.15;
-        camera.position.set(Math.sin(spin) * dist * Math.cos(tilt), Math.sin(tilt) * dist, Math.cos(spin) * dist * Math.cos(tilt));
-        camera.lookAt(0, 0, 0);
-        renderer.render(scene, camera);
-        requestAnimationFrame(frame);
-      }
-      requestAnimationFrame(function (now) { last = now; frame(now); });
-      window.addEventListener("resize", resize);
-      canvas.parentNode.addEventListener("pointermove", function (e) {
-        if (!motionOn) { return; }
-        var r = canvas.getBoundingClientRect(); state.mouseX = ((e.clientX - r.left) / r.width - 0.5); state.mouseY = ((e.clientY - r.top) / r.height - 0.5);
-      });
-      canvas.parentNode.addEventListener("pointerleave", function () { tween(state, "mouseX", 0, 0.8); tween(state, "mouseY", 0, 0.8); });
-      doc.addEventListener("visibilitychange", function () { visible = !doc.hidden; if (visible) { requestAnimationFrame(function (now) { last = now; frame(now); }); } });
-      if ("IntersectionObserver" in window) {
-        new IntersectionObserver(function (entries) { var on = entries[0].isIntersecting; if (on && !visible) { visible = true; requestAnimationFrame(function (now) { last = now; frame(now); }); } else if (!on) { visible = false; } }).observe(canvas);
-      }
-      window.addEventListener("pagehide", function () { geo.dispose(); material.dispose(); glowMat.dispose(); renderer.dispose(); });
-      return { morphTo: morphTo };
-    }
-    function world2d(canvas) {
-      var ctx = canvas.getContext("2d");
-      var cur = shapes.grid, nxt = shapes.grid, shown = "";
-      var state = { mix: 0, spin: 0, tilt: 0.16, mouseX: 0, mouseY: 0, time: 0 };
-      var dist = 12.2, fov = 30 * Math.PI / 180, pixel = Math.min(window.devicePixelRatio || 1, 2);
-      var buf = new Float32Array(N * 3);
-      function morphTo(name) {
-        if (name === shown) { return; }
-        cur = shapes[shown || name]; nxt = shapes[name]; shown = name; state.mix = 0;
-        tween(state, "mix", 1, reduced || !motionOn ? 0 : 1.6);
-        showLabels(name);
-      }
-      function resize() {
-        var w = canvas.parentNode.clientWidth, h = canvas.parentNode.clientHeight;
-        if (!w || !h) { return; }
-        canvas.width = Math.round(w * pixel); canvas.height = Math.round(h * pixel);
-      }
-      resize();
-      var visible = true, last = 0;
-      function frame(now) {
-        if (!visible) { return; }
-        var dt = Math.min((now - last) / 1000, 0.05); last = now; stepTweens(now);
-        if (motionOn) { state.spin += dt; state.time += dt; }
-        var m = state.mix, e = m < 0.5 ? 2 * m * m : 1 - Math.pow(-2 * m + 2, 2) / 2;
-        var spin = Math.sin(state.spin * 0.22) * 0.16 + state.mouseX * 0.25, tilt = state.tilt + state.mouseY * 0.15;
-        var cs = Math.cos(spin), sn = Math.sin(spin), ct = Math.cos(tilt), st = Math.sin(tilt);
-        var W = canvas.width, H = canvas.height, f = (H / 2) / Math.tan(fov / 2);
-        ctx.clearRect(0, 0, W, H);
-        ctx.globalCompositeOperation = "lighter";
-        var lift = Math.sin(e * Math.PI) * 0.9;
-        for (var i = 0; i < N; i++) {
-          var ax = cur.pos[i * 3], ay = cur.pos[i * 3 + 1], az = cur.pos[i * 3 + 2];
-          var x = ax + (nxt.pos[i * 3] - ax) * e, y = ay + (nxt.pos[i * 3 + 1] - ay) * e, z = az + (nxt.pos[i * 3 + 2] - az) * e;
-          var len = Math.sqrt(x * x + y * y + z * z) + 0.001; x += x / len * lift; y += y / len * lift + Math.sin(state.time * 0.6 + x * 1.3 + z) * 0.025; z += z / len * lift;
-          // rotate around y (spin), then x (tilt), then the camera at dist
-          var rx = x * cs - z * sn, rz = x * sn + z * cs; var ry = y * ct - rz * st; rz = y * st + rz * ct; rz = dist - rz;
-          if (rz < 0.5) { continue; }
-          var sx = W / 2 + rx * f / rz, sy = H / 2 - ry * f / rz;
-          var r0 = cur.col[i * 3] + (nxt.col[i * 3] - cur.col[i * 3]) * e, g0 = cur.col[i * 3 + 1] + (nxt.col[i * 3 + 1] - cur.col[i * 3 + 1]) * e, b0 = cur.col[i * 3 + 2] + (nxt.col[i * 3 + 2] - cur.col[i * 3 + 2]) * e;
-          var sz = (cur.size[i] + (nxt.size[i] - cur.size[i]) * e) * pixel * 18 / rz;
-          ctx.fillStyle = "rgba(" + ((r0 * 255) | 0) + "," + ((g0 * 255) | 0) + "," + ((b0 * 255) | 0) + ",0.85)";
-          ctx.fillRect(sx - sz / 2, sy - sz / 2, sz, sz);
-        }
-        ctx.globalCompositeOperation = "source-over";
-        requestAnimationFrame(frame);
-      }
-      requestAnimationFrame(function (now) { last = now; frame(now); });
-      window.addEventListener("resize", resize);
-      canvas.parentNode.addEventListener("pointermove", function (ev) { if (!motionOn) { return; } var r = canvas.getBoundingClientRect(); state.mouseX = (ev.clientX - r.left) / r.width - 0.5; state.mouseY = (ev.clientY - r.top) / r.height - 0.5; });
-      canvas.parentNode.addEventListener("pointerleave", function () { tween(state, "mouseX", 0, 0.8); tween(state, "mouseY", 0, 0.8); });
-      doc.addEventListener("visibilitychange", function () { visible = !doc.hidden; if (visible) { requestAnimationFrame(function (now) { last = now; frame(now); }); } });
-      return { morphTo: morphTo };
-    }
-    var stage = hasGL ? world(doc.getElementById("canvas"), "stage") : world2d(doc.getElementById("canvas"));
-    if (g && window.ScrollTrigger) { g.registerPlugin(window.ScrollTrigger); }
-    function opening() { announce(null); stage.morphTo("grid"); }  // above chapter 1: the hero's own state
-    chapters.forEach(function (chapter, index) {
-      var name = sceneShape[chapter.getAttribute("data-scene") || "flow"] || "brain";
-      function go() { announce(chapter); stage.morphTo(name); }
-      function back() { if (index === 0) { opening(); } else { var prev = chapters[index - 1]; announce(prev); stage.morphTo(sceneShape[prev.getAttribute("data-scene") || "flow"] || "brain"); } }
-      if (g && window.ScrollTrigger) { window.ScrollTrigger.create({ trigger: chapter, start: "top 60%", end: "bottom 40%", onEnter: go, onEnterBack: go, onLeaveBack: back }); }
-      else if ("IntersectionObserver" in window) {
-        new IntersectionObserver(function (entries) { var e = entries[0]; if (e.isIntersecting) { go(); } else if (e.boundingClientRect.top > 0) { back(); } }, { rootMargin: "-40% 0px -40% 0px" }).observe(chapter);
-      }
-    });
-    // opens on scattered websites and gathers them into the four packages
-    stage.morphTo("cloud");
-    setTimeout(function () { stage.morphTo("grid"); }, reduced || !motionOn ? 0 : 900);
-    // gentle text reveal from a visible resting state
-    if (!reduced && g && window.ScrollTrigger) { chapters.forEach(function (c) { g.from(c, { opacity: 0.35, y: 12, duration: 0.6, ease: "power1.out", scrollTrigger: { trigger: c, start: "top 85%", once: true } }); }); }
-  }
-  if (doc.readyState === "complete") { start(); } else { window.addEventListener("load", start); }
+  $('#world').classList.add('ready');requestDraw();
+  $('#canvas').addEventListener('webglcontextlost',event=>{event.preventDefault();drawWorld=null;$('#world').classList.remove('ready');});
+  $('#canvas').addEventListener('webglcontextrestored',()=>location.reload());
+  addEventListener('pagehide',()=>{cancelAnimationFrame(raf);raf=0;});
+  addEventListener('pageshow',()=>requestDraw());
+}
+if(document.readyState==='complete')mountWorld();else addEventListener('load',mountWorld,{once:true});
 })();
 </script>
 </body>
