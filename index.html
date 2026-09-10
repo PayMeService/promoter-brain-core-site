@@ -465,7 +465,7 @@ function update() {
   world.style.visibility = state.inGuide ? 'hidden' : 'visible';
   world.style.opacity=String(motionOn && engines.some(engine=>engine.chapter===active)?state.opacity:1);
   for (const selector of ['.rail','.plate-id','.component-link','.architecture-map']) $(selector).style.visibility = archiveTop < innerHeight*.5 ? 'hidden' : 'visible';
-  $('#progress').style.transform = `scaleX(${Math.min(1,scrollY / Math.max(1,document.documentElement.scrollHeight-innerHeight))})`;
+  $('#progress').style.transform = `scaleX(${sceneProgress / (scenes.length-1)})`;
   world.style.setProperty('--brain-scale',String(brainScale(motionOn?sceneProgress:active)));
   if (motionOn && !engines.some(engine => engine.chapter === active)) loadFilm();
   syncEngines();updateMediaStatus();
