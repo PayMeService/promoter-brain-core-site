@@ -56,7 +56,7 @@
 main{position:relative;z-index:1}.scene{position:relative;min-height:140svh;padding:22svh var(--gutter) 0;scroll-margin-top:-6rem}.hero{min-height:110svh}.scene-copy{width:42%;max-width:560px;position:sticky;top:29svh;padding-bottom:var(--s8)}.hero .scene-copy{top:25svh;padding-top:0;margin-top:0;max-width:660px;width:53%}.eyebrow{display:flex;align-items:center;gap:var(--s4);font-family:var(--font-mono);font-size:10px;font-weight:400;letter-spacing:.17em;text-transform:uppercase;color:var(--gold);margin:0 0 var(--s6)}.eyebrow::before{content:'';height:1px;width:28px;background:var(--gold)}h1,h2,h3,p{margin:0}h1,h2{font-weight:400;line-height:var(--tight);letter-spacing:-.035em}h1{font-size:clamp(66px,7.8vw,124px)}h1 em,h2 em{font-family:var(--font-display);font-weight:400;color:var(--gold-bright);font-style:normal}h1 em{display:block;padding-left:var(--s7)}.hero p{font-size:14px;max-width:345px;color:var(--muted);margin-top:var(--s6)}.hero-actions{display:flex;align-items:center;gap:var(--s6);margin-top:var(--s7)}.button{display:inline-flex;align-items:center;justify-content:space-between;gap:var(--s7);font-size:11px;letter-spacing:.03em;padding:var(--s4) var(--s5);border:1px solid var(--gold);background:var(--gold);color:var(--paper);transition:background var(--transition),transform var(--transition)}.button:hover{background:var(--gold-bright);transform:translateY(-2px)}.text-link{font-size:11px;color:var(--muted);border-bottom:1px solid var(--line);padding-block:var(--s2)}.text-link:hover{color:var(--gold)}.hero-bottom{position:absolute;bottom:15svh;left:var(--gutter);right:var(--gutter);display:flex;justify-content:space-between;align-items:end;gap:var(--s6)}.hero-facts{display:flex;gap:var(--s7)}.hero-facts div{border-left:1px solid var(--line);padding-left:var(--s4)}.hero-facts strong{font-family:var(--font-display);font-size:29px;line-height:1.1;font-weight:400}.hero-facts span{display:block;font-family:var(--font-mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:var(--s2)}.scroll-note{display:flex;gap:var(--s4);align-items:center;font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.scroll-note b{display:grid;place-items:center;width:34px;height:46px;border:1px solid var(--line);border-radius:var(--pill);color:var(--gold);font-weight:400;animation:drift 3s ease-in-out infinite}@keyframes drift{50%{transform:translateY(7px)}}
 .scene:not(.hero) .scene-copy{padding-top:var(--s6)}h2{font-size:clamp(44px,5.1vw,76px)}.scene-copy>p{color:var(--muted);font-size:14px;max-width:380px;margin-top:var(--s6)}.scene-copy>p strong{font-weight:400;color:var(--ink)}.detail-line{border-top:1px solid var(--line);margin-top:var(--s6);padding-top:var(--s4);max-width:370px;font-family:var(--font-mono);font-size:10px;color:var(--gold);display:flex;gap:var(--s5);flex-wrap:wrap}.detail-line span{color:var(--faint)}.chapter-source{display:inline-block;color:var(--faint);font-size:10px;margin-top:var(--s6);border-bottom:1px solid var(--line)}.chapter-source:hover{color:var(--gold)}.scene-number{position:absolute;top:var(--s6);right:var(--gutter);font-family:var(--font-display);font-size:160px;line-height:var(--flat);color:var(--line-soft);pointer-events:none}.scene-tag{display:inline-flex;align-items:center;gap:var(--s3);font-family:var(--font-mono);font-size:9px;letter-spacing:.06em;color:var(--sage);margin-top:var(--s5)}.scene-tag::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--sage)}
 .rail{position:fixed;right:var(--s6);top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column}.rail a{height:30px;width:30px;display:grid;place-items:center;position:relative}.rail a::after{content:'';height:4px;width:4px;border:1px solid var(--faint);border-radius:50%;transition:var(--transition)}.rail a[aria-current="step"]::after{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 5px var(--line-soft)}.rail a span{position:absolute;right:35px;white-space:nowrap;color:var(--gold);background:var(--paper);font-family:var(--font-mono);font-size:9px;padding:var(--s2);opacity:0;pointer-events:none}.rail a:hover span,.rail a:focus-visible span{opacity:1}.hud{position:fixed;bottom:0;left:var(--gutter);right:var(--gutter);height:68px;display:flex;align-items:center;gap:var(--s6);z-index:25;background:linear-gradient(transparent,var(--paper) 38%);font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;color:var(--faint)}.hud-title{min-width:165px}.hud-title b{font-weight:400;color:var(--gold);margin-right:var(--s3)}.track{height:1px;background:var(--line);flex:1}.track span{display:block;width:100%;height:100%;background:var(--gold);transform:scaleX(0);transform-origin:left}.motion{display:flex;gap:var(--s3);align-items:center;background:none;border:none;font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;min-height:44px;padding:0}.motion svg{width:13px;height:13px}.hud-end{color:var(--muted)}
-.archive{position:relative;background:var(--paper);border-top:1px solid var(--line);padding:var(--s9) var(--gutter);z-index:2}.archive-header{display:flex;justify-content:space-between;align-items:end;gap:var(--s7);margin-bottom:var(--s8)}.archive-header h2{font-size:clamp(42px,5vw,70px)}.archive-header p{color:var(--muted);max-width:300px;font-size:13px}.doc-links{display:flex;gap:var(--s5);flex-wrap:wrap;margin-bottom:var(--s7);font-size:11px;color:var(--gold)}.doc-links a{border-bottom:1px solid var(--line);padding-block:var(--s2)}.field-note{border-top:1px solid var(--line);scroll-margin-top:110px}.field-note:last-of-type{border-bottom:1px solid var(--line)}.field-note>summary{list-style:none;display:flex;align-items:center;gap:var(--s6);cursor:pointer;padding:var(--s5) 0;font-size:17px;line-height:1.4}.field-note>summary::-webkit-details-marker{display:none}.note-num{font-family:var(--font-mono);font-size:10px;color:var(--gold);width:30px;flex-shrink:0}.plus{margin-left:auto;font-size:24px;color:var(--gold);font-weight:400}.field-note[open] .plus{transform:rotate(45deg)}.note-body{max-width:1050px;padding:var(--s4) 0 var(--s7) 62px;color:var(--muted);font-size:14px}.note-body p{margin-bottom:var(--s5);max-width:85ch}.note-body h3{color:var(--ink);font-size:16px;font-weight:500;margin-block:var(--s4)}.note-body strong{color:var(--ink)}.note-body a{color:var(--gold);text-decoration:underline}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s6);margin-block:var(--s6)}.card{padding:var(--s5);border:1px solid var(--line)}.tag{font-family:var(--font-mono);font-size:9px;color:var(--gold);text-transform:uppercase}.table-wrap{overflow-x:auto;margin-block:var(--s5)}table{width:100%;border-collapse:collapse;font-size:12px}td,th{text-align:left;vertical-align:top;padding:var(--s3);border-bottom:1px solid var(--line)}th{color:var(--ink)}pre,code{font-family:var(--font-mono);font-size:.86em}pre{padding:var(--s5);background:var(--surface);overflow-x:auto;max-width:100%}code{overflow-wrap:anywhere;color:var(--sage)}.callout{border-left:1px solid var(--gold);padding:var(--s4) var(--s5);background:var(--surface);margin-block:var(--s5)}li{margin-bottom:var(--s3)}.cmd{display:flex;align-items:start;gap:var(--s3);flex-wrap:wrap}.cmd pre{flex:1;min-width:0;margin:0}.cmd button{background:var(--surface-raised);border:1px solid var(--line);padding:var(--s3);font-size:11px;min-height:44px}.cmd .why{flex-basis:100%;font-size:12px}.glossary{display:grid;grid-template-columns:180px 1fr;gap:var(--s4) var(--s6)}dt{color:var(--gold)}dd{margin:0}.closing{padding:var(--s9) 0 var(--s8);display:flex;justify-content:space-between;align-items:end;gap:var(--s7)}.closing h2{font-size:clamp(40px,5vw,66px)}.closing p{margin-top:var(--s5);max-width:420px;font-size:13px;color:var(--muted)}footer{padding:var(--s6) 0 var(--s7);border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:var(--s6);font-family:var(--font-mono);font-size:9px;color:var(--faint)}footer a{color:var(--gold)}.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--paper);font-size:12px;padding:var(--s3) var(--s5);z-index:50;opacity:0;pointer-events:none;transition:opacity var(--transition)}.toast.show{opacity:1}
+.archive{position:relative;background:var(--paper);border-top:1px solid var(--line);padding:var(--s9) max(var(--gutter),calc((100vw - 1240px)/2));z-index:2}.archive-header{display:flex;justify-content:space-between;align-items:end;gap:var(--s7);margin-bottom:var(--s8)}.archive-header h2{font-size:clamp(42px,5vw,70px)}.archive-header p{color:var(--muted);max-width:300px;font-size:13px}.doc-links{display:flex;gap:var(--s5);flex-wrap:wrap;margin-bottom:var(--s7);font-size:11px;color:var(--gold)}.doc-links a{border-bottom:1px solid var(--line);padding-block:var(--s2)}.field-note{border-top:1px solid var(--line);scroll-margin-top:16px}.field-note:last-of-type{border-bottom:1px solid var(--line)}.field-note>summary{list-style:none;display:flex;align-items:center;gap:var(--s6);cursor:pointer;padding:var(--s5) 0;font-size:17px;line-height:1.4}.field-note>summary::-webkit-details-marker{display:none}.note-num{font-family:var(--font-mono);font-size:10px;color:var(--gold);width:30px;flex-shrink:0}.plus{margin-left:auto;font-size:24px;color:var(--gold);font-weight:400}.field-note[open] .plus{transform:rotate(45deg)}.note-body{max-width:1050px;padding:var(--s4) 0 var(--s7) 62px;color:var(--muted);font-size:14px}.note-body p{margin-bottom:var(--s5);max-width:85ch}.note-body h3{color:var(--ink);font-size:16px;font-weight:500;margin-block:var(--s4)}.note-body strong{color:var(--ink)}.note-body a{color:var(--gold);text-decoration:underline}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s6);margin-block:var(--s6)}.card{padding:var(--s5);border:1px solid var(--line)}.tag{font-family:var(--font-mono);font-size:9px;color:var(--gold);text-transform:uppercase}.table-wrap{overflow-x:auto;margin-block:var(--s5)}table{width:100%;border-collapse:collapse;font-size:12px}td,th{text-align:left;vertical-align:top;padding:var(--s3);border-bottom:1px solid var(--line)}th{color:var(--ink)}pre,code{font-family:var(--font-mono);font-size:.86em}pre{padding:var(--s5);background:var(--surface);overflow-x:auto;max-width:100%}code{overflow-wrap:anywhere;color:var(--sage)}.callout{border-left:1px solid var(--gold);padding:var(--s4) var(--s5);background:var(--surface);margin-block:var(--s5)}li{margin-bottom:var(--s3)}.cmd{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:12px;margin:18px 0 26px;padding:20px;border:1px solid var(--line);background:var(--surface)}.cmd pre{min-width:0;margin:0;padding:0;align-self:center;background:transparent;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.75}.cmd pre code{font-size:13px}.cmd button{background:var(--surface-raised);border:1px solid var(--line);padding:var(--s3);font-size:11px;min-height:44px}.cmd .why{grid-column:1/-1;max-width:none;margin:0;padding-top:12px;border-top:1px solid var(--line);font-size:13px;line-height:1.75}.glossary{display:grid;grid-template-columns:180px 1fr;gap:var(--s4) var(--s6)}dt{color:var(--gold)}dd{margin:0}.closing{padding:var(--s9) 0 var(--s8);display:flex;justify-content:space-between;align-items:end;gap:var(--s7)}.closing h2{font-size:clamp(40px,5vw,66px)}.closing p{margin-top:var(--s5);max-width:420px;font-size:13px;color:var(--muted)}footer{padding:var(--s6) 0 var(--s7);border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:var(--s6);font-family:var(--font-mono);font-size:9px;color:var(--faint)}footer a{color:var(--gold)}.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--paper);font-size:12px;padding:var(--s3) var(--s5);z-index:50;opacity:0;pointer-events:none;transition:opacity var(--transition)}.toast.show{opacity:1}
 /* The film and its poster share a contain box; small screens keep the entire brain. */
 .topbar{height:84px;background:linear-gradient(#050505f2,#05050588);backdrop-filter:blur(8px)}
 .brand svg{width:29px}.topbar nav{font-size:11px}.brand{font-size:11px}
@@ -87,7 +87,7 @@ h2{font-size:clamp(40px,4.5vw,68px)}
  .plate-id{top:85px;right:var(--gutter);font-size:7px}.hero-bottom{bottom:7svh}.hero-facts{gap:20px}.hero-facts strong{font-size:17px}.hero-facts span{font-size:6px;letter-spacing:.08em}.scroll-note{font-size:0}.scroll-note b{font-size:12px;width:24px;height:32px}
  .scene-number{top:11svh;font-size:8px}.detail-line{margin-top:16px;padding-top:12px;font-size:8px;gap:12px}.scene-tag{font-size:8px;margin-top:12px}.chapter-source{font-size:10px;margin-top:14px}
  .rail{right:0;top:66%}.rail a{width:28px;min-width:28px;height:28px;min-height:28px}.hud{height:52px;gap:12px;font-size:8px}.hud-title{min-width:185px}.motion{font-size:8px;gap:6px}.motion svg{width:10px}.track{min-width:12px}
- .archive{padding-top:60px}.archive-header{display:block}.archive-header p{margin-top:20px}.field-note>summary{font-size:14px;gap:12px}.note-num{width:23px}.note-body{font-size:12px}.cards{grid-template-columns:1fr;gap:16px}.glossary{grid-template-columns:1fr;gap:8px}dd{margin-bottom:16px}.closing{display:block;padding-block:60px}.closing .button{margin-top:24px}footer{flex-direction:column;gap:12px}.doc-links{font-size:10px;gap:16px}
+ .cmd{padding:14px;gap:12px}.cmd pre code{font-size:12px}.cmd .why{font-size:12px}.archive{padding-top:60px}.archive-header{display:block}.archive-header p{margin-top:20px}.field-note>summary{font-size:14px;gap:12px}.note-num{width:23px}.note-body{font-size:12px}.cards{grid-template-columns:1fr;gap:16px}.glossary{grid-template-columns:1fr;gap:8px}dd{margin-bottom:16px}.closing{display:block;padding-block:60px}.closing .button{margin-top:24px}footer{flex-direction:column;gap:12px}.doc-links{font-size:10px;gap:16px}
 }
 @media(max-width:380px){.hud-title{min-width:150px}.hud-title b{margin-right:6px}.hud-title{font-size:7px}.scene-copy>p{font-size:11px}.hero-actions{gap:12px}}
 /* Architecture annotations stay in HTML so boundaries and labels remain exact. */
@@ -103,6 +103,29 @@ h2{font-size:clamp(40px,4.5vw,68px)}
 @media print{.architecture-map{display:none}}
 .play-next{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;min-width:86px;padding:0 14px;border:1px solid var(--gold);background:var(--gold);color:var(--paper);font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;flex-shrink:0}.play-next:hover{background:var(--gold-bright)}.play-next svg{width:10px;height:10px}
 @media(max-width:700px){.hud-title{min-width:0;flex:1}.hud-title b{display:block;margin-bottom:2px}.hud .track{display:none}.play-next{min-width:70px;padding:0 10px;font-size:9px}.hud{gap:12px}.motion{flex-shrink:0}}
+/* Dedicated engine chambers: quiet typography, a wide mechanism, and living flow. */
+.engine-stage{position:absolute;width:92%;left:4%;top:59%;height:48svh;transform:translateY(-50%);mask-image:linear-gradient(0deg,transparent,#000 12%,#000 88%,transparent)}
+.engine-stage img,.engine-stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.engine-stage video{opacity:0}.engine-stage.ready video{opacity:1}.engine-stage.ready img{opacity:0}
+.world.engine-active .brain-stage{opacity:0}.world.engine-active::after{background:linear-gradient(0deg,#050505,transparent 24%,transparent 62%,#050505 88%)}
+.engine-scene{min-height:185svh;padding-top:14svh}.engine-scene .scene-copy{width:100%;max-width:none;top:14svh}.engine-scene h2{font-size:clamp(40px,4.5vw,68px);max-width:none;line-height:1.12}.engine-scene h2 br{display:none}.engine-scene h2 em::before{content:' '}.engine-scene .scene-copy>p{max-width:640px;font-size:13px;line-height:1.75;margin-top:16px}.engine-scene .eyebrow{margin-bottom:18px}.engine-scene .detail-line,.engine-scene .scene-tag{display:none}.engine-scene .chapter-source{margin-top:14px}.engine-scene .scene-number{display:none}
+html[data-engine="true"] .architecture-map{left:var(--gutter);right:var(--gutter);bottom:11%;background:linear-gradient(transparent,#050505d9);border:0;backdrop-filter:none;padding:0}
+html[data-engine="true"] .architecture-map::before,html[data-engine="true"] .component-link{display:none}
+.process-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}.process-steps a{position:relative;padding:12px 0 0;border-top:1px solid var(--line);min-height:64px}.process-steps span{position:absolute;right:0;top:14px;font:9px var(--font-mono);color:var(--faint)}.process-steps b{display:block;font-size:13px;font-weight:400;letter-spacing:.02em}.process-steps small{display:block;margin-top:7px;font-size:10px;line-height:1.5;color:var(--muted)}.process-steps a:hover b{color:var(--gold-bright)}
+html[data-motion="off"] .engine-stage.ready video{opacity:0}html[data-motion="off"] .engine-stage.ready img{opacity:1}
+@media(max-width:700px){.engine-scene{min-height:175svh;padding-top:15svh}.engine-scene .scene-copy{top:15svh}.engine-scene h2{font-size:34px;line-height:1.15;max-width:360px}.engine-scene .scene-copy>p{font-size:11px;max-width:340px;line-height:1.7;margin-top:12px}.engine-scene .eyebrow{margin-bottom:14px}.engine-scene .chapter-source{font-size:10px;margin-top:12px}.engine-stage{width:100%;left:0;top:59%;height:35svh}html[data-engine="true"] .architecture-map{bottom:9%;left:24px;right:24px}.process-steps{grid-template-columns:1fr 1fr;gap:10px 18px}.process-steps a{min-height:45px;padding-top:7px}.process-steps b{font-size:10px}.process-steps small{font-size:8px;margin-top:3px}.process-steps span{font-size:7px;top:9px}html[data-engine="true"] .architecture-map .map-heading{font-size:7px;margin-bottom:8px}}
+@media print{.engine-stage{display:none}.engine-scene{min-height:0}.engine-scene .scene-copy{position:static}}
+/* One chapter owns the copy, mechanism and annotations throughout its scroll interval. */
+html[data-motion] .scene-copy,html[data-motion] .hero-bottom{position:fixed;visibility:hidden;opacity:var(--chapter-opacity,1);pointer-events:none}
+html[data-motion] .scene-copy{left:var(--gutter)}
+html[data-motion] .scene.current .scene-copy,html[data-motion] .scene.current .hero-bottom{visibility:visible;pointer-events:auto}
+html[data-motion] .engine-scene .scene-copy{width:calc(100% - 2*var(--gutter))}
+html[data-motion] .scene-number{display:none}
+html[data-motion] .architecture-map,html[data-motion] .component-link{opacity:var(--chapter-opacity,1)}
+html[data-guide="true"] :is(.hud,.rail,.plate-id,.component-link,.architecture-map){display:none}
+html[data-guide="true"] .scene.current .scene-copy,html[data-guide="true"] .scene.current .hero-bottom{visibility:hidden;pointer-events:none}
+@media(max-width:700px){html[data-motion] .scene-copy,html[data-motion] .hero .scene-copy{width:calc(100% - 2*var(--gutter))}}
+@media print{html[data-motion] .scene .scene-copy,html[data-motion] .scene.current .scene-copy{position:static;visibility:visible;opacity:1;pointer-events:auto;width:100%}}
+html:not([data-motion]) .world{opacity:.2}html:not([data-motion]) .rail,html:not([data-motion]) .component-link,html:not([data-motion]) .plate-id,html:not([data-motion]) .hud{display:none}
 html[data-motion="off"]{scroll-behavior:auto}html[data-motion="off"] *,html[data-motion="off"] *::before,html[data-motion="off"] *::after{animation:none!important;transition:none!important}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
 @media print{.world,.topbar,.hud,.rail,.hero-bottom,.scene-number,.plate-id,.component-link{display:none}.scene,.hero{min-height:0;padding:var(--s5) 0}.scene-copy,.hero .scene-copy{position:static;width:100%;margin:0;padding:0}.archive{padding:0}.field-note>summary{break-after:avoid}body{background:white;color:black}.scene-copy>p,.note-body{color:inherit}}
@@ -119,6 +142,14 @@ html[data-motion="off"]{scroll-behavior:auto}html[data-motion="off"] *,html[data
  <div class="brain-stage">
   <img class="brain-poster" id="brain-poster" src="assets/mechanical-brain/anchor.png" width="1672" height="941" alt="" fetchpriority="high">
   <video class="brain-film" id="brain-film" data-src="assets/mechanical-brain/brain-scroll.mp4" muted playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+ </div>
+ <div class="engine-stage" data-engine-chapter="3" hidden>
+  <img src="assets/mechanical-brain/profiling-process.webp" width="1280" height="720" alt="">
+  <video data-src="assets/mechanical-brain/profiling-process.mp4" muted playsinline loop preload="none" tabindex="-1" disablepictureinpicture></video>
+ </div>
+ <div class="engine-stage" data-engine-chapter="5" hidden>
+  <img src="assets/mechanical-brain/serving-process.webp" width="1280" height="720" alt="">
+  <video data-src="assets/mechanical-brain/serving-process.mp4" muted playsinline loop preload="none" tabindex="-1" disablepictureinpicture></video>
  </div>
  <div class="world-label" id="world-label">Two independent engines<small>Mechanical study · conceptual architecture</small></div>
 </div>
@@ -141,9 +172,13 @@ html[data-motion="off"]{scroll-behavior:auto}html[data-motion="off"] *,html[data
  <p class="map-note">Seal the manifest, then promote atomically within local PostgreSQL.</p>
 </template>
 <template data-map="profiling">
- <div class="map-heading">One extraction → requested Gemini lenses</div>
- <div class="map-nodes map-lenses"><a href="#profiling"><b>Purchase</b><small>Buying drivers</small></a><a href="#profiling"><b>Psychological</b><small>Behavioral attributes</small></a><a href="#profiling"><b>Political</b><small>Sociological attributes</small></a></div>
- <p class="map-note">Structured profiles → local results + registry. Model-derived attributes.</p>
+ <div class="map-heading">Profiling · a continuous process study</div>
+ <div class="process-steps">
+  <a href="#profiling" data-phase="0"><span>01</span><b>Extract once</b><small>One shared website workload</small></a>
+  <a href="#profiling" data-phase="1"><span>02</span><b>Three parallel lenses</b><small>Purchase · Psychological · Political</small></a>
+  <a href="#profiling" data-phase="2"><span>03</span><b>Gemini nucleus</b><small>External API · requested lens inference</small></a>
+  <a href="#profiling" data-phase="3"><span>04</span><b>Structured profiles</b><small>Local results + registry / per window</small></a>
+ </div>
 </template>
 <template data-map="handoff">
  <div class="map-heading">Two explicit operations</div>
@@ -151,9 +186,13 @@ html[data-motion="off"]{scroll-behavior:auto}html[data-motion="off"] *,html[data
  <p class="map-note">Separate publish and refresh. No direct engine-to-engine runtime access.</p>
 </template>
 <template data-map="serving">
- <div class="map-heading">Purchase graph · built in process</div>
- <div class="map-nodes"><a href="#serving"><b>Warm / CF</b><small>Shared purchase signal</small></a><a href="#serving"><b>Cold & day-zero</b><small>Tag-sharing purchase counts</small></a></div>
- <p class="map-note">Exclude existing buyers → positive scores → exact quota. Empty CF can fall back to cold.</p>
+ <div class="map-heading">Purchase graph · built in process · warm CF illustration</div>
+ <div class="process-steps">
+  <a href="#serving" data-phase="0"><span>01</span><b>Target seller</b><small>Existing buyers seed the signal</small></a>
+  <a href="#serving" data-phase="1"><span>02</span><b>Related sellers</b><small>Shared purchase relationships</small></a>
+  <a href="#serving" data-phase="2"><span>03</span><b>Eligible identities</b><small>Existing buyers excluded</small></a>
+  <a href="#serving" data-phase="3"><span>04</span><b>Positive-score cut</b><small>Exact quota · no zero-score padding</small></a>
+ </div>
 </template>
 <template data-map="evidence">
  <div class="map-heading">Selection leaves an evidence trail</div>
@@ -170,9 +209,9 @@ html[data-motion="off"]{scroll-behavior:auto}html[data-motion="off"] *,html[data
 </section>
 <section class="scene" id="journey" data-world="1" data-title="The foundation"><span class="scene-number" aria-hidden="true">01</span><div class="scene-copy"><div class="eyebrow">01 / The foundation</div><h2>Every part.<br><em>A purpose.</em></h2><p>Four packages, each with a precise responsibility. <strong>Contracts</strong> define the language. <strong>Data-transfer</strong> moves it safely. Profiling and serving build on both, without importing each other.</p><div class="detail-line">CONTRACTS <span>←</span> TRANSFER <span>←</span> ENGINES</div><span class="scene-tag">Install profiling, serving, or both</span><br><a class="chapter-source" href="docs/01-system-architecture.md">Explore package boundaries ↗</a></div></section>
 <section class="scene" id="revisions" data-world="2" data-title="The data lifecycle"><span class="scene-number" aria-hidden="true">02</span><div class="scene-copy"><div class="eyebrow">02 / The data lifecycle</div><h2>Precision begins<br><em>with trust.</em></h2><p>A read-only source snapshot enters staging. Copies are verified, engine gates run, and a manifest is sealed. Only then does an atomic local promotion make the revision visible.</p><div class="detail-line">STAGING <span>→</span> ACTIVE <span>→</span> PREVIOUS</div><span class="scene-tag">One previous revision. Local, reversible rollback.</span><br><a class="chapter-source" href="docs/03-transfer-and-revisions.md">Follow a verified revision ↗</a></div></section>
-<section class="scene" id="understanding" data-world="3" data-title="The profiling engine"><span class="scene-number" aria-hidden="true">03</span><div class="scene-copy"><div class="eyebrow">03 / The profiling engine</div><h2>The engine of<br><em>understanding.</em></h2><p>One shared website workload. One extraction pass. Three configurable lenses: purchase drivers, psychological, and political. Gemini turns content into structured attributes and summaries.</p><div class="detail-line">WEBSITES <span>→</span> LENSES <span>→</span> ATTRIBUTES</div><span class="scene-tag">Results and registry changes commit per window</span><br><a class="chapter-source" href="docs/04-profiling-engine.md">Look inside the profiling engine ↗</a></div></section>
+<section class="scene engine-scene" id="understanding" data-world="3" data-title="The profiling engine"><span class="scene-number" aria-hidden="true">03</span><div class="scene-copy"><div class="eyebrow">03 / The profiling engine</div><h2>The engine of<br><em>understanding.</em></h2><p>One extraction becomes three parallel streams: purchase, psychological, and political. Requested lenses call the external Gemini API, then structured profiles return to local results and registry tables.</p><div class="detail-line">WEBSITES <span>→</span> LENSES <span>→</span> ATTRIBUTES</div><span class="scene-tag">Results and registry changes commit per window</span><br><a class="chapter-source" href="docs/04-profiling-engine.md">Look inside the profiling engine ↗</a></div></section>
 <section class="scene" id="bridge" data-world="4" data-title="The explicit handoff"><span class="scene-number" aria-hidden="true">04</span><div class="scene-copy"><div class="eyebrow">04 / The explicit handoff</div><h2>Connected.<br><em>On your terms.</em></h2><p>“Copy now” publishes local result tables through a separate write-scoped RDS session. “Later” records a deferred handoff. Serving receives the published profiles on its next explicit data refresh.</p><div class="detail-line">PROFILING <span>→</span> RDS TABLES <span>→</span> SERVING</div><span class="scene-tag">Append-only, per-table transactions. No timer sync.</span><br><a class="chapter-source" href="docs/06-handoff-export-and-evidence.md">Understand the handoff boundary ↗</a></div></section>
-<section class="scene" id="selection" data-world="5" data-title="The serving engine"><span class="scene-number" aria-hidden="true">05</span><div class="scene-copy"><div class="eyebrow">05 / The serving engine</div><h2>The engine<br><em>of discovery.</em></h2><p>Purchase relationships shape a local graph. Warm sellers use collaborative filtering; cold and day-zero paths use attribute-sharing purchase counts. Existing buyers stay outside the eligible audience.</p><div class="detail-line">ELIGIBILITY <span>→</span> SCORING <span>→</span> EXACT QUOTA</div><span class="scene-tag">Deterministic ties. No padding with zero scores.</span><br><a class="chapter-source" href="docs/05-serving-engine.md">Inspect the selection logic ↗</a></div></section>
+<section class="scene engine-scene" id="selection" data-world="5" data-title="The serving engine"><span class="scene-number" aria-hidden="true">05</span><div class="scene-copy"><div class="eyebrow">05 / The serving engine</div><h2>The engine<br><em>of discovery.</em></h2><p>Watch the warm purchase signal travel from a seller through related shops to eligible identities. Existing buyers stay outside the audience. Cold and day-zero paths instead count purchases at attribute-sharing sellers.</p><div class="detail-line">ELIGIBILITY <span>→</span> SCORING <span>→</span> EXACT QUOTA</div><span class="scene-tag">Deterministic ties. No padding with zero scores.</span><br><a class="chapter-source" href="docs/05-serving-engine.md">Inspect the selection logic ↗</a></div></section>
 <section class="scene" id="evidence" data-world="6" data-title="The evidence trail"><span class="scene-number" aria-hidden="true">06</span><div class="scene-copy"><div class="eyebrow">06 / The evidence trail</div><h2>Every audience.<br><em>A reason why.</em></h2><p>Ranked prospects become contact exports, with suppression and deduplication. Receipts explain the selected lane. Per-run snapshots preserve the story; optional Neo4j publication makes the evidence explorable.</p><div class="detail-line">RECEIPTS <span>·</span> CSV <span>·</span> RUN SNAPSHOTS</div><span class="scene-tag">Neo4j explains the result; it does not score it</span><br><a class="chapter-source" href="docs/06-handoff-export-and-evidence.md">Trace a result back to its evidence ↗</a></div></section>
 <section class="archive" id="field-guide"><div class="archive-header"><div><div class="eyebrow">For the curious. And the builders.</div><h2>The field <em>guide.</em></h2></div><p>The complete anatomy. Open a chapter for the mechanics, commands, and boundaries behind each component.</p></div>
 <div class="doc-links"><a href="docs/README.md">Complete engineering guide ↗</a><a href="docs/07-applications-and-apis.md">Applications & APIs ↗</a><a href="docs/09-engineering-and-verification.md">Verification & limitations ↗</a><a href="docs/10-source-reference.md">Source reference ↗</a></div>
@@ -262,8 +301,8 @@ html[data-motion="off"]{scroll-behavior:auto}html[data-motion="off"] *,html[data
   <div class="cmd"><pre><code>gh repo clone PayMeService/promoter-brain-core ~/promoter-brain-core &amp;&amp; ~/promoter-brain-core/install.sh</code></pre><button data-copy>Copy</button></div>
   <p>A guided screen asks which engine (or "not sure"), your settings in plain language, reads your GitHub account, makes a branch named after you, runs setup with a progress bar, writes your notes into the README and the rules, and offers, never forces, the data copy. Re-running it is safe.</p>
   <h3>The commands you will use</h3>
-  <div class="cmd"><pre><code>uv run promoter-brain-profiling api serve</code></pre><button data-copy>Copy</button><p class="why">The profiling app at http://127.0.0.1:8010/ (from <code>~/promoter-brain-core</code>).</p></div>
-  <div class="cmd"><pre><code>uv run promoter-brain-serving studio serve</code></pre><button data-copy>Copy</button><p class="why">The serving studio at http://127.0.0.1:8020/.</p></div>
+  <div class="cmd"><pre><code>uv run promoter-brain-profiling api serve</code></pre><button data-copy>Copy</button></div>
+  <div class="cmd"><pre><code>uv run promoter-brain-serving studio serve</code></pre><button data-copy>Copy</button></div>
   <div class="cmd"><pre><code>uv run promoter-brain-&lt;engine&gt; data preflight</code></pre><button data-copy>Copy</button><p class="why">Rung one of the ladder, alone: look, copy nothing.</p></div>
   <div class="cmd"><pre><code>uv run promoter-brain-&lt;engine&gt; data bootstrap</code></pre><button data-copy>Copy</button><p class="why">The first copy, the whole ladder. <code>refresh</code> later, <code>rollback</code> to go back one vintage, <code>status</code> to see where you stand.</p></div>
   <div class="cmd"><pre><code>~/promoter-brain-core/install.sh --check</code></pre><button data-copy>Copy</button><p class="why">What is installed here, and is it healthy.</p></div>
@@ -302,6 +341,15 @@ html[data-motion="off"]{scroll-behavior:auto}html[data-motion="off"] *,html[data
 const $ = s => document.querySelector(s);
 const scenes = [...document.querySelectorAll('[data-world]')];
 const rail = [...document.querySelectorAll('.rail a')];
+// A new visit starts the story at the opening, never a restored scroll offset.
+// Explicit field-guide bookmarks remain directly addressable.
+function startsAtOpening(hash, chapterIds) {
+  return !hash || chapterIds.some(id=>hash==='#'+id);
+}
+history.scrollRestoration='manual';
+if(startsAtOpening(location.hash,scenes.map(scene=>scene.id))) {
+  history.replaceState(null,'','#top');scrollTo({top:0,behavior:'instant'});
+}
 const media = matchMedia('(prefers-reduced-motion: reduce)');
 let preference = null;
 try { preference = localStorage.getItem('pb-motion'); } catch {}
@@ -309,6 +357,7 @@ let motionOn = !media.matches && preference !== 'off';
 let starts = [], active = -1, sceneProgress = 0, raf = 0;
 const world = $('#world'), film = $('#brain-film'), poster = $('#brain-poster');
 let loading = false, filmURL = null, failed = false;
+const engines = [...document.querySelectorAll('[data-engine-chapter]')].map(stage => ({stage,video:stage.querySelector('video'),chapter:Number(stage.dataset.engineChapter),failed:false,pending:false}));
 const maps = [...document.querySelectorAll('template[data-map]')];
 const labels = [
  ['Two independent engines','Mechanical study · conceptual architecture'],
@@ -327,6 +376,9 @@ const components = [
 ];
 // Pure scroll mapping; shared by live rendering and the runnable regression check.
 function scenePosition(y, offsets) {
+  // Browser scroll positions and layout offsets can round to different physical pixels.
+  const landing=offsets.find(top=>Math.abs(top-y)<=1);
+  if(landing!==undefined) y=landing;
   if (offsets.length < 2 || y <= offsets[0]) return 0;
   for (let i = 0; i < offsets.length - 1; i++) {
     if (y < offsets[i + 1]) return i + (y - offsets[i]) / Math.max(1, offsets[i + 1] - offsets[i]);
@@ -335,13 +387,17 @@ function scenePosition(y, offsets) {
 }
 // Native smooth scrolling advances one stop; after the last chapter, replay the tour.
 function nextChapter(y, offsets) {
-  const next = offsets.findIndex(top => top > y + 1);
-  return next < 0 ? 0 : next;
+  const next=Math.floor(scenePosition(y,offsets))+1;
+  return next<offsets.length ? next : 0;
+}
+function goToChapter(index, behavior='instant') {
+  scrollTo({top:Math.ceil(starts[index]),behavior});
 }
 $('#play-next').hidden = false;
 $('#play-next').addEventListener('click',() => {
   const next = nextChapter(scrollY,starts);
-  scenes[next].scrollIntoView({behavior:motionOn && !media.matches ? 'smooth' : 'instant',block:'start'});
+  history.replaceState(null,'','#'+scenes[next].id);
+  goToChapter(next,motionOn && !media.matches ? 'smooth' : 'instant');
 });
 // Hold important assemblies long enough to read, then scrub the intervening motion.
 // Times are mapped to the inspected film; the last chapter includes the final pullback.
@@ -353,17 +409,39 @@ function brainScale(progress) {
 function filmTime(progress, duration) {
   if (!Number.isFinite(duration) || duration <= 0) return 0;
   const p = Math.max(0,Math.min(6,progress)), i = Math.floor(p);
-  const t = Math.max(0,Math.min(1,(p-i-.28)/.72));
+  // Only the opening disassembly runs between adjacent brain chapters.
+  // Engine cutaways hold their own shot until the chapter changes.
+  const t = i<2 ? Math.max(0,Math.min(1,(p-i-.72)/.28)) : 0;
   const eased = t*t*(3-2*t);
   const seconds = filmStops[i] + ((filmStops[Math.min(6,i+1)]-filmStops[i])*eased);
   return Math.min(Math.max(0,duration-.05),seconds);
 }
-function measure() { starts = scenes.map(el => el.offsetTop); update(); }
+function chapterState(y, offsets, guideTop) {
+  const progress=scenePosition(y,offsets), index=Math.min(offsets.length-1,Math.floor(progress));
+  const exit=Math.max(0,Math.min(1,(progress-index-.72)/.28));
+  return {progress,index,opacity:1-exit*exit*(3-2*exit),inGuide:guideTop<=innerHeight*.5};
+}
+function measure() { starts = scenes.map(el => el.getBoundingClientRect().top+scrollY); update(); }
 function update() {
-  sceneProgress = scenePosition(scrollY, starts);
-  const index = Math.min(6, Math.floor(sceneProgress));
+  const archiveTop = $('#field-guide').getBoundingClientRect().top;
+  const state=chapterState(scrollY,starts,archiveTop), index=state.index;
+  sceneProgress=state.progress;
+  document.documentElement.dataset.guide=String(state.inGuide);
+  document.documentElement.style.setProperty('--chapter-opacity',String(motionOn?state.opacity:1));
   if (index !== active) {
     active = index;
+    scenes.forEach((scene,i)=>scene.classList.toggle('current',i===index));
+    poster.src=`assets/mechanical-brain/${posters[index]}`;
+    world.classList.remove('film-ready');
+    for (const engine of engines) {
+      engine.video.pause();
+      if (engine.chapter===index && engine.video.readyState>=1) {
+        engine.stage.classList.remove('ready');engine.video.currentTime=0;
+      }
+    }
+    const engineChapter = engines.some(engine => engine.chapter === index);
+    world.classList.toggle('engine-active',engineChapter);
+    document.documentElement.dataset.engine = String(engineChapter);
     $('#architecture-map').replaceChildren(maps[index].content.cloneNode(true));
     $('#architecture-map').hidden = false;
     $('#chapter-number').textContent = `${String(index).padStart(2,'0')} / 06`;
@@ -375,33 +453,39 @@ function update() {
     $('#component-link b').textContent = title;
     $('#component-link').href = '#'+chapter;
     rail.forEach((link,i) => i === index ? link.setAttribute('aria-current','step') : link.removeAttribute('aria-current'));
+    // Cancel interrupted arrivals; every visible layer enters the same chapter together.
+    for (const element of [world,scenes[index].querySelector('.scene-copy'),$('#architecture-map'),$('#component-link')]) {
+      element.getAnimations().forEach(animation=>animation.cancel());
+      if(motionOn && !media.matches) element.animate([{opacity:0},{opacity:1}],{duration:400,easing:'ease-out'});
+    }
   }
-  const archiveTop = $('#field-guide').getBoundingClientRect().top;
   const next = nextChapter(scrollY,starts);
   $('#play-next span').textContent = next === 0 ? 'Replay' : 'Play';
   $('#play-next').setAttribute('aria-label',next === 0 ? 'Replay architecture tour' : 'Play next chapter: '+scenes[next].dataset.title);
-  world.style.visibility = archiveTop <= 0 ? 'hidden' : 'visible';
+  world.style.visibility = state.inGuide ? 'hidden' : 'visible';
+  world.style.opacity=String(motionOn && engines.some(engine=>engine.chapter===active)?state.opacity:1);
   for (const selector of ['.rail','.plate-id','.component-link','.architecture-map']) $(selector).style.visibility = archiveTop < innerHeight*.5 ? 'hidden' : 'visible';
   $('#progress').style.transform = `scaleX(${Math.min(1,scrollY / Math.max(1,document.documentElement.scrollHeight-innerHeight))})`;
   world.style.setProperty('--brain-scale',String(brainScale(motionOn?sceneProgress:active)));
-  if (!motionOn || failed) poster.src = `assets/mechanical-brain/${posters[index]}`;
+  if (motionOn && !engines.some(engine => engine.chapter === active)) loadFilm();
+  syncEngines();updateMediaStatus();
   requestDraw();
 }
 function requestDraw() { if (!raf && !document.hidden) raf = requestAnimationFrame(draw); }
 function draw() {
   raf = 0;
-  if (!motionOn || failed || film.readyState < 2 || film.seeking || world.style.visibility === 'hidden') return;
+  if (engines.some(engine => engine.chapter === active) || !motionOn || failed || film.readyState < 2 || film.seeking || world.style.visibility === 'hidden') return;
   const target = filmTime(sceneProgress,film.duration);
   if (Math.abs(film.currentTime-target) > .025) film.currentTime = target;
   else world.classList.add('film-ready');
 }
 function filmError() {
   failed = true;world.classList.remove('film-ready');update();
-  $('#film-status').textContent = 'STILL STUDY / FILM UNAVAILABLE';
+  updateMediaStatus();
 }
 async function loadFilm() {
   if (loading || failed) return;
-  loading = true;$('#film-status').textContent = 'LOADING MECHANICAL STUDY';
+  loading = true;updateMediaStatus();
   try {
     // A local blob also allows seeking on simple static hosts without byte-range support.
     const response = await fetch(film.dataset.src);
@@ -410,17 +494,48 @@ async function loadFilm() {
     film.src = filmURL;film.load();
   } catch { filmError(); }
 }
-film.addEventListener('loadeddata',() => {$('#film-status').textContent=motionOn?'SCROLL-CONTROLLED STUDY':'STILL STUDY';requestDraw();});
+film.addEventListener('loadeddata',() => {updateMediaStatus();requestDraw();});
 film.addEventListener('seeked',requestDraw);
 film.addEventListener('error',filmError);
+// Load only the visible engine. Hidden tabs and the motion toggle stop both loops.
+function syncEngines() {
+  for (const engine of engines) {
+    const selected = engine.chapter === active;
+    engine.stage.hidden = !selected;
+    const canPlay = selected && motionOn && !document.hidden && world.style.visibility !== 'hidden' && !engine.failed;
+    if (!canPlay) {engine.video.pause();continue;}
+    if (!engine.video.getAttribute('src')) {engine.video.src=engine.video.dataset.src;engine.video.load();}
+    if (engine.video.paused && !engine.pending) {
+      engine.pending=true;
+      engine.video.play().then(() => {
+        engine.pending=false;
+        if (engine.chapter!==active || !motionOn || document.hidden || world.style.visibility==='hidden') engine.video.pause();
+      }).catch(error => {
+        engine.pending=false;
+        if (error.name==='AbortError') {syncEngines();return;}
+        engine.failed=true;engine.stage.classList.remove('ready');updateMediaStatus();
+      });
+    }
+  }
+}
+function updateMediaStatus() {
+  const engine=engines.find(item => item.chapter===active);
+  $('#film-status').textContent = engine
+    ? !motionOn ? 'STILL PROCESS STUDY' : engine.failed ? 'STILL PROCESS / VIDEO UNAVAILABLE' : engine.video.readyState<2 ? 'LOADING PROCESS STUDY' : 'LIVING PROCESS / ILLUSTRATION'
+    : !motionOn ? 'STILL STUDY' : failed ? 'STILL STUDY / FILM UNAVAILABLE' : film.readyState<2 ? 'LOADING MECHANICAL STUDY' : 'SCROLL-CONTROLLED STUDY';
+}
+for (const engine of engines) {
+  engine.video.addEventListener('loadeddata',() => {engine.stage.classList.add('ready');updateMediaStatus();});
+  engine.video.addEventListener('error',() => {engine.failed=true;engine.stage.classList.remove('ready');updateMediaStatus();});
+  engine.video.addEventListener('seeked',() => {engine.stage.classList.add('ready');updateMediaStatus();syncEngines();});
+}
 function applyMotion() {
   document.documentElement.dataset.motion = motionOn ? 'on' : 'off';
   $('#motion').hidden = false;
   $('#motion').setAttribute('aria-pressed',String(!motionOn));
   $('#motion').setAttribute('aria-label',motionOn ? 'Pause motion' : 'Enable motion');
   $('#motion span').textContent = motionOn ? 'Motion on' : 'Motion off';
-  if (motionOn) {loadFilm();if(film.readyState>=2) $('#film-status').textContent='SCROLL-CONTROLLED STUDY';}
-  else {film.pause();world.classList.remove('film-ready');$('#film-status').textContent='STILL STUDY';}
+  if (!motionOn) {document.getAnimations().forEach(animation=>animation.cancel());film.pause();world.classList.remove('film-ready');}
   update();
 }
 if (navigator.connection?.saveData) motionOn = false;
@@ -428,17 +543,30 @@ $('#motion').addEventListener('click',() => {motionOn=!motionOn;preference=motio
 media.addEventListener('change',() => {motionOn=!media.matches && preference!=='off';applyMotion();});
 measure();applyMotion();
 addEventListener('scroll',update,{passive:true});
-addEventListener('resize',measure);
-document.addEventListener('visibilitychange',() => {if(document.hidden){cancelAnimationFrame(raf);raf=0;}else requestDraw();});
-addEventListener('pagehide',event => {cancelAnimationFrame(raf);raf=0;if(!event.persisted && filmURL) URL.revokeObjectURL(filmURL);});
-addEventListener('pageshow',requestDraw);
+addEventListener('resize',()=>{
+  const progress=sceneProgress, inTour=$('#field-guide').getBoundingClientRect().top>innerHeight*.5;
+  starts=scenes.map(el=>el.getBoundingClientRect().top+scrollY);
+  if(inTour) {const i=Math.floor(progress);scrollTo({top:starts[i]+(progress-i)*((starts[i+1]??starts[i])-starts[i]),behavior:'instant'});}
+  update();
+});
+document.addEventListener('visibilitychange',() => {if(document.hidden){cancelAnimationFrame(raf);raf=0;}else requestDraw();syncEngines();});
+addEventListener('pagehide',event => {engines.forEach(engine=>engine.video.pause());cancelAnimationFrame(raf);raf=0;if(!event.persisted && filmURL) URL.revokeObjectURL(filmURL);});
+addEventListener('pageshow',() => {syncEngines();requestDraw();});
 function revealHash() {
   let target;try{target=document.getElementById(decodeURIComponent(location.hash.slice(1)));}catch{return;}
+  if(target?.matches('[data-world]')) {goToChapter(scenes.indexOf(target));update();return;}
   const detail=target?.closest('details');
   if(detail){detail.open=true;requestAnimationFrame(()=>target.scrollIntoView({behavior:'instant',block:'start'}));}
 }
 addEventListener('hashchange',revealHash);
-document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{const target=document.getElementById(a.hash.slice(1));const detail=target?.closest('details');if(detail)detail.open=true;}));
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',event=>{
+  const target=document.getElementById(a.hash.slice(1)), detail=target?.closest('details');
+  if(detail) detail.open=true;
+  if(target?.matches('[data-world]')) {
+    event.preventDefault();history.pushState(null,'',a.hash);
+    goToChapter(scenes.indexOf(target));update();
+  }
+}));
 let toastTimer;
 document.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener('click',async()=>{
   const code=button.parentElement.querySelector('code');
