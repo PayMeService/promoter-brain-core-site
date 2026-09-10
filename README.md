@@ -17,3 +17,14 @@ The site remains one `index.html`, with vanilla JavaScript and the existing inte
 Visual direction: luxury typography, obsidian, parchment, champagne, and patinated brass. Design tokens live at the top of the inline stylesheet. Motion references: [Scroll World](https://github.com/cth9191/scroll-world) for connected spatial storytelling, and [Motion Design](https://github.com/cth9191/motion-design) for layered component reveals. This is a browser-rendered interpretation, not their Higgsfield video-generation pipeline.
 
 Live site: [paymeservice.github.io/promoter-brain-core-site](https://paymeservice.github.io/promoter-brain-core-site/). Local edits must be published separately to update it.
+
+## Working with Codex
+
+Open this repository as the project folder. [AGENTS.md](AGENTS.md) contains the
+project rules, source-evidence requirements, and verification commands.
+[.codex/config.toml](.codex/config.toml) sets the project sandbox; model and other
+personal preferences remain inherited. No project-specific skills, hooks, or
+MCP servers are required. Start a new task to load the project instructions;
+project config applies when the project is trusted. See the official
+[instruction guide](https://developers.openai.com/codex/guides/agents-md) and
+[config guide](https://developers.openai.com/codex/config-basic).

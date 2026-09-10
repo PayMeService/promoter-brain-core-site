@@ -1,0 +1,2 @@
+# Shared project defaults. Model, approval, and tool preferences are inherited.
+sandbox_mode = "workspace-write"
